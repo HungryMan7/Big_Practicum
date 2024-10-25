@@ -160,7 +160,35 @@ void LexicalAnalyzer::STR() {
 }
 
 void LexicalAnalyzer::SIGN() {
+    if ((int)ch_ == 61) {
+        curr_lexem_.push_back(ch_);
+        GetChar();
+        SIGN_EQ();
+    } else if (ch_ == ' ' || ch_ == '\n' || ch_ == '\0') {
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Operator);
+        new_lexem->SetValue(curr_lexem_);
+        list_.push_back(new_lexem);
+        curr_lexem_.clear();
+        GetChar();
+        H();
+    } else {
+        ERR();
+    }
+}
 
+void LexicalAnalyzer::SIGN_EQ() {
+    if (ch_ == ' ' || ch_ == '\n' || ch_ == '\0') {
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Operator);
+        new_lexem->SetValue(curr_lexem_);
+        list_.push_back(new_lexem);
+        curr_lexem_.clear();
+        GetChar();
+        H();
+    } else {
+        ERR();
+    }
 }
 
 void LexicalAnalyzer::ERR() {

@@ -24,6 +24,7 @@ class LexicalAnalyzer {
      void INT();
      void STR();
      void SIGN();
+     void SIGN_EQ();
      void ERR();
      void EMPTY();
      char* program_,* iter_;

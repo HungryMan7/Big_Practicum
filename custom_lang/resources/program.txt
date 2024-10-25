@@ -1,4 +1,4 @@
 for
 abc #x
 "fr" #no
-while
+while + - == >=
