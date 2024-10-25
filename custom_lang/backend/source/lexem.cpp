@@ -1,4 +1,4 @@
-#include "../../../custom_lang/backend/includes/lexem.h"
+#include "../includes/lexem.h"
 
 void Lexem::SetType(LexemType type) {
     type_ = type;

@@ -1,4 +1,4 @@
-#include "Bor.h"
+#include "../includes/bor.h"
 
 #include <iostream>
 #include <fstream>
@@ -11,7 +11,11 @@ Bor::Bor() {
 Bor::Bor(std::string file_name) {
     root = new Node;
     std::ifstream file;
-    file.open(file_name);
+    try {
+        file.open(file_name);
+    } catch (const std::exception& e) {
+        std::cout << "ERROR! " << e.what() << "\n";
+    }
     std::string words;
     while (file >> words) {
         AddString(words);

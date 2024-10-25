@@ -1,7 +1,8 @@
-#include "backend/includes/lexem.h"
+#include "backend/includes/lexical_analyzer.h"
 
 int main() {
-    std::string garbage = "while";
-    Lexem* lexem = new Lexem;
+    LexicalAnalyzer* la = new LexicalAnalyzer;
+    la->SetLanguage("custom_lang/resources/lang.txt");
+    la->AnalyzeFile("custom_lang/resources/program.txt");
     return 0;
 }
