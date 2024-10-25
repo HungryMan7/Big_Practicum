@@ -66,7 +66,7 @@ void LexicalAnalyzer::H() {
         GetChar();
         INT();
     } else if ((int)ch_ == 34) { /* case " */
-        curr_lexem_.push_back(ch_);
+        // curr_lexem_.push_back(ch_);
         GetChar();
         STR();
     } else if ((int)ch_ == 35) { /* case # */
@@ -89,7 +89,7 @@ void LexicalAnalyzer::ID() {
         curr_lexem_.push_back(ch_);
         GetChar();
         ID();
-    } else {
+    } else if (ch_ == ' ' || ch_ == '\0' || ch_ == '\n') {
         Lexem* new_lexem = new Lexem;
         if (bor_->FindString(curr_lexem_)) {
             new_lexem->SetType(LexemType::Utility);
@@ -99,7 +99,10 @@ void LexicalAnalyzer::ID() {
         new_lexem->SetValue(curr_lexem_);
         list_.push_back(new_lexem);
         curr_lexem_.clear();
+        GetChar();
         H();
+    } else {
+        ERR();
     }
 }
 
@@ -114,15 +117,46 @@ void LexicalAnalyzer::COM() {
         new_lexem->SetValue(curr_lexem_);
         list_.push_back(new_lexem);
         curr_lexem_.clear();
+        GetChar();
+        H();
     }
 }
 
 void LexicalAnalyzer::INT() {
-
+    if (48 <= (int)ch_ && (int)ch_ <= 57) { /* case digit */
+        curr_lexem_.push_back(ch_);
+        GetChar();
+        INT();
+    } else if (ch_ == ' ' || ch_ == '\0' || ch_ == '\n') {
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Literal);
+        new_lexem->SetValue(curr_lexem_);
+        list_.push_back(new_lexem);
+        curr_lexem_.clear();
+        GetChar();
+        H();
+    } else {
+        ERR();
+    }
 }
 
 void LexicalAnalyzer::STR() {
-
+    if (ch_ == '\n' || ch_ == '\0') {
+        ERR();
+    } else if ((int)ch_ == 34) {
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Literal);
+        new_lexem->SetValue(curr_lexem_);
+        list_.push_back(new_lexem);
+        curr_lexem_.clear();
+        GetChar();
+        GetChar();
+        H();
+    } else {
+        curr_lexem_.push_back(ch_);
+        GetChar();
+        STR();
+    }
 }
 
 void LexicalAnalyzer::SIGN() {
