@@ -4,11 +4,13 @@ enum class LexemType { Identifier, Utility, Operator, Literal, Error, Empty };
 
 class Lexem {
 public:
+    /* setters */
     void SetType(LexemType);
     void SetValue(std::string);
     void SetLine(int);
     void SetColumn(int);
 
+    /* getters */
     LexemType GetType();
     std::string GetValue();
     int GetLine();
