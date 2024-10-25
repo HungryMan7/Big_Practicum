@@ -54,7 +54,6 @@ void LexicalAnalyzer::GetChar() {
     }
     ch_ = *iter_;
     ++iter_;
-    int x;
 }
 
 void LexicalAnalyzer::H() {
@@ -92,7 +91,11 @@ void LexicalAnalyzer::ID() {
         ID();
     } else {
         Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Identifier);
+        if (bor_->FindString(curr_lexem_)) {
+            new_lexem->SetType(LexemType::Utility);
+        } else {
+            new_lexem->SetType(LexemType::Identifier);
+        }
         new_lexem->SetValue(curr_lexem_);
         list_.push_back(new_lexem);
         curr_lexem_.clear();
