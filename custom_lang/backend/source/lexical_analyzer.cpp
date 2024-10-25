@@ -54,10 +54,10 @@ void LexicalAnalyzer::GetChar() {
     }
     ch_ = *iter_;
     ++iter_;
-    std::cout << ch_;
+    int x;
 }
 
-void LexicalAnalyzer::H() { 
+void LexicalAnalyzer::H() {
     if (65 <= (int)ch_ && (int)ch_ <= 90 || 97 <= (int)ch_ && (int)ch_ <= 122 || (int)ch_ == 95) { /* case letter */
         curr_lexem_.push_back(ch_);
         GetChar();
@@ -96,11 +96,22 @@ void LexicalAnalyzer::ID() {
         new_lexem->SetValue(curr_lexem_);
         list_.push_back(new_lexem);
         curr_lexem_.clear();
+        H();
     }
 }
 
 void LexicalAnalyzer::COM() {
-
+    if (ch_ != '\n' && ch_ != '\0') {
+        curr_lexem_.push_back(ch_);
+        GetChar();
+        COM();
+    } else {
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Comment);
+        new_lexem->SetValue(curr_lexem_);
+        list_.push_back(new_lexem);
+        curr_lexem_.clear();
+    }
 }
 
 void LexicalAnalyzer::INT() {

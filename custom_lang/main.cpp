@@ -24,6 +24,10 @@ int main() {
             std::cout << "literal" << "\n";
             break;
 
+        case LexemType::Comment:
+            std::cout << "comment" << "\n";
+            break;
+
         case LexemType::Empty:
             std::cout << "empty" << "\n";
             break;
