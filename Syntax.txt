@@ -1,7 +1,7 @@
 # main body
 | <program>          ::= <preprocessing> | {<opt-space><global-statement><opt-space>}
 | <preprocessing>    ::= {"#include"<opt-space>'<'<opt-space><string><opt-space>'>'<opt-space>"\n"}
-| <global-statement> ::= <variables-multidefinition><opt-space>';' | <function>
+| <global-statement> ::= <variables-multidefinition><opt-space>';' | <function> | <comment>
 
 # spaces
 | <space>     ::= ' '<space> | ' '
@@ -11,6 +11,7 @@
 | <letter> ::= 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'|
 |			   'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'|'_'		 
 | <digit>  ::= '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
+| <symbol> ::= <letter> | <digit> | '+' | '-' | '*' | '/' | '|' | '\' | '&' | '?' | '^' | ':' | ';' | ''' | '"' | '%' | '$' | '#' | '№' | '@' | '!' | '~' | '`' | '(' | ')' | '{' | '}' | '[' | ']' | '<' | '>' | '=' | '.' | ',' | <spaces> | eps
 
 # type & id
 | <type> ::= "int" | "double" | "bool" | "char" | "array" | "string"
@@ -55,3 +56,6 @@
 | <loop-while>   ::= '('<opt-space><expr><opt-space>')'<opt-space><branching-body>
 | <loop-foreach> ::= '('<opt-space><id><opt-space>','<opt-space><expr><opt-space>')'<opt-space><branching-body>
 | <loop-for>     ::= '('<opt-space>[<expr> | <variables-multidefinition> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>')'<opt-space><branching-body>
+
+# comments
+| <comment> ::= "//"{<symbol>}"\n" | "/*"{[<symbol> | "\n"]}"*/"
