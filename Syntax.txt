@@ -1,0 +1,57 @@
+# main body
+| <program>          ::= <preprocessing> | {<opt-space><global-statement><opt-space>}
+| <preprocessing>    ::= {#include<opt-space>'<'<opt-space><string><opt-space>'>'<opt-space>"\n"}
+| <global-statement> ::= <variables-multidefinition><opt-space>';' | <function>
+
+# spaces
+| <space>     ::= ' '<space> | ' '
+| <opt-space> ::= <space> | eps
+
+# symbols
+| <letter> ::= 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'|
+|			   'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'|'_'		 
+| <digit>  ::= '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
+
+# type & id
+| <type> ::= "int" | "double" | "bool" | "char" | "array" | "string"
+| <id>   ::= <letter>{<letter>|<digit>}
+
+# expressions & statements
+| <term>           ::= <id> | <literal> | '('<expr>')'
+| <expr>           ::= <term><opt-space>[<math-operator> | <logical-operator>]<opt-space><term> | <identificator><opt-space>[<assign-operator>]<opt-space><term> | 
+|		               <unary-operator><term> | ["++" | "--"]<identificator> | <identificator>["++" | "--"] | <expr><opt-space>','<opt-space><expr>
+| <statement>      ::= <variables-multidefinition><opt-space>';' | <expr><opt-space>';' | <if> | <switch><opt-space>';' | <loop> | <function-call><opt-space>';'
+| <branching-body> ::= '{'{<statement>}'}'
+
+# literals
+| <number>  ::= <digit><number> | <digit>
+| <string>  ::= {letter}
+| <literal> ::= <number> | <string>
+
+# operators
+| <unary-operator>   ::= '!' | '*' | '&'
+| <math-operator>    ::= '+' | '-' | '*' | '/' | '|' | '&' | '^'
+| <logical-operator> ::= '>' | '<' | "==" | "!="
+| <assign-operator>  ::= '=' | "+=" | "-=" | "*=" | "/=" | "|=" | "&=" | "^="
+
+# variables
+| <variables-multidefinition> ::= <type><space><variables>
+| <variables>                 ::= <variable-definition> | <variable-definition><opt-space>,<opt-space><variables>
+| <variable-definition>       ::= <id> | <id><opt-space>=<opt-space><expr>
+
+# functions
+| <function>      ::= <type><space><id><opt-space>([<arguments> | void | eps])<opt-space>[<function-body> | ';']
+| <arguments>     ::= <type><space><id> | <type><space><id>,<opt-space><arguments>
+| <function-body> ::= '{'{[<statement> | "break"<opt-space>';' | "continue"<opt-space>';']}'}'
+| <function-call> ::= <id>'('<opt-space>[<arguments> | eps]<opt-space>')'
+
+# if & switch
+| <if>     ::= "if"<opt-space>'('<expr>')'<opt-space><branching-body>[<opt-space>"else"<space><branching-body><opt-space> | eps]
+| <switch> ::= "switch"<opt-space>'('<opt-space><expr><opt-space>')'<opt-space>'{'{"case"<space><expr><opt-space>':'{<opt-space><statement><opt-space>}}["default:"{<opt-space><statement><opt-space>} | eps]'}'
+
+# loops
+| <loop>         ::= "loop"<opt-space><loop-type>
+| <loop-type>    ::= <loop-while> | <loop-foreach> | <loop-for>
+| <loop-while>   ::= '('<opt-space><expr><opt-space>')'<opt-space><branching-body>
+| <loop-foreach> ::= '('<opt-space><id><opt-space>','<opt-space><expr><opt-space>')'<opt-space><branching-body>
+| <loop-for>     ::= '('<opt-space>[<expr> | <variables-multidefinition> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>')'<opt-space><branching-body>
