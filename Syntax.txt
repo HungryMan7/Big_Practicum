@@ -47,7 +47,7 @@
 | <function-call> ::= <id>'('<opt-space>[<arguments> | eps]<opt-space>')'
 
 # if & switch
-| <if>     ::= "if"<opt-space>'('<expr>')'<opt-space><branching-body>[<opt-space>"else"<space><branching-body><opt-space> | eps]
+| <if>     ::= "if"<opt-space>'('<expr>')'<opt-space><branching-body>{<opt-space>"elif"<branching-body>'('<expr>')'<opt-space><branching-body><opt-space>}[<opt-space>"else"<opt-space><branching-body><opt-space> | eps]
 | <switch> ::= "switch"<opt-space>'('<opt-space><expr><opt-space>')'<opt-space>'{'{"case"<space><expr><opt-space>':'{<opt-space><statement><opt-space>}}["default:"{<opt-space><statement><opt-space>} | eps]'}'
 
 # loops
