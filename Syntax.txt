@@ -19,8 +19,8 @@
 
 # expressions & statements
 | <term>           ::= <id> | <literal> | '('<expr>')'
-| <expr>           ::= <term><opt-space>[<math-operator> | <logical-operator>]<opt-space><term> | <identificator><opt-space>[<assignment-operator>]<opt-space><term> | 
-|		               <unary-operator><term> | ["++" | "--"]<identificator> | <identificator>["++" | "--"] | <expr><opt-space>','<opt-space><expr>
+| <expr>           ::= <term><opt-space>[<math-operator> | <logical-operator>]<opt-space><term> | <id><opt-space>[<assignment-operator>]<opt-space><term> | 
+|		               <unary-operator><term> | ["++" | "--"]<id> | <id>["++" | "--"] | <expr><opt-space>','<opt-space><expr>
 | <statement>      ::= <variables-multidefinition><opt-space>';' | <expr><opt-space>';' | <if> | <switch><opt-space>';' | <loop> | <function-call><opt-space>';' | "break"<opt-space>';' | "continue"<opt-space>';' | eps
 | <body>           ::= '{'{<statement>}'}'
 
