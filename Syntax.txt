@@ -14,6 +14,7 @@
 | <term>      ::= <id> | <literal> | '(' <expr> ')'
 | <expr>      ::= <term> [ <math-op> | <log-op> ] <term> | <id> <ass-op> <term> | 
 |		          <unary-op> <term> | [ "++" | "--" ] <id> | <id> [ "++" | "--" ] | <expr> ',' <expr>
+| <expr-list> ::= [ <expr> | <expr> ',' <expr-list> ]
 | <statement> ::= <vars-mdef> ';' | <expr> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break;" | "continue;" | eps
 | <body>      ::= '{' { <statement> } '}'
 
@@ -31,7 +32,7 @@
 # vars
 | <vars-mdef> ::= <type> <vars>
 | <vars>      ::= <var-def> | <var-def> ',' <vars>
-| <var-def>   ::= <id> | <id>=<expr>
+| <var-def>   ::= <id> | <id> '=' <expr> | <id> "={" <expr-list> '}'
 
 # funcs
 | <func>      ::= <type> <id> '(' [ <arguments> | void | eps ] ')' [ <body> | ';' ]
