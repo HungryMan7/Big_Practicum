@@ -1,17 +1,12 @@
 # main body
-| <program>          ::= <preprocessing> | {<opt-space><global-statement><opt-space>}
-| <preprocessing>    ::= {"#include"<opt-space>'<'<opt-space><string><opt-space>'>'<opt-space>"\n"}
-| <global-statement> ::= <variables-multidefinition><opt-space>';' | <function> | <comment>
-
-# spaces
-| <space>     ::= ' '<space> | ' '
-| <opt-space> ::= <space> | eps
+| <program>          ::= <preprocessing>{<global-statement>}
+| <preprocessing>    ::= {"#include"'<'<string>'>'"\n"}
+| <global-statement> ::= <variables-multidefinition>';' | <function> | <comment>
 
 # symbols
 | <letter> ::= 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'|
 |			   'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'|'_'		 
 | <digit>  ::= '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
-| <symbol> ::= <letter> | <digit> | '+' | '-' | '*' | '/' | '|' | '\' | '&' | '?' | '^' | ':' | ';' | ''' | '"' | '%' | '$' | '#' | '№' | '@' | '!' | '~' | '`' | '(' | ')' | '{' | '}' | '[' | ']' | '<' | '>' | '=' | '.' | ',' | <spaces> | eps
 
 # type & id
 | <type> ::= "int" | "double" | "bool" | "char" | "array" | "string"
@@ -19,9 +14,9 @@
 
 # expressions & statements
 | <term>           ::= <id> | <literal> | '('<expr>')'
-| <expr>           ::= <term><opt-space>[<math-operator> | <logical-operator>]<opt-space><term> | <id><opt-space>[<assignment-operator>]<opt-space><term> | 
-|		               <unary-operator><term> | ["++" | "--"]<id> | <id>["++" | "--"] | <expr><opt-space>','<opt-space><expr>
-| <statement>      ::= <variables-multidefinition><opt-space>';' | <expr><opt-space>';' | <if> | <switch><opt-space>';' | <loop> | <function-call><opt-space>';' | "break"<opt-space>';' | "continue"<opt-space>';' | eps
+| <expr>           ::= <term>[<math-operator> | <logical-operator>]<term> | <id>[<assignment-operator>]<term> | 
+|		               <unary-operator><term> | ["++" | "--"]<id> | <id>["++" | "--"] | <expr>','<expr>
+| <statement>      ::= <variables-multidefinition>';' | <expr>';' | <if> | <switch>';' | <loop> | <function-call>';' | "break"';' | "continue"';' | eps
 | <body>           ::= '{'{<statement>}'}'
 
 # literals
@@ -36,25 +31,22 @@
 | <assignment-operator>  ::= '=' | "+=" | "-=" | "*=" | "/=" | "|=" | "&=" | "^="
 
 # variables
-| <variables-multidefinition> ::= <type><space><variables>
-| <variables>                 ::= <variable-definition> | <variable-definition><opt-space>,<opt-space><variables>
-| <variable-definition>       ::= <id> | <id><opt-space>=<opt-space><expr>
+| <variables-multidefinition> ::= <type><variables>
+| <variables>                 ::= <variable-definition> | <variable-definition>,<variables>
+| <variable-definition>       ::= <id> | <id>=<expr>
 
 # functions
-| <function>      ::= <type><space><id><opt-space>([<arguments> | void | eps])<opt-space>[<body> | ';']
-| <arguments>     ::= <type><space><id> | <type><space><id>,<opt-space><arguments>
-| <function-call> ::= <id>'('<opt-space>[<arguments> | eps]<opt-space>')'
+| <function>      ::= <type><id>([<arguments> | void | eps])[<body> | ';']
+| <arguments>     ::= <type><id> | <type><id>,<arguments>
+| <function-call> ::= <id>'('[<arguments> | eps]')'
 
 # if & switch
-| <if>     ::= "if"<opt-space>'('<expr>')'<opt-space><body>{<opt-space>"elif"<body>'('<expr>')'<opt-space><body><opt-space>}[<opt-space>"else"<opt-space><body><opt-space> | eps]
-| <switch> ::= "switch"<opt-space>'('<opt-space><expr><opt-space>')'<opt-space>'{'{"case"<space><expr><opt-space>':'{<opt-space><statement><opt-space>}}["default:"{<opt-space><statement><opt-space>} | eps]'}'
+| <if>     ::= "if"'('<expr>')'<body>{"elif"<body>'('<expr>')'<body>}["else"<body> | eps]
+| <switch> ::= "switch"'('<expr>')''{'{"case"<expr>':'{<statement>}}["default:"{<statement>} | eps]'}'
 
 # loops
-| <loop>         ::= "loop"<opt-space><loop-type>
+| <loop>         ::= "loop"<loop-type>
 | <loop-type>    ::= <loop-while> | <loop-foreach> | <loop-for>
-| <loop-while>   ::= '('<opt-space><expr><opt-space>')'<opt-space><body>
-| <loop-foreach> ::= '('<opt-space><id><opt-space>','<opt-space><expr><opt-space>')'<opt-space><body>
-| <loop-for>     ::= '('<opt-space>[<expr> | <variables-multidefinition> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>')'<opt-space><body>
-
-# comments
-| <comment> ::= "//"{<symbol>}"\n" | "/*"{[<symbol> | "\n"]}"*/"
+| <loop-while>   ::= '('<expr>')'<body>
+| <loop-foreach> ::= '('<id>','<expr>')'<body>
+| <loop-for>     ::= '('[<expr> | <variables-multidefinition> | eps]','[<expr> | eps]','[<expr> | eps]')'<body>
