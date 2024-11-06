@@ -34,7 +34,9 @@
 | <ex9> ::= <ex10> { [ "<<" | ">>" ] <ex10> }
 | <ex10> ::= <ex5> { [ '+' | '-' ] <ex11> }
 | <ex11> ::= <ex12> { [ '*' | '/' | '%' ] <ex12> }
-| <ex12> ::= [ '+' | '-' | '!'] { [ '+' | '-' | '!'] <ex12> } | <term>
+| <ex12> ::= { [ '+' | '-' | '!' | "++" | "--" ] } <ex13>
+| <ex13> ::= <ex14> { [ "++" | "--" ] }
+| <ex14> ::= <id> { "::" <id> } | <term>
   
 # vars
 | <vars-mdef> ::= <type> <vars>
@@ -48,11 +50,10 @@
 
 # if & switch
 | <if>     ::= "if(" <ex0> ')' <body> { "elif(" <ex0> ')' <body> } [ "else" <body> | eps ]
-| <switch> ::= "switch(" <ex0> "){" { "case" <ex0> ':' {<statement>} } [ "default:"{<statement>} | eps ] '}'
+| <switch> ::= "switch(" <ex0> "){" { "case" <ex0> ':' {<statement>} } [ "default:" {<statement>} | eps ] '}'
 
 # loops
-| <loop>         ::= "loop" <loop-type>
-| <loop-type>    ::= <loop-while> | <loop-foreach> | <loop-for>
+| <loop>         ::= "loop" [ <loop-while> | <loop-foreach> | <loop-for> ]
 | <loop-while>   ::= '(' <ex0> ')' <body>
-| <loop-foreach> ::= '(' <id> ',' <ex0> ')' <body>
-| <loop-for>     ::= '(' [ <ex0> | <vars-mdef> | eps ] ',' [ <ex0> | eps ] ',' [ <ex0> | eps ] ')' <body>
+| <loop-foreach> ::= '(' <id> ';' <ex0> ')' <body>
+| <loop-for>     ::= '(' [ <ex0> | <vars-mdef> | eps ] ';' [ <ex0> | eps ] ';' [ <ex0> | eps ] ')' <body>
