@@ -19,10 +19,10 @@
 
 # expressions & statements
 | <term>           ::= <id> | <literal> | '('<expr>')'
-| <expr>           ::= <term><opt-space>[<math-operator> | <logical-operator>]<opt-space><term> | <identificator><opt-space>[<assign-operator>]<opt-space><term> | 
+| <expr>           ::= <term><opt-space>[<math-operator> | <logical-operator>]<opt-space><term> | <identificator><opt-space>[<assignment-operator>]<opt-space><term> | 
 |		               <unary-operator><term> | ["++" | "--"]<identificator> | <identificator>["++" | "--"] | <expr><opt-space>','<opt-space><expr>
-| <statement>      ::= <variables-multidefinition><opt-space>';' | <expr><opt-space>';' | <if> | <switch><opt-space>';' | <loop> | <function-call><opt-space>';' | eps
-| <branching-body> ::= '{'{<statement>}'}'
+| <statement>      ::= <variables-multidefinition><opt-space>';' | <expr><opt-space>';' | <if> | <switch><opt-space>';' | <loop> | <function-call><opt-space>';' | "break"<opt-space>';' | "continue"<opt-space>';' | eps
+| <body> ::= '{'{<statement>}'}'
 
 # literals
 | <number>  ::= <digit><number> | <digit>
@@ -33,7 +33,7 @@
 | <unary-operator>   ::= '!' | '*' | '&'
 | <math-operator>    ::= '+' | '-' | '*' | '/' | '|' | '&' | '^'
 | <logical-operator> ::= '>' | '<' | "==" | "!="
-| <assign-operator>  ::= '=' | "+=" | "-=" | "*=" | "/=" | "|=" | "&=" | "^="
+| <assignment-operator>  ::= '=' | "+=" | "-=" | "*=" | "/=" | "|=" | "&=" | "^="
 
 # variables
 | <variables-multidefinition> ::= <type><space><variables>
@@ -41,21 +41,21 @@
 | <variable-definition>       ::= <id> | <id><opt-space>=<opt-space><expr>
 
 # functions
-| <function>      ::= <type><space><id><opt-space>([<arguments> | void | eps])<opt-space>[<function-body> | ';']
+| <function>      ::= <type><space><id><opt-space>([<arguments> | void | eps])<opt-space>[<body> | ';']
 | <arguments>     ::= <type><space><id> | <type><space><id>,<opt-space><arguments>
-| <function-body> ::= '{'{[<statement> | "break"<opt-space>';' | "continue"<opt-space>';']}'}'
+| <body> ::= '{'{<statement>}'}'
 | <function-call> ::= <id>'('<opt-space>[<arguments> | eps]<opt-space>')'
 
 # if & switch
-| <if>     ::= "if"<opt-space>'('<expr>')'<opt-space><branching-body>{<opt-space>"elif"<branching-body>'('<expr>')'<opt-space><branching-body><opt-space>}[<opt-space>"else"<opt-space><branching-body><opt-space> | eps]
+| <if>     ::= "if"<opt-space>'('<expr>')'<opt-space><body>{<opt-space>"elif"<body>'('<expr>')'<opt-space><body><opt-space>}[<opt-space>"else"<opt-space><body><opt-space> | eps]
 | <switch> ::= "switch"<opt-space>'('<opt-space><expr><opt-space>')'<opt-space>'{'{"case"<space><expr><opt-space>':'{<opt-space><statement><opt-space>}}["default:"{<opt-space><statement><opt-space>} | eps]'}'
 
 # loops
 | <loop>         ::= "loop"<opt-space><loop-type>
 | <loop-type>    ::= <loop-while> | <loop-foreach> | <loop-for>
-| <loop-while>   ::= '('<opt-space><expr><opt-space>')'<opt-space><branching-body>
-| <loop-foreach> ::= '('<opt-space><id><opt-space>','<opt-space><expr><opt-space>')'<opt-space><branching-body>
-| <loop-for>     ::= '('<opt-space>[<expr> | <variables-multidefinition> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>')'<opt-space><branching-body>
+| <loop-while>   ::= '('<opt-space><expr><opt-space>')'<opt-space><body>
+| <loop-foreach> ::= '('<opt-space><id><opt-space>','<opt-space><expr><opt-space>')'<opt-space><body>
+| <loop-for>     ::= '('<opt-space>[<expr> | <variables-multidefinition> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>','<opt-space>[<expr> | eps]<opt-space>')'<opt-space><body>
 
 # comments
 | <comment> ::= "//"{<symbol>}"\n" | "/*"{[<symbol> | "\n"]}"*/"
