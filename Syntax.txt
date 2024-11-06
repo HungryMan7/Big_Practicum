@@ -1,7 +1,5 @@
 # main body
-| <program>          ::= <preprocessing>{<global-statement>}
-| <preprocessing>    ::= {"#include"'<'<string>'>'"\n"}
-| <global-statement> ::= <variables-multidefinition>';' | <function> | <comment>
+| <program> ::= { [ <vars-mdef>';' | <func> ] }
 
 # symbols
 | <letter> ::= 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'|
@@ -10,14 +8,14 @@
 
 # type & id
 | <type> ::= "int" | "double" | "bool" | "char" | "array" | "string"
-| <id>   ::= <letter>{<letter>|<digit>}
+| <id>   ::= <letter> { [ <letter> | <digit> ] }
 
 # expressions & statements
-| <term>           ::= <id> | <literal> | '('<expr>')'
-| <expr>           ::= <term>[<math-operator> | <logical-operator>]<term> | <id>[<assignment-operator>]<term> | 
-|		               <unary-operator><term> | ["++" | "--"]<id> | <id>["++" | "--"] | <expr>','<expr>
-| <statement>      ::= <variables-multidefinition>';' | <expr>';' | <if> | <switch>';' | <loop> | <function-call>';' | "break"';' | "continue"';' | eps
-| <body>           ::= '{'{<statement>}'}'
+| <term>      ::= <id> | <literal> | '(' <expr> ')'
+| <expr>      ::= <term> [ <math-op> | <log-op> ] <term> | <id> <ass-op> <term> | 
+|		          <unary-op> <term> | [ "++" | "--" ] <id> | <id> [ "++" | "--" ] | <expr> ',' <expr>
+| <statement> ::= <vars-mdef> ';' | <expr> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break;" | "continue;" | eps
+| <body>      ::= '{' { <statement> } '}'
 
 # literals
 | <number>  ::= <digit><number> | <digit>
@@ -25,28 +23,28 @@
 | <literal> ::= <number> | <string>
 
 # operators
-| <unary-operator>       ::= '!' | '*' | '&'
-| <math-operator>        ::= '+' | '-' | '*' | '/' | '|' | '&' | '^'
-| <logical-operator>     ::= '>' | '<' | "==" | "!="
-| <assignment-operator>  ::= '=' | "+=" | "-=" | "*=" | "/=" | "|=" | "&=" | "^="
+| <unary-op> ::= '!' | '*' | '&'
+| <math-op>  ::= '+' | '-' | '*' | '/' | '|' | '&' | '^'
+| <log-op>   ::= '>' | '<' | "==" | "!="
+| <ass-op>   ::= '=' | "+=" | "-=" | "*=" | "/=" | "|=" | "&=" | "^="
 
-# variables
-| <variables-multidefinition> ::= <type><variables>
-| <variables>                 ::= <variable-definition> | <variable-definition>,<variables>
-| <variable-definition>       ::= <id> | <id>=<expr>
+# vars
+| <vars-mdef> ::= <type> <vars>
+| <vars>      ::= <var-def> | <var-def> ',' <vars>
+| <var-def>   ::= <id> | <id>=<expr>
 
-# functions
-| <function>      ::= <type><id>([<arguments> | void | eps])[<body> | ';']
-| <arguments>     ::= <type><id> | <type><id>,<arguments>
-| <function-call> ::= <id>'('[<arguments> | eps]')'
+# funcs
+| <func>      ::= <type> <id> '(' [ <arguments> | void | eps ] ')' [ <body> | ';' ]
+| <arguments> ::= <type> <id> | <type> <id> ',' <arguments>
+| <func-call> ::= <id> '(' [ <arguments> | eps ] ')'
 
 # if & switch
-| <if>     ::= "if"'('<expr>')'<body>{"elif"<body>'('<expr>')'<body>}["else"<body> | eps]
-| <switch> ::= "switch"'('<expr>')''{'{"case"<expr>':'{<statement>}}["default:"{<statement>} | eps]'}'
+| <if>     ::= "if(" <expr> ')' <body> { "elif(" <expr> ')' <body> } [ "else" <body> | eps ]
+| <switch> ::= "switch(" <expr> "){" { "case" <expr> ':' {<statement>} } [ "default:"{<statement>} | eps ] '}'
 
 # loops
-| <loop>         ::= "loop"<loop-type>
+| <loop>         ::= "loop" <loop-type>
 | <loop-type>    ::= <loop-while> | <loop-foreach> | <loop-for>
-| <loop-while>   ::= '('<expr>')'<body>
-| <loop-foreach> ::= '('<id>','<expr>')'<body>
-| <loop-for>     ::= '('[<expr> | <variables-multidefinition> | eps]','[<expr> | eps]','[<expr> | eps]')'<body>
+| <loop-while>   ::= '(' <expr> ')' <body>
+| <loop-foreach> ::= '(' <id> ',' <expr> ')' <body>
+| <loop-for>     ::= '(' [ <expr> | <vars-mdef> | eps ] ',' [ <expr> | eps ] ',' [ <expr> | eps ] ')' <body>
