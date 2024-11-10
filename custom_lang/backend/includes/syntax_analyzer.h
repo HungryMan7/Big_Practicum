@@ -1,14 +1,10 @@
 #pragma once
 #include "lexical_analyzer.h"
-#include <iostream>
-#include <string>
-#include <vector>
 
 class SyntaxAnalyzer {
     public:
         SyntaxAnalyzer(std::string file_name);
         virtual ~SyntaxAnalyzer();
-        void ReadFile(std::string file_name);
         void Analyze();
 
         /* setters */

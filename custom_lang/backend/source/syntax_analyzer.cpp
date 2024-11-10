@@ -1,29 +1,14 @@
 #include "../includes/syntax_analyzer.h"
 
 SyntaxAnalyzer::SyntaxAnalyzer(std::string file_name) {
+    LexicalAnalyzer* la = new LexicalAnalyzer(file_name);
+    la->SetLanguage("custom_lang/resources/lang.txt");
+    la->Analyze();
+    list_of_lexems_ = la->GetLexems();
 }
 
-/*SyntaxAnalyzer::~SyntaxAnalyzer() {
-    delete program_;
-}
+SyntaxAnalyzer::~SyntaxAnalyzer() {
 
-void SyntaxAnalyzer::ReadFile(std::string file_name) {
-    std::ifstream file;
-    try {
-        file.open(file_name, std::ifstream::binary);
-    }
-    catch (const std::exception& e) {
-        std::cout << "ERROR! " << e.what() << "\n";
-    }
-    int text_size;
-    file.seekg(0, file.end);
-    text_size = (int)file.tellg();
-    file.seekg(0, file.beg);
-    program_ = new char[text_size];
-    file.read(program_, text_size);
-    file.close();
-    iter_ = program_;
-    file_size_ = text_size;
 }
 
 void SyntaxAnalyzer::GetLex() {
@@ -33,7 +18,7 @@ void SyntaxAnalyzer::GetLex() {
 }
 
 void SyntaxAnalyzer::START() {
-      nothing 
+
 }
 
 void SyntaxAnalyzer::EXP_ZERO() {
@@ -50,7 +35,7 @@ void SyntaxAnalyzer::EXP_ONE() {
         while (lexem_.GetValue() == "+=" || lexem_.GetValue() == "-=" || lexem_.GetValue() == "*=" || lexem_.GetValue() == "/=" ||
             lexem_.GetValue() == "%=" || lexem_.GetValue() == "=") {
             GetLex();
-            if (lexem_.GetType() != LexemType::Identifier) throw "expected ID, found " + ;
+            if (lexem_.GetType() != LexemType::Identifier) throw "expected ID, found " + lexem_.GetValue();
         }
     }
     else {
@@ -113,4 +98,4 @@ void SyntaxAnalyzer::EXP_FOURTEEN() {
 void SyntaxAnalyzer::Analyze() {
     GetLex();
     START();
-}*/
+}
