@@ -17,7 +17,7 @@
 | <body>      ::= '{' { <statement> } '}'
 
 # literals
-| <number>  ::= <digit><number> | <digit>
+| <number>  ::= <digit> <number> | <digit>
 | <string>  ::= {letter}
 | <literal> ::= <number> | <string>
 
@@ -49,8 +49,8 @@
 | <func-call> ::= <id> '(' [ <arguments> | eps ] ')'
 
 # if & switch
-| <if>     ::= "if(" <ex0> ')' <body> { "elif(" <ex0> ')' <body> } [ "else" <body> | eps ]
-| <switch> ::= "switch(" <ex0> "){" { "case" <ex0> ':' {<statement>} } [ "default:" {<statement>} | eps ] '}'
+| <if>     ::= "if" '(' <ex0> ')' <body> { "elif" '(' <ex0> ')' <body> } [ "else" <body> | eps ]
+| <switch> ::= "switch" '(' <ex0> ')' '{' { "case" <ex0> ':' {<statement>} } [ "default:" {<statement>} | eps ] '}'
 
 # loops
 | <loop>         ::= "loop" [ <loop-while> | <loop-foreach> | <loop-for> ]
