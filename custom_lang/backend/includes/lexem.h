@@ -1,6 +1,6 @@
 #include <iostream>
 
-enum class LexemType { Identifier, Utility, Operator, Literal, Comment, Error, Empty };
+enum class LexemType { Identifier, Utility, Operator, Integer, Float, String, Brackets, Separator, Error };
 
 class Lexem {
 public:
