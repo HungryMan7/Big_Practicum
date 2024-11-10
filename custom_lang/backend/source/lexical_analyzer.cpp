@@ -19,10 +19,10 @@ void LexicalAnalyzer::ReadFile(std::string file_name) {
     catch (const std::exception& e) {
         std::cout << "ERROR! " << e.what() << "\n";
     }
-    int text_size;
-    file.seekg(0, file.end);
-    text_size = (int)file.tellg();
-    file.seekg(0, file.beg);
+    size_t text_size;
+    file.seekg(0, std::ios::end);
+    text_size = file.tellg();
+    file.seekg(0, std::ios::beg);
     program_ = new char[text_size];
     file.read(program_, text_size);
     file.close();
@@ -50,7 +50,7 @@ std::vector<Lexem*> LexicalAnalyzer::GetLexems() {
 }
 
 void LexicalAnalyzer::GetChar() {
-    if (current_size_ == file_size_) {
+    if (current_size_ > file_size_) {
         for (auto x : list_of_lexems_) {
             std::cout << x->GetLine() << ") " << x->GetValue() << " => ";
             switch (x->GetType()) {
@@ -92,7 +92,7 @@ void LexicalAnalyzer::GetChar() {
 
             }
         }
-        exit(0);
+        return;
     }
     symbol_ = *iter_;
     ++iter_;
@@ -125,8 +125,8 @@ void LexicalAnalyzer::H() {
         GetChar();
         SPR();
     }
-    else if (symbol_ == '{' || symbol_ == '}' || symbol_ == '<' || symbol_ == '>'
-        || symbol_ == '(' || symbol_ == ')' || symbol_ == '[' || symbol_ == ']') {
+    else if (symbol_ == '{' || symbol_ == '}' || symbol_ == '(' || symbol_ == ')' || 
+             symbol_ == '[' || symbol_ == ']') {
         current_lexem_.push_back(symbol_);
         GetChar();
         BRK();
@@ -143,7 +143,8 @@ void LexicalAnalyzer::H() {
         GetChar();
         SPC();
     }
-    else if (current_size_ == file_size_) {
+    else if (current_size_ > file_size_) {
+        GetChar();
         return;
     }
     else {

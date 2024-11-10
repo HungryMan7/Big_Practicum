@@ -1,12 +1,10 @@
 #include <iostream>
 #include <vector>
 
-#include "Bor.h"
-#include "Lexem.h"
-#include "LexicalAnalyzer.h"
+#include "backend/includes/lexical_analyzer.h"
 
 int main() {
-    LexicalAnalyzer* la = new LexicalAnalyzer("program.txt");
-    la->SetLanguage("lang.txt");
+    LexicalAnalyzer* la = new LexicalAnalyzer("custom_lang/resources/program.txt");
+    la->SetLanguage("custom_lang/resources/lang.txt");
     la->Analyze();
 }

@@ -1,2 +1,15 @@
-while
-for
+if
+elif
+else
+switch
+case
+default
+break
+continue
+loop
+int
+float
+bool
+char
+string
+array

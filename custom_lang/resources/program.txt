@@ -1,4 +1,11 @@
-for
-abc #x
-"fr" #no
-while + - == >=
+int main() {
+	loop (x) {
+		switch(y) {
+			case bebra:
+				kakashki;
+			default:
+				saki;
+		}
+		--x;
+	}
+}

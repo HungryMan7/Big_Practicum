@@ -6,6 +6,7 @@ file(GLOB ALL_FILES
      custom_lang/*.cpp
 	 custom_lang/backend/includes/*.h
 	 custom_lang/backend/source/*.cpp
+	 custom_lang/backend/resources/*.txt
 )
 
 add_executable (main ${ALL_FILES})
