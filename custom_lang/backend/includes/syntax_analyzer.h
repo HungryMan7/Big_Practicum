@@ -1,6 +1,5 @@
 #pragma once
-#include "LexicalAnalyzer.h"
-#include "Lexem.h"
+#include "lexical_analyzer.h"
 #include <iostream>
 #include <string>
 #include <vector>

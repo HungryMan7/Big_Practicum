@@ -1,16 +1,9 @@
-/*#include "SyntaxAnalyzer.h"
-#include "LexicalAnalyzer.h"
-#include <fstream>
+#include "../includes/syntax_analyzer.h"
 
 SyntaxAnalyzer::SyntaxAnalyzer(std::string file_name) {
-    ReadFile(file_name);
-    LexicalAnalyzer* la = new LexicalAnalyzer("Program.txt");
-    la->SetLanguage("Utilities.txt");
-    la->Analyze();
-    list_of_lexems_ = la->GetLexems();
 }
 
-SyntaxAnalyzer::~SyntaxAnalyzer() {
+/*SyntaxAnalyzer::~SyntaxAnalyzer() {
     delete program_;
 }
 
