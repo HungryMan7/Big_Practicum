@@ -6,7 +6,7 @@
 #include "LexicalAnalyzer.h"
 
 int main() {
-    LexicalAnalyzer* la = new LexicalAnalyzer("Program.txt");
-    la->SetLanguage("Utilities.txt");
+    LexicalAnalyzer* la = new LexicalAnalyzer("program.txt");
+    la->SetLanguage("lang.txt");
     la->Analyze();
 }
