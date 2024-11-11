@@ -1,4 +1,4 @@
-#include "../includes/lexical_analyzer.h"
+#include "lexical_analyzer.h"
 #include <fstream>
 
 LexicalAnalyzer::LexicalAnalyzer(std::string file_name) {
@@ -19,10 +19,10 @@ void LexicalAnalyzer::ReadFile(std::string file_name) {
     catch (const std::exception& e) {
         std::cout << "ERROR! " << e.what() << "\n";
     }
-    size_t text_size;
-    file.seekg(0, std::ios::end);
-    text_size = file.tellg();
-    file.seekg(0, std::ios::beg);
+    int text_size;
+    file.seekg(0, file.end);
+    text_size = (int)file.tellg();
+    file.seekg(0, file.beg);
     program_ = new char[text_size];
     file.read(program_, text_size);
     file.close();
@@ -50,8 +50,8 @@ std::vector<Lexem*> LexicalAnalyzer::GetLexems() {
 }
 
 void LexicalAnalyzer::GetChar() {
-    if (current_size_ > file_size_) {
-        for (auto x : list_of_lexems_) {
+    if (current_size_ == file_size_ + 1) {
+        /*for (auto x : list_of_lexems_) {
             std::cout << x->GetLine() << ") " << x->GetValue() << " => ";
             switch (x->GetType()) {
             case LexemType::Identifier:
@@ -86,12 +86,16 @@ void LexicalAnalyzer::GetChar() {
                 std::cout << "separator" << "\n";
                 break;
 
+            case LexemType::Logic:
+                std::cout << "logical operator";
+                break;
+
             case LexemType::Error:
                 std::cout << "wrong lexem" << "\n";
                 break;
 
             }
-        }
+        }*/
         return;
     }
     symbol_ = *iter_;
@@ -115,7 +119,8 @@ void LexicalAnalyzer::H() {
         STR();
     }
     else if (symbol_ == '+' || symbol_ == '-' || symbol_ == '*' || symbol_ == '/' || symbol_ == '%'
-        || symbol_ == '=' || symbol_ == '>' || symbol_ == '<' || symbol_ == '!') { /* case sign */
+        || symbol_ == '=' || symbol_ == '>' || symbol_ == '<' || symbol_ == '!' || symbol_ == '^' 
+        || symbol_ == '&' || symbol_ == '|') { /* case sign */
         current_lexem_.push_back(symbol_);
         GetChar();
         SIGN();
@@ -125,8 +130,7 @@ void LexicalAnalyzer::H() {
         GetChar();
         SPR();
     }
-    else if (symbol_ == '{' || symbol_ == '}' || symbol_ == '(' || symbol_ == ')' || 
-             symbol_ == '[' || symbol_ == ']') {
+    else if (symbol_ == '{' || symbol_ == '}' || symbol_ == '(' || symbol_ == ')' || symbol_ == '[' || symbol_ == ']') {
         current_lexem_.push_back(symbol_);
         GetChar();
         BRK();
@@ -143,7 +147,7 @@ void LexicalAnalyzer::H() {
         GetChar();
         SPC();
     }
-    else if (current_size_ > file_size_) {
+    else if (current_size_ == file_size_ + 1) {
         GetChar();
         return;
     }
@@ -318,9 +322,44 @@ void LexicalAnalyzer::BRK() {
 
 void LexicalAnalyzer::SIGN() {
     if (symbol_ == '=') {
+        if (current_lexem_ != "++" && current_lexem_ != "--") {
+            current_lexem_.push_back(symbol_);
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            GetChar();
+            H();
+        }
+        else {
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            H();
+        }
+    }
+    else if (symbol_ == '&' && current_lexem_ == "&") {
         current_lexem_.push_back(symbol_);
         Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Operator);
+        new_lexem->SetType(LexemType::Logic);
+        new_lexem->SetLine(line_number_);
+        line_number_ = current_line_number_;
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        GetChar();
+        H();
+    }
+    else if (symbol_ == '|' && current_lexem_ == "|") {
+        current_lexem_.push_back(symbol_);
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Logic);
         new_lexem->SetLine(line_number_);
         line_number_ = current_line_number_;
         new_lexem->SetValue(current_lexem_);
@@ -343,27 +382,55 @@ void LexicalAnalyzer::SIGN() {
     }
     else if (symbol_ == '>' && current_lexem_ == ">") {
         current_lexem_.push_back(symbol_);
-        Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Operator);
-        new_lexem->SetLine(line_number_);
-        line_number_ = current_line_number_;
-        new_lexem->SetValue(current_lexem_);
-        list_of_lexems_.push_back(new_lexem);
-        current_lexem_.clear();
         GetChar();
-        H();
+        if (symbol_ != '=') {
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            H();
+        }
+        else {
+            current_lexem_.push_back(symbol_);
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            GetChar();
+            H();
+        }
     }
     else if (symbol_ == '<' && current_lexem_ == "<") {
         current_lexem_.push_back(symbol_);
-        Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Operator);
-        new_lexem->SetLine(line_number_);
-        line_number_ = current_line_number_;
-        new_lexem->SetValue(current_lexem_);
-        list_of_lexems_.push_back(new_lexem);
-        current_lexem_.clear();
         GetChar();
-        H();
+        if (symbol_ != '=') {
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            H();
+        }
+        else {
+            current_lexem_.push_back(symbol_);
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            GetChar();
+            H();
+        }
     }
     else if (symbol_ == '-' && current_lexem_ == "-") {
         current_lexem_.push_back(symbol_);
