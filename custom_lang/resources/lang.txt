@@ -13,3 +13,4 @@ bool
 char
 string
 array
+void

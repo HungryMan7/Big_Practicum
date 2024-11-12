@@ -1,11 +1,3 @@
-int main() {
-	loop (x) {
-		switch(y) {
-			case bebra:
-				kakashki;
-			default:
-				saki;
-		}
-		--x;
-	}
+int test(int l, int r) {
+	break;
 }
