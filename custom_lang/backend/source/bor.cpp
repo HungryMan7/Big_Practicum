@@ -1,4 +1,4 @@
-#include "bor.h"
+#include "../includes/bor.h"
 
 #include <iostream>
 #include <fstream>

@@ -1,4 +1,4 @@
-#include "lexical_analyzer.h"
+#include "../includes/lexical_analyzer.h"
 #include <fstream>
 
 LexicalAnalyzer::LexicalAnalyzer(std::string file_name) {

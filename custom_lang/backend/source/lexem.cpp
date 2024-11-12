@@ -1,4 +1,4 @@
-#include "lexem.h"
+#include "../includes/lexem.h"
 #include <string>
 
 void Lexem::SetType(LexemType type) {
@@ -11,6 +11,10 @@ void Lexem::SetValue(std::string value) {
 
 void Lexem::SetLine(int line) {
     line_ = line;
+}
+
+void Lexem::SetColumn(int column) {
+    column_ = column;
 }
 
 LexemType Lexem::GetType() {
@@ -70,4 +74,8 @@ std::string Lexem::GetValue() {
 
 int Lexem::GetLine() {
     return line_;
+}
+
+int Lexem::GetColumn() {
+    return column_;
 }

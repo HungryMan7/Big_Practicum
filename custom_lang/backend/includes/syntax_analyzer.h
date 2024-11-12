@@ -15,7 +15,6 @@ private:
     void GetLex();
     void PROGRAM();
     void VARS_MDEF();
-    void VARS();
     void FUNC();
     void BODY();
     void STATEMENT();
@@ -23,6 +22,8 @@ private:
     void IF();
     void LOOP();
     void SWITCH();
+    void ID();
+    void TERM();
     void EXP_ZERO();
     void EXP_ONE();
     void EXP_TWO();
