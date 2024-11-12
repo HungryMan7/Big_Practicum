@@ -1,4 +1,4 @@
-### Language grammatics
+### Language syntax
 ```
 main body
 | <program> ::= { [ <vars-mdef>';' | <func> ] }
