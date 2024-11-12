@@ -51,8 +51,8 @@ std::vector<Lexem*> LexicalAnalyzer::GetLexems() {
 
 void LexicalAnalyzer::GetChar() {
     if (current_size_ == file_size_ + 1) {
-        /*for (auto x : list_of_lexems_) {
-            std::cout << x->GetLine() << ") " << x->GetValue() << " => ";
+        for (auto x : list_of_lexems_) {
+            std::cout << x->GetLine() << " line, " << x->GetColumn() - 1 << " symbol: " << x->GetValue() << " => ";
             switch (x->GetType()) {
             case LexemType::Identifier:
                 std::cout << "identifier" << "\n";
@@ -87,7 +87,11 @@ void LexicalAnalyzer::GetChar() {
                 break;
 
             case LexemType::Logic:
-                std::cout << "logical operator";
+                std::cout << "logical operator" << "\n";
+                break;
+
+            case LexemType::Type:
+                std::cout << "type" << "\n";
                 break;
 
             case LexemType::Error:
@@ -95,12 +99,13 @@ void LexicalAnalyzer::GetChar() {
                 break;
 
             }
-        }*/
+        }
         return;
     }
     symbol_ = *iter_;
     ++iter_;
     ++current_size_;
+    ++current_column_number_;
 }
 
 void LexicalAnalyzer::H() {
@@ -138,6 +143,7 @@ void LexicalAnalyzer::H() {
     else if (symbol_ == '\n') {
         if (symbol_ == '\n') {
             ++current_line_number_;
+            current_column_number_ = 1;
             ++line_number_;
         }
         GetChar();
@@ -167,7 +173,13 @@ void LexicalAnalyzer::ID() {
     else {
         Lexem* new_lexem = new Lexem;
         if (bor_->FindString(current_lexem_)) {
-            new_lexem->SetType(LexemType::Utility);
+            if (current_lexem_ == "int" || current_lexem_ == "double" || current_lexem_ == "bool" ||
+                current_lexem_ == "char" || current_lexem_ == "array" || current_lexem_ == "string") {
+                new_lexem->SetType(LexemType::Type);
+            }
+            else {
+                new_lexem->SetType(LexemType::Utility);
+            }
             new_lexem->SetLine(line_number_);
             line_number_ = current_line_number_;
         }
@@ -177,6 +189,7 @@ void LexicalAnalyzer::ID() {
             line_number_ = current_line_number_;
         }
         new_lexem->SetValue(current_lexem_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         list_of_lexems_.push_back(new_lexem);
         current_lexem_.clear();
         H();
@@ -203,10 +216,12 @@ void LexicalAnalyzer::INT() {
             new_lexem->SetLine(line_number_);
             new_lexem->SetValue(current_lexem_);
             list_of_lexems_.push_back(new_lexem);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size() - 1);
             current_lexem_.clear();
             new_lexem = new Lexem;
             new_lexem->SetType(LexemType::Separator);
             new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(1);
             line_number_ = current_line_number_;
             new_lexem->SetValue(".");
             list_of_lexems_.push_back(new_lexem);
@@ -217,6 +232,7 @@ void LexicalAnalyzer::INT() {
         Lexem* new_lexem = new Lexem;
         new_lexem->SetType(LexemType::Integer);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         line_number_ = current_line_number_;
         new_lexem->SetValue(current_lexem_);
         list_of_lexems_.push_back(new_lexem);
@@ -236,6 +252,7 @@ void LexicalAnalyzer::FLOAT() {
         new_lexem->SetType(LexemType::Float);
         new_lexem->SetValue(current_lexem_);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         line_number_ = current_line_number_;
         list_of_lexems_.push_back(new_lexem);
         current_lexem_.clear();
@@ -249,6 +266,7 @@ void LexicalAnalyzer::STR() {
         new_lexem->SetType(LexemType::Error);
         new_lexem->SetValue(current_lexem_);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         line_number_ = current_line_number_;
         list_of_lexems_.push_back(new_lexem);
         current_lexem_.clear();
@@ -258,6 +276,7 @@ void LexicalAnalyzer::STR() {
         Lexem* new_lexem = new Lexem;
         new_lexem->SetType(LexemType::String);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         line_number_ = current_line_number_;
         new_lexem->SetValue(current_lexem_);
         list_of_lexems_.push_back(new_lexem);
@@ -279,6 +298,7 @@ void LexicalAnalyzer::SPR() {
             Lexem* new_lexem = new Lexem;
             new_lexem->SetType(LexemType::Separator);
             new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
             line_number_ = current_line_number_;
             new_lexem->SetValue(current_lexem_);
             list_of_lexems_.push_back(new_lexem);
@@ -290,6 +310,7 @@ void LexicalAnalyzer::SPR() {
             Lexem* new_lexem = new Lexem;
             new_lexem->SetType(LexemType::Separator);
             new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
             line_number_ = current_line_number_;
             new_lexem->SetValue(current_lexem_);
             list_of_lexems_.push_back(new_lexem);
@@ -301,6 +322,7 @@ void LexicalAnalyzer::SPR() {
         Lexem* new_lexem = new Lexem;
         new_lexem->SetType(LexemType::Separator);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         line_number_ = current_line_number_;
         new_lexem->SetValue(current_lexem_);
         list_of_lexems_.push_back(new_lexem);
@@ -313,6 +335,7 @@ void LexicalAnalyzer::BRK() {
     Lexem* new_lexem = new Lexem;
     new_lexem->SetType(LexemType::Brackets);
     new_lexem->SetLine(line_number_);
+    new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
     line_number_ = current_line_number_;
     new_lexem->SetValue(current_lexem_);
     list_of_lexems_.push_back(new_lexem);
@@ -322,33 +345,23 @@ void LexicalAnalyzer::BRK() {
 
 void LexicalAnalyzer::SIGN() {
     if (symbol_ == '=') {
-        if (current_lexem_ != "++" && current_lexem_ != "--") {
-            current_lexem_.push_back(symbol_);
-            Lexem* new_lexem = new Lexem;
-            new_lexem->SetType(LexemType::Operator);
-            new_lexem->SetLine(line_number_);
-            line_number_ = current_line_number_;
-            new_lexem->SetValue(current_lexem_);
-            list_of_lexems_.push_back(new_lexem);
-            current_lexem_.clear();
-            GetChar();
-            H();
-        }
-        else {
-            Lexem* new_lexem = new Lexem;
-            new_lexem->SetType(LexemType::Operator);
-            new_lexem->SetLine(line_number_);
-            new_lexem->SetValue(current_lexem_);
-            list_of_lexems_.push_back(new_lexem);
-            current_lexem_.clear();
-            H();
-        }
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Operator);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        current_lexem_ += "=";
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        GetChar();
+        H();
     }
     else if (symbol_ == '&' && current_lexem_ == "&") {
         current_lexem_.push_back(symbol_);
         Lexem* new_lexem = new Lexem;
         new_lexem->SetType(LexemType::Logic);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
         line_number_ = current_line_number_;
         new_lexem->SetValue(current_lexem_);
         list_of_lexems_.push_back(new_lexem);
@@ -361,6 +374,7 @@ void LexicalAnalyzer::SIGN() {
         Lexem* new_lexem = new Lexem;
         new_lexem->SetType(LexemType::Logic);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
         line_number_ = current_line_number_;
         new_lexem->SetValue(current_lexem_);
         list_of_lexems_.push_back(new_lexem);
@@ -373,6 +387,7 @@ void LexicalAnalyzer::SIGN() {
         Lexem* new_lexem = new Lexem;
         new_lexem->SetType(LexemType::Operator);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
         line_number_ = current_line_number_;
         new_lexem->SetValue(current_lexem_);
         list_of_lexems_.push_back(new_lexem);
@@ -387,6 +402,7 @@ void LexicalAnalyzer::SIGN() {
             Lexem* new_lexem = new Lexem;
             new_lexem->SetType(LexemType::Operator);
             new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
             line_number_ = current_line_number_;
             new_lexem->SetValue(current_lexem_);
             list_of_lexems_.push_back(new_lexem);
@@ -398,6 +414,7 @@ void LexicalAnalyzer::SIGN() {
             Lexem* new_lexem = new Lexem;
             new_lexem->SetType(LexemType::Operator);
             new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
             line_number_ = current_line_number_;
             new_lexem->SetValue(current_lexem_);
             list_of_lexems_.push_back(new_lexem);
@@ -413,6 +430,7 @@ void LexicalAnalyzer::SIGN() {
             Lexem* new_lexem = new Lexem;
             new_lexem->SetType(LexemType::Operator);
             new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
             line_number_ = current_line_number_;
             new_lexem->SetValue(current_lexem_);
             list_of_lexems_.push_back(new_lexem);
@@ -424,6 +442,7 @@ void LexicalAnalyzer::SIGN() {
             Lexem* new_lexem = new Lexem;
             new_lexem->SetType(LexemType::Operator);
             new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
             line_number_ = current_line_number_;
             new_lexem->SetValue(current_lexem_);
             list_of_lexems_.push_back(new_lexem);
@@ -437,6 +456,7 @@ void LexicalAnalyzer::SIGN() {
         Lexem* new_lexem = new Lexem;
         new_lexem->SetType(LexemType::Operator);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
         line_number_ = current_line_number_;
         new_lexem->SetValue(current_lexem_);
         list_of_lexems_.push_back(new_lexem);
@@ -459,6 +479,7 @@ void LexicalAnalyzer::SIGN() {
         new_lexem->SetType(LexemType::Operator);
         new_lexem->SetValue(current_lexem_);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         line_number_ = current_line_number_;
         list_of_lexems_.push_back(new_lexem);
         current_lexem_.clear();
@@ -491,13 +512,16 @@ void LexicalAnalyzer::COM_MANY() {
         new_lexem->SetType(LexemType::Error);
         new_lexem->SetValue(current_lexem_);
         new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         line_number_ = current_line_number_;
         list_of_lexems_.push_back(new_lexem);
         current_lexem_.clear();
         H();
     }
     else {
-        if (symbol_ == '\n') ++current_line_number_;
+        if (symbol_ == '\n') {
+            ++current_line_number_;
+        }
         current_lexem_.push_back(symbol_);
         GetChar();
         COM_MANY();

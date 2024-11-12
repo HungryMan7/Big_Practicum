@@ -13,6 +13,10 @@ void Lexem::SetLine(int line) {
     line_ = line;
 }
 
+void Lexem::SetColumn(int column) {
+    column_ = column;
+}
+
 LexemType Lexem::GetType() {
     return type_;
 }
@@ -55,9 +59,14 @@ std::string Lexem::GetLexemType() {
         return "logical operator";
         break;
 
+    case LexemType::Type:
+        return "type";
+        break;
+
     case LexemType::Error:
         return "wrong lexem";
         break;
+
     default:
         return "nothing";
         break;
@@ -70,4 +79,8 @@ std::string Lexem::GetValue() {
 
 int Lexem::GetLine() {
     return line_;
+}
+
+int Lexem::GetColumn() {
+    return column_;
 }
