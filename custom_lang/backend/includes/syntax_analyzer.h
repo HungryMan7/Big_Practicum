@@ -37,6 +37,7 @@ private:
     void EXP_FOURTEEN();
     Lexem* lexem_;
     int lex_index_ = 0;
+    LexicalAnalyzer* la;
     std::vector<Lexem*> list_of_lexems_;
 };
 
