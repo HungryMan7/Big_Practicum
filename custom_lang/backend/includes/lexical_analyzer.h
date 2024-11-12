@@ -35,6 +35,7 @@ private:
     char* program_, *iter_;
     int file_size_, current_size_ = 0;
     int line_number_ = 1, current_line_number_ = 1;
+    int current_column_number_ = 1;
     Bor* bor_;
     std::vector<Lexem*> list_of_lexems_;
     char symbol_;
