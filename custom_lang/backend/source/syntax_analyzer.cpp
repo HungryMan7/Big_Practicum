@@ -2,15 +2,14 @@
 #include <fstream>
 
 SyntaxAnalyzer::SyntaxAnalyzer(std::string file_name) {
-    LexicalAnalyzer* la = new LexicalAnalyzer("Program.txt");
+    la = new LexicalAnalyzer("Program.txt");
     la->SetLanguage("Utilities.txt");
     la->Analyze();
     list_of_lexems_ = la->GetLexems();
-    delete la;
 }
 
 SyntaxAnalyzer::~SyntaxAnalyzer() {
-    /* nothing */
+    delete la;
 }
 
 void SyntaxAnalyzer::GetLex() {
