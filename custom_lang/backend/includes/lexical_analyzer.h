@@ -1,7 +1,6 @@
 #pragma once
-#include <iostream>
 #include <vector>
-
+#include <string>
 #include "lexem.h"
 #include "bor.h"
 
