@@ -15,7 +15,7 @@ type & id
 expressions & statements
 | <term>      ::= <id> | <literal> | '(' <ex0> ')'
 | <expr-list> ::= [ <ex0> | <ex0> ',' <expr-list> ]
-| <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break;" | "continue;" | eps
+| <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break" ';' | "continue" ';' | eps
 | <body>      ::= '{' { <statement> } '}'
 
 literals
