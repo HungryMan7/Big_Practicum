@@ -1,4 +1,5 @@
 ### Language grammatics
+```
 main body
 | <program> ::= { [ <vars-mdef>';' | <func> ] }
 
@@ -58,3 +59,4 @@ loops
 | <loop-while>   ::= '(' <ex0> ')' <body>
 | <loop-foreach> ::= '(' <id> ';' <ex0> ')' <body>
 | <loop-for>     ::= '(' [ <ex0> | <vars-mdef> | eps ] ';' [ <ex0> | eps ] ';' [ <ex0> | eps ] ')' <body>
+```
