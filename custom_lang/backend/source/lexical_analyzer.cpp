@@ -51,7 +51,7 @@ std::vector<Lexem*> LexicalAnalyzer::GetLexems() {
 
 void LexicalAnalyzer::GetChar() {
     if (current_size_ == file_size_ + 1) {
-        for (auto x : list_of_lexems_) {
+        /*for (auto x : list_of_lexems_) {
             std::cout << x->GetLine() << " line, " << x->GetColumn() - 1 << " symbol: " << x->GetValue() << " => ";
             switch (x->GetType()) {
             case LexemType::Identifier:
@@ -99,7 +99,7 @@ void LexicalAnalyzer::GetChar() {
                 break;
 
             }
-        }
+        }*/
         return;
     }
     symbol_ = *iter_;
