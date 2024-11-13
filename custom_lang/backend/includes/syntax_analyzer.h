@@ -11,13 +11,17 @@ public:
     virtual ~SyntaxAnalyzer();
     void Analyze();
 
-    /* setters */
-
-    /* getters */
-
 private:
     void GetLex();
-    void START();
+    void PROGRAM();
+    void VARS_MDEF();
+    void FUNC();
+    void BODY();
+    void STATEMENT();
+    void FUNC_CALL();
+    void IF();
+    void LOOP();
+    void SWITCH();
     void ID();
     void TERM();
     void EXP_ZERO();
@@ -35,9 +39,8 @@ private:
     void EXP_TWELVE();
     void EXP_THIRTEEN();
     void EXP_FOURTEEN();
+    LexicalAnalyzer* la;
     Lexem* lexem_;
     int lex_index_ = 0;
-    LexicalAnalyzer* la;
     std::vector<Lexem*> list_of_lexems_;
 };
-
