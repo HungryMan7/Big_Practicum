@@ -59,9 +59,14 @@ std::string Lexem::GetLexemType() {
         return "logical operator";
         break;
 
+    case LexemType::Type:
+        return "type";
+        break;
+
     case LexemType::Error:
         return "wrong lexem";
         break;
+
     default:
         return "nothing";
         break;

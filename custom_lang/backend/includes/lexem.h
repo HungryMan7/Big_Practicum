@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-enum class LexemType { Identifier, Utility, Operator, Integer, Float, String, Brackets, Separator, Logic, Error };
+enum class LexemType { Identifier, Utility, Operator, Integer, Float, String, Brackets, Separator, Logic, Type, Error };
 
 class Lexem {
 public:
