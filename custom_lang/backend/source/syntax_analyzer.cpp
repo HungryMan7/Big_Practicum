@@ -67,6 +67,10 @@ void SyntaxAnalyzer::PROGRAM() {
 }
 
 void SyntaxAnalyzer::VARS_MDEF() {
+    if (lexem_->GetValue() == ";") {
+        GetLex();
+        return;
+    }
     if (lexem_->GetValue() == "=") {
         GetLex();
         EXP_ZERO();
