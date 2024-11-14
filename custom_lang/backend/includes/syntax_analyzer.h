@@ -21,6 +21,9 @@ private:
     void FUNC_CALL();
     void IF();
     void LOOP();
+    void LOOP_WHILE();
+    void LOOP_FOREACH();
+    void LOOP_FOR();
     void SWITCH();
     void ID();
     void TERM();
