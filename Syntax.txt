@@ -1,5 +1,5 @@
 # main body
-| <program> ::= { <vars-mdef> <func> } <type> "main" '(' ')' <body>
+| <program> ::= { <vars-mdef> <func> } "int" "main" '(' ')' <body>
 
 # symbols
 | <letter> ::= 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'|
@@ -13,7 +13,7 @@
 # expressions & statements
 | <term>      ::= <id> | <literal> | '(' <ex0> ')'
 | <expr-list> ::= [ <ex0> | <ex0> ',' <expr-list> ]
-| <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break;" | "continue;" | eps
+| <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break;" | "continue;" | <input> | <output> | eps
 | <body>      ::= '{' { <statement> } '}'
 
 # literals
@@ -42,6 +42,10 @@
 | <vars-mdef> ::= <type> <vars>
 | <vars>      ::= <var-def> | <var-def> ',' <vars>
 | <var-def>   ::= <id> | <id> '=' <ex0> | <id> "={" <expr-list> '}'
+
+# input and output
+| <output> ::= "cout" "<<" <id> | <literal> { "<<" <id> | <literal> } ';'
+| <input> ::= "cin"  ">>" <id> {">>" <id>} ';'
 
 # funcs
 | <func>      ::= <type> <id> '(' [ <arguments> | void | eps ] ')' [ <body> | ';' ]
