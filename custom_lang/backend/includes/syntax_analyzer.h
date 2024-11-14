@@ -24,6 +24,8 @@ private:
     void SWITCH();
     void ID();
     void TERM();
+    void INPUT();
+    void OUTPUT();
     void EXP_ZERO();
     void EXP_ONE();
     void EXP_TWO();
