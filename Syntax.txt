@@ -13,8 +13,8 @@
 # expressions & statements
 | <term>      ::= <id> | <literal> | '(' <ex0> ')'
 | <expr-list> ::= [ <ex0> | <ex0> ',' <expr-list> ]
-| <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break;" | "continue;" | <input> | <output> | eps
-| <body>      ::= '{' { <statement> } "return" [<ex0> | eps] ';' '}'
+| <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break" ';' | "continue" ';' | <input> | <output> | "return" | eps
+| <body>      ::= '{' { <statement> } '}'
 
 # literals
 | <number>  ::= <digit> <number> | <digit>
@@ -45,7 +45,7 @@
 
 # input and output
 | <output> ::= "cout" "<<" <id> | <literal> { "<<" <id> | <literal> } ';'
-| <input> ::= "cin"  ">>" <id> {">>" <id>} ';'
+| <input>  ::= "cin"  ">>" <id> {">>" <id>} ';'
 
 # funcs
 | <func>      ::= <type> <id> '(' [ <arguments> | void | eps ] ')' [ <body> | ';' ]
