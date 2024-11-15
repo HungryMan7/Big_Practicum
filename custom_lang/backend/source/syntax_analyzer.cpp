@@ -17,6 +17,9 @@ void SyntaxAnalyzer::GetLex() {
         lexem_ = list_of_lexems_[lex_index_];
         ++lex_index_;
     }
+    else {
+        ++lex_index_;
+    }
 }
 
 void SyntaxAnalyzer::PROGRAM() {
@@ -69,6 +72,11 @@ void SyntaxAnalyzer::PROGRAM() {
     }
     GetLex();
     BODY();
+    if (lex_index_ <= list_of_lexems_.size()) {
+        throw "line: " + std::to_string(lexem_->GetLine()) +
+            " column: " + std::to_string(lexem_->GetColumn() - 1) +
+            " expected EOF, but found " + lexem_->GetValue();
+    }
 }
 
 void SyntaxAnalyzer::VARS_MDEF() {
