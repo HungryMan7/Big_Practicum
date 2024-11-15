@@ -35,13 +35,15 @@
 | <ex10> ::= <ex5> { [ '+' | '-' ] <ex11> }
 | <ex11> ::= <ex12> { [ '*' | '/' | '%' ] <ex12> }
 | <ex12> ::= { [ '+' | '-' | '!' | "++" | "--" ] } <ex13>
-| <ex13> ::= <ex14> { [ "++" | "--" ] }
+| <ex13> ::= <ex14> { [ "++" | "--" | '[' <ex0> ']'] }
 | <ex14> ::= <id> { "::" <id> } | <term>
   
 # vars
-| <vars-mdef> ::= <type> <vars>
-| <vars>      ::= <var-def> | <var-def> ',' <vars>
-| <var-def>   ::= <id> | <id> '=' <ex0> | <id> "={" <expr-list> '}'
+| <vars-mdef>  ::= <type> <vars>
+| <vars>       ::= <var-def> | <var-def> ',' <vars>
+| <var-def>    ::= <id> | <id> '=' <ex0> | <id> "={" <expr-list> '}'
+| <var-array>  ::= <id> [';' | '=' '{' <ex0> '}' ';']
+| <var-common> ::= <var-array> | <var-def>
 
 # input and output
 | <output> ::= "cout" "<<" <id> | <literal> { "<<" <id> | <literal> } ';'
