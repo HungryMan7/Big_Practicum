@@ -58,6 +58,6 @@
 
 # loops
 | <loop>         ::= "loop" [ <loop-while> | <loop-foreach> | <loop-for> ]
-| <loop-while>   ::= '(' <ex0> ')' <body>
-| <loop-foreach> ::= '(' <id> ';' <ex0> ')' <body>
-| <loop-for>     ::= '(' [ <ex0> | <vars-mdef> | eps ] ';' [ <ex0> | eps ] ';' [ <ex0> | eps ] ')' <body>
+| <loop-while>   ::= "loop" "while" '(' <ex0> ')' <body>
+| <loop-foreach> ::= "loop" "foreach" '(' <id> ';' <ex0> ')' <body>
+| <loop-for>     ::= "loop" "for" '(' [ <ex0> | <vars-mdef> | eps ] ';' [ <ex0> | eps ] ';' [ <ex0> | eps ] ')' <body>
