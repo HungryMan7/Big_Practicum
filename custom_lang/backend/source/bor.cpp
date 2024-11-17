@@ -1,5 +1,4 @@
-#include "bor.h"
-
+#include "../includes/bor.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -19,8 +18,8 @@ Bor::Bor(std::string file_name) {
     file.close();
 }
 
-void Bor::AddString(std::string &s) {
-    Node *vertex = root;
+void Bor::AddString(std::string& s) {
+    Node* vertex = root;
     for (char symbol : s) {
         symbol -= 'a';
         if (!vertex->to[symbol]) {
@@ -31,8 +30,8 @@ void Bor::AddString(std::string &s) {
     vertex->is_terminal = true;
 }
 
-bool Bor::FindString(std::string &s) {
-    Node *vertex = root;
+bool Bor::FindString(std::string& s) {
+    Node* vertex = root;
     for (char symbol : s) {
         if (!(symbol >= 'a' && symbol <= 'z')) {
             return false;

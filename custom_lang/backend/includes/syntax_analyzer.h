@@ -15,14 +15,20 @@ private:
     void GetLex();
     void PROGRAM();
     void VARS_MDEF();
-    void VARS();
     void FUNC();
     void BODY();
     void STATEMENT();
     void FUNC_CALL();
     void IF();
     void LOOP();
+    void LOOP_WHILE();
+    void LOOP_FOR();
+    void LOOP_FOREACH();
     void SWITCH();
+    void ID();
+    void TERM();
+    void INPUT();
+    void OUTPUT();
     void EXP_ZERO();
     void EXP_ONE();
     void EXP_TWO();
@@ -43,4 +49,3 @@ private:
     int lex_index_ = 0;
     std::vector<Lexem*> list_of_lexems_;
 };
-
