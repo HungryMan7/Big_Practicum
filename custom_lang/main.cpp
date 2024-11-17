@@ -1,12 +1,11 @@
-#include <iostream>
-#include <vector>
-
-#include "Bor.h"
-#include "Lexem.h"
-#include "LexicalAnalyzer.h"
+#include "backend/includes/syntax_analyzer.h"
 
 int main() {
-    LexicalAnalyzer* la = new LexicalAnalyzer("Program.txt");
-    la->SetLanguage("Utilities.txt");
-    la->Analyze();
+    SyntaxAnalyzer* sa = new SyntaxAnalyzer("custom_lang/resources/program.txt");
+    try {
+        sa->Analyze();
+        std::cout << "OK!\n";
+    } catch (const std::string e) {
+        std::cout << e;
+    }
 }

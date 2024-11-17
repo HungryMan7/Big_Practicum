@@ -1,5 +1,6 @@
 #include "../includes/lexical_analyzer.h"
 #include <fstream>
+#include <string>
 
 LexicalAnalyzer::LexicalAnalyzer(std::string file_name) {
     bor_ = new Bor;
@@ -14,22 +15,24 @@ LexicalAnalyzer::~LexicalAnalyzer() {
 void LexicalAnalyzer::ReadFile(std::string file_name) {
     std::ifstream file;
     try {
-        file.open(file_name);
-    } catch (const std::exception& e) {
+        file.open(file_name, std::ifstream::binary);
+    }
+    catch (const std::exception& e) {
         std::cout << "ERROR! " << e.what() << "\n";
     }
-    size_t text_size;
-    file.seekg(0, std::ios::end);
-    text_size = file.tellg();
-    file.seekg(0, std::ios::beg);
+    int text_size;
+    file.seekg(0, file.end);
+    text_size = (int)file.tellg();
+    file.seekg(0, file.beg);
     program_ = new char[text_size];
     file.read(program_, text_size);
     file.close();
     iter_ = program_;
+    file_size_ = text_size;
 }
 
 void LexicalAnalyzer::Analyze() {
-    curr_lexem_.clear();
+    current_lexem_.clear();
     GetChar();
     H();
 }
@@ -44,158 +47,419 @@ Bor* LexicalAnalyzer::GetLanguage() {
 }
 
 std::vector<Lexem*> LexicalAnalyzer::GetLexems() {
-    return list_;
+    return list_of_lexems_;
 }
 
 void LexicalAnalyzer::GetChar() {
-    if (!iter_) {
-        std::cout << "EOF reached!\n";
+    if (current_size_ == file_size_ + 1) {
+        for (auto x : list_of_lexems_) {
+            if (x->GetType() == LexemType::Error) {
+                std::string error = "line " + std::to_string(x->GetColumn() - 1) + ": wrong lexem";
+                std::cout << error;
+                exit(0);
+            }
+        }
         return;
     }
-    ch_ = *iter_;
+    symbol_ = *iter_;
     ++iter_;
+    ++current_size_;
+    ++current_column_number_;
 }
 
 void LexicalAnalyzer::H() {
-    if (65 <= (int)ch_ && (int)ch_ <= 90 || 97 <= (int)ch_ && (int)ch_ <= 122 || (int)ch_ == 95) { /* case letter */
-        curr_lexem_.push_back(ch_);
+    if ('a' <= symbol_ && symbol_ <= 'z' || 'A' <= symbol_ && symbol_ <= 'Z' || symbol_ == '_') { /* case letter */
+        current_lexem_.push_back(symbol_);
         GetChar();
         ID();
-    } else if (48 <= (int)ch_ && (int)ch_ <= 57) { /* case digit */
-        curr_lexem_.push_back(ch_);
+    } else if ('0' <= symbol_ && symbol_ <= '9') { /* case digit */
+        current_lexem_.push_back(symbol_);
         GetChar();
         INT();
-    } else if ((int)ch_ == 34) { /* case " */
-        // curr_lexem_.push_back(ch_);
+    } else if (symbol_ == '"') { /* case " */
         GetChar();
         STR();
-    } else if ((int)ch_ == 35) { /* case # */
-        curr_lexem_.push_back(ch_);
-        GetChar();
-        COM();
-    } else if ((int)ch_ == 43 || (int)ch_ == 45 || (int)ch_ == 42 || (int)ch_ == 47 || (int)ch_ == 37 
-        || (int)ch_ == 61 || (int)ch_ == 62 || (int)ch_ == 60 || (int)ch_ == 33) { /* case sign */
-        curr_lexem_.push_back(ch_);
+    } else if (symbol_ == '+' || symbol_ == '-' || symbol_ == '*' || symbol_ == '/' || symbol_ == '%'
+        || symbol_ == '=' || symbol_ == '>' || symbol_ == '<' || symbol_ == '!' || symbol_ == '^'
+        || symbol_ == '&' || symbol_ == '|') { /* case sign */
+        current_lexem_.push_back(symbol_);
         GetChar();
         SIGN();
+    } else if (symbol_ == '.' || symbol_ == ',' || symbol_ == ';' || symbol_ == ':') {
+        current_lexem_.push_back(symbol_);
+        GetChar();
+        SPR();
+    } else if (symbol_ == '{' || symbol_ == '}' || symbol_ == '(' || symbol_ == ')' || symbol_ == '[' || symbol_ == ']') {
+        current_lexem_.push_back(symbol_);
+        GetChar();
+        BRK();
+    } else if (symbol_ == '\n') {
+        if (symbol_ == '\n') {
+            ++current_line_number_;
+            current_column_number_ = 1;
+            ++line_number_;
+        }
+        GetChar();
+        H();
+    } else if (symbol_ == '#') {
+        GetChar();
+        SPC();
+    } else if (current_size_ == file_size_ + 1) {
+        GetChar();
+        return;
     } else {
-        ERR();
+        GetChar();
+        H();
     }
 }
 
 void LexicalAnalyzer::ID() {
-    if (65 <= (int)ch_ && (int)ch_ <= 90 || 97 <= (int)ch_ && (int)ch_ <= 122 || (int)ch_ == 95
-        || 48 <= (int)ch_ && (int)ch_ <= 57) {
-        curr_lexem_.push_back(ch_);
+    if ('A' <= symbol_ && symbol_ <= 'Z' || 'a' <= symbol_ && symbol_ <= 'z' || symbol_ == '_'
+        || '0' <= symbol_ && symbol_ <= '9') {
+        current_lexem_.push_back(symbol_);
         GetChar();
         ID();
-    } else if (ch_ == ' ' || ch_ == '\0' || ch_ == '\n') {
+    } else {
         Lexem* new_lexem = new Lexem;
-        if (bor_->FindString(curr_lexem_)) {
-            new_lexem->SetType(LexemType::Utility);
+        if (bor_->FindString(current_lexem_)) {
+            if (current_lexem_ == "int" || current_lexem_ == "double" || current_lexem_ == "bool" ||
+                current_lexem_ == "char" || current_lexem_ == "array" || current_lexem_ == "string") {
+                new_lexem->SetType(LexemType::Type);
+            } else {
+                new_lexem->SetType(LexemType::Utility);
+            }
+            new_lexem->SetLine(line_number_);
+            line_number_ = current_line_number_;
         } else {
             new_lexem->SetType(LexemType::Identifier);
+            new_lexem->SetLine(line_number_);
+            line_number_ = current_line_number_;
         }
-        new_lexem->SetValue(curr_lexem_);
-        list_.push_back(new_lexem);
-        curr_lexem_.clear();
-        GetChar();
-        H();
-    } else {
-        ERR();
-    }
-}
-
-void LexicalAnalyzer::COM() {
-    if (ch_ != '\n' && ch_ != '\0') {
-        curr_lexem_.push_back(ch_);
-        GetChar();
-        COM();
-    } else {
-        Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Comment);
-        new_lexem->SetValue(curr_lexem_);
-        list_.push_back(new_lexem);
-        curr_lexem_.clear();
-        GetChar();
+        new_lexem->SetValue(current_lexem_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
         H();
     }
 }
 
 void LexicalAnalyzer::INT() {
-    if (48 <= (int)ch_ && (int)ch_ <= 57) { /* case digit */
-        curr_lexem_.push_back(ch_);
+    if ('0' <= symbol_ && symbol_ <= '9') { /* case digit */
+        current_lexem_.push_back(symbol_);
         GetChar();
         INT();
-    } else if (ch_ == ' ' || ch_ == '\0' || ch_ == '\n') {
-        Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Literal);
-        new_lexem->SetValue(curr_lexem_);
-        list_.push_back(new_lexem);
-        curr_lexem_.clear();
+    } else if (symbol_ == '.') {
         GetChar();
-        H();
+        if (symbol_ >= '0' && symbol_ <= '9') {
+            current_lexem_.push_back('.');
+            current_lexem_.push_back(symbol_);
+            GetChar();
+            FLOAT();
+        } else {
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Integer);
+            new_lexem->SetLine(line_number_);
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size() - 1);
+            current_lexem_.clear();
+            new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Separator);
+            new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(1);
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(".");
+            list_of_lexems_.push_back(new_lexem);
+            H();
+        }
     } else {
-        ERR();
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Integer);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        line_number_ = current_line_number_;
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        H();
+    }
+}
+
+void LexicalAnalyzer::FLOAT() {
+    if ('0' <= symbol_ && symbol_ <= '9') { /* case digit */
+        current_lexem_.push_back(symbol_);
+        GetChar();
+        FLOAT();
+    } else {
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Float);
+        new_lexem->SetValue(current_lexem_);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        line_number_ = current_line_number_;
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        H();
     }
 }
 
 void LexicalAnalyzer::STR() {
-    if (ch_ == '\n' || ch_ == '\0') {
-        ERR();
-    } else if ((int)ch_ == 34) {
+    if (symbol_ == '\r' || current_size_ == file_size_) {
         Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Literal);
-        new_lexem->SetValue(curr_lexem_);
-        list_.push_back(new_lexem);
-        curr_lexem_.clear();
-        GetChar();
+        new_lexem->SetType(LexemType::Error);
+        new_lexem->SetValue(current_lexem_);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        line_number_ = current_line_number_;
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        H();
+    } else if (symbol_ == '"') {
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::String);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        line_number_ = current_line_number_;
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
         GetChar();
         H();
     } else {
-        curr_lexem_.push_back(ch_);
+        current_lexem_.push_back(symbol_);
         GetChar();
         STR();
     }
 }
 
+void LexicalAnalyzer::SPR() {
+    if (current_lexem_ == ":") {
+        if (symbol_ == ':') {
+            current_lexem_.push_back(symbol_);
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Separator);
+            new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            GetChar();
+            H();
+        } else {
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Separator);
+            new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            H();
+        }
+    } else {
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Separator);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        line_number_ = current_line_number_;
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        H();
+    }
+}
+
+void LexicalAnalyzer::BRK() {
+    Lexem* new_lexem = new Lexem;
+    new_lexem->SetType(LexemType::Brackets);
+    new_lexem->SetLine(line_number_);
+    new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+    line_number_ = current_line_number_;
+    new_lexem->SetValue(current_lexem_);
+    list_of_lexems_.push_back(new_lexem);
+    current_lexem_.clear();
+    H();
+}
+
 void LexicalAnalyzer::SIGN() {
-    if ((int)ch_ == 61) {
-        curr_lexem_.push_back(ch_);
-        GetChar();
-        SIGN_EQ();
-    } else if (ch_ == ' ' || ch_ == '\n' || ch_ == '\0') {
+    if (symbol_ == '=') {
         Lexem* new_lexem = new Lexem;
         new_lexem->SetType(LexemType::Operator);
-        new_lexem->SetValue(curr_lexem_);
-        list_.push_back(new_lexem);
-        curr_lexem_.clear();
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        current_lexem_ += "=";
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
         GetChar();
         H();
+    } else if (symbol_ == '&' && current_lexem_ == "&") {
+        current_lexem_.push_back(symbol_);
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Logic);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
+        line_number_ = current_line_number_;
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        GetChar();
+        H();
+    } else if (symbol_ == '|' && current_lexem_ == "|") {
+        current_lexem_.push_back(symbol_);
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Logic);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
+        line_number_ = current_line_number_;
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        GetChar();
+        H();
+    } else if (symbol_ == '+' && current_lexem_ == "+") {
+        current_lexem_.push_back(symbol_);
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Operator);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
+        line_number_ = current_line_number_;
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        GetChar();
+        H();
+    } else if (symbol_ == '>' && current_lexem_ == ">") {
+        current_lexem_.push_back(symbol_);
+        GetChar();
+        if (symbol_ != '=') {
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            H();
+        } else {
+            current_lexem_.push_back(symbol_);
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            GetChar();
+            H();
+        }
+    } else if (symbol_ == '<' && current_lexem_ == "<") {
+        current_lexem_.push_back(symbol_);
+        GetChar();
+        if (symbol_ != '=') {
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            H();
+        } else {
+            current_lexem_.push_back(symbol_);
+            Lexem* new_lexem = new Lexem;
+            new_lexem->SetType(LexemType::Operator);
+            new_lexem->SetLine(line_number_);
+            new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
+            line_number_ = current_line_number_;
+            new_lexem->SetValue(current_lexem_);
+            list_of_lexems_.push_back(new_lexem);
+            current_lexem_.clear();
+            GetChar();
+            H();
+        }
+    } else if (symbol_ == '-' && current_lexem_ == "-") {
+        current_lexem_.push_back(symbol_);
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Operator);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size() + 1);
+        line_number_ = current_line_number_;
+        new_lexem->SetValue(current_lexem_);
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        GetChar();
+        H();
+    } else if (symbol_ == '/' && current_lexem_ == "/") {
+        current_lexem_.clear();
+        GetChar();
+        COM_ONE();
+    } else if (symbol_ == '*' && current_lexem_ == "/") {
+        current_lexem_.clear();
+        GetChar();
+        COM_MANY();
     } else {
-        ERR();
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Operator);
+        new_lexem->SetValue(current_lexem_);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        line_number_ = current_line_number_;
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        H();
     }
 }
 
-void LexicalAnalyzer::SIGN_EQ() {
-    if (ch_ == ' ' || ch_ == '\n' || ch_ == '\0') {
-        Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Operator);
-        new_lexem->SetValue(curr_lexem_);
-        list_.push_back(new_lexem);
-        curr_lexem_.clear();
+void LexicalAnalyzer::COM_ONE() {
+    if (symbol_ != '\n' && current_size_ != file_size_) {
+        current_lexem_.push_back(symbol_);
         GetChar();
-        H();
+        COM_ONE();
     } else {
-        ERR();
+        current_lexem_.clear();
+        H();
     }
 }
 
-void LexicalAnalyzer::ERR() {
-    std::cout << "Wrong lexem detected!\n";
+void LexicalAnalyzer::COM_MANY() {
+    if (symbol_ == '/' && current_lexem_[current_lexem_.size() - 1] == '*') {
+        current_lexem_.clear();
+        line_number_ = current_line_number_;
+        GetChar();
+        H();
+    } else if (current_size_ == file_size_) {
+        current_lexem_.push_back(symbol_);
+        Lexem* new_lexem = new Lexem;
+        new_lexem->SetType(LexemType::Error);
+        new_lexem->SetValue(current_lexem_);
+        new_lexem->SetLine(line_number_);
+        new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
+        line_number_ = current_line_number_;
+        list_of_lexems_.push_back(new_lexem);
+        current_lexem_.clear();
+        H();
+    } else {
+        if (symbol_ == '\n') {
+            ++current_line_number_;
+        }
+        current_lexem_.push_back(symbol_);
+        GetChar();
+        COM_MANY();
+    }
 }
 
-
-void LexicalAnalyzer::EMPTY() {
-
+void LexicalAnalyzer::SPC() {
+    if (symbol_ != '\n' && current_size_ != file_size_) {
+        current_lexem_.push_back(symbol_);
+        GetChar();
+        SPC();
+    } else {
+        current_lexem_.clear();
+        H();
+    }
 }
