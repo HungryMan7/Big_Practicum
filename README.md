@@ -1,29 +1,29 @@
 ### Language syntax
 ```
-main body
-| <program> ::= { [ <vars-mdef>';' | <func> ] }
+# main body
+| <program> ::= { <vars-mdef> <func> } "int" "main" '(' ')' <body>
 
-symbols
+# symbols
 | <letter> ::= 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'|
 |			   'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'|'_'		 
 | <digit>  ::= '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
 
-type & id
+# type & id
 | <type> ::= "int" | "double" | "bool" | "char" | "array" | "string"
 | <id>   ::= <letter> { [ <letter> | <digit> ] }
 
-expressions & statements
+# expressions & statements
 | <term>      ::= <id> | <literal> | '(' <ex0> ')'
 | <expr-list> ::= [ <ex0> | <ex0> ',' <expr-list> ]
-| <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> | <loop> | <func-call> ';' | "break" ';' | "continue" ';' | eps
+| <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break" ';' | "continue" ';' | <input> | <output> | "return" | eps
 | <body>      ::= '{' { <statement> } '}'
 
-literals
+# literals
 | <number>  ::= <digit> <number> | <digit>
-| <string>  ::= { letter }
+| <string>  ::= {letter}
 | <literal> ::= <number> | <string>
 
-priorities
+# priorities
 | <ex0> ::= <ex1> { ',' <ex1> }
 | <ex1> ::= <id> [ { [ '=' | "+=" | "-=" | "*=" | "/=" | "%=" | ">>=" | "<<=" | "|=" | "&=" | "^=" ] <id> } [ '=' | "+=" | "-=" | "*=" | "/=" | "%=" | ">>=" | "<<=" | "|=" | "&=" | "^=" <ex2> | eps ] ] | <ex2>
 | <ex2> ::= <ex3> { "||" <ex3> }
@@ -37,26 +37,32 @@ priorities
 | <ex10> ::= <ex5> { [ '+' | '-' ] <ex11> }
 | <ex11> ::= <ex12> { [ '*' | '/' | '%' ] <ex12> }
 | <ex12> ::= { [ '+' | '-' | '!' | "++" | "--" ] } <ex13>
-| <ex13> ::= <ex14> { [ "++" | "--" ] }
+| <ex13> ::= <ex14> { [ "++" | "--" | '[' <ex0> ']'] }
 | <ex14> ::= <id> { "::" <id> } | <term>
   
-vars
-| <vars-mdef> ::= <type> <vars>
-| <vars>      ::= <var-def> | <var-def> ',' <vars>
-| <var-def>   ::= <id> | <id> '=' <ex0> | <id> "={" <expr-list> '}'
+# vars
+| <vars-mdef>  ::= <type> <vars>
+| <vars>       ::= <var-def> | <var-def> ',' <vars>
+| <var-def>    ::= <id> | <id> '=' <ex0> | <id> "={" <expr-list> '}'
+| <var-array>  ::= <id> [';' | '=' '{' <ex0> '}' ';']
+| <var-common> ::= <var-array> | <var-def>
 
-funcs
+# input and output
+| <output> ::= "cout" "<<" <id> | <literal> { "<<" <id> | <literal> } ';'
+| <input>  ::= "cin"  ">>" <id> {">>" <id>} ';'
+
+# funcs
 | <func>      ::= <type> <id> '(' [ <arguments> | void | eps ] ')' [ <body> | ';' ]
 | <arguments> ::= <type> <id> | <type> <id> ',' <arguments>
 | <func-call> ::= <id> '(' [ <arguments> | eps ] ')'
 
-if & switch
+# if & switch
 | <if>     ::= "if" '(' <ex0> ')' <body> { "elif" '(' <ex0> ')' <body> } [ "else" <body> | eps ]
 | <switch> ::= "switch" '(' <ex0> ')' '{' { "case" <ex0> ':' { <statement> } } [ "default" ':' {<statement>} | eps ] '}'
 
-loops
+# loops
 | <loop>         ::= "loop" [ <loop-while> | <loop-foreach> | <loop-for> ]
-| <loop-while>   ::= '(' <ex0> ')' <body>
-| <loop-foreach> ::= '(' <id> ';' <ex0> ')' <body>
-| <loop-for>     ::= '(' [ <ex0> | <vars-mdef> | eps ] ';' [ <ex0> | eps ] ';' [ <ex0> | eps ] ')' <body>
+| <loop-while>   ::= "loop" "while" '(' <ex0> ')' <body>
+| <loop-foreach> ::= "loop" "foreach" '(' <id> ';' <ex0> ')' <body>
+| <loop-for>     ::= "loop" "for" '(' [ <ex0> | <vars-mdef> | eps ] ';' [ <ex0> | eps ] ';' [ <ex0> | eps ] ')' <body>
 ```
