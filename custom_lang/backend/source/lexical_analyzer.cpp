@@ -1,5 +1,6 @@
 #include "../includes/lexical_analyzer.h"
 #include <fstream>
+#include <string>
 
 LexicalAnalyzer::LexicalAnalyzer(std::string file_name) {
     bor_ = new Bor;
@@ -51,55 +52,13 @@ std::vector<Lexem*> LexicalAnalyzer::GetLexems() {
 
 void LexicalAnalyzer::GetChar() {
     if (current_size_ == file_size_ + 1) {
-        /*for (auto x : list_of_lexems_) {
-            std::cout << x->GetLine() << " line, " << x->GetColumn() - 1 << " symbol: " << x->GetValue() << " => ";
-            switch (x->GetType()) {
-            case LexemType::Identifier:
-                std::cout << "identifier" << "\n";
-                break;
-
-            case LexemType::Utility:
-                std::cout << "utility" << "\n";
-                break;
-
-            case LexemType::Operator:
-                std::cout << "operator" << "\n";
-                break;
-
-            case LexemType::Integer:
-                std::cout << "integer number" << "\n";
-                break;
-
-            case LexemType::Float:
-                std::cout << "float number" << "\n";
-                break;
-
-            case LexemType::String:
-                std::cout << "string" << "\n";
-                break;
-
-            case LexemType::Brackets:
-                std::cout << "bracket" << "\n";
-                break;
-
-            case LexemType::Separator:
-                std::cout << "separator" << "\n";
-                break;
-
-            case LexemType::Logic:
-                std::cout << "logical operator" << "\n";
-                break;
-
-            case LexemType::Type:
-                std::cout << "type" << "\n";
-                break;
-
-            case LexemType::Error:
-                std::cout << "wrong lexem" << "\n";
-                break;
-
+        for (auto x : list_of_lexems_) {
+            if (x->GetType() == LexemType::Error) {
+                std::string error = "line " + std::to_string(x->GetColumn() - 1) + ": wrong lexem";
+                std::cout << error;
+                exit(0);
             }
-        }*/
+        }
         return;
     }
     symbol_ = *iter_;

@@ -1,0 +1,36 @@
+int a = 1, b = 1, m;
+
+int func1() {
+  if (x == 1) {
+    y = 0;
+  } elif (2 > t) {
+    p = t;
+  } elif (y == 1) {
+    o = x;
+  } else {
+    k = l;
+  }
+  return;
+}
+
+int func2() {
+  switch(x) {
+  case 1:
+    x = 1;
+  case 2:
+    x = 2;
+  case 3:
+    x = 3;
+  default:
+    x = 0;
+  }
+  return;
+}
+
+int main() {
+  d = 10, sum = a + b , count = 90 + d;
+  if (year % 400 == 0 || year % 4 == 0 && year % 100 != 0) {
+    break;
+  }
+  return 0;
+}
