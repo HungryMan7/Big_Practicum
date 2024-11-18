@@ -1,17 +1,6 @@
 #include "../includes/syntax_analyzer.h"
 #include <fstream>
 
-SyntaxAnalyzer::SyntaxAnalyzer(std::string file_name) {
-    la = new LexicalAnalyzer(file_name);
-    la->SetLanguage("utilities.txt");
-    la->Analyze();
-    list_of_lexems_ = la->GetLexems();
-}
-
-SyntaxAnalyzer::~SyntaxAnalyzer() {
-    delete la;
-}
-
 void SyntaxAnalyzer::GetLex() {
     if (lex_index_ < (int)list_of_lexems_.size()) {
         lexem_ = list_of_lexems_[lex_index_];
@@ -21,8 +10,14 @@ void SyntaxAnalyzer::GetLex() {
     }
 }
 
+void SyntaxAnalyzer::Analyze(std::vector<Lexem*> list_of_lexems) {
+    list_of_lexems_ = list_of_lexems;
+    GetLex();
+    PROGRAM();
+}
+
 void SyntaxAnalyzer::PROGRAM() {
-    while (3 + 5 == 8) {
+    while (true) {
         if (!(lexem_->GetValue() == "int" || lexem_->GetValue() == "double" ||
             lexem_->GetValue() == "bool" || lexem_->GetValue() == "char" ||
             lexem_->GetValue() == "array" || lexem_->GetValue() == "string")) {
@@ -202,7 +197,6 @@ void SyntaxAnalyzer::BODY() {
     GetLex();
 }
 
-// <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> | <loop> | <func-call> ';' | "break" ';' | "continue" ';' | eps
 void SyntaxAnalyzer::STATEMENT() {
     if (lexem_->GetValue() == "int" || lexem_->GetValue() == "double" ||
         lexem_->GetValue() == "bool" || lexem_->GetValue() == "char" ||
@@ -388,9 +382,6 @@ void SyntaxAnalyzer::FUNC_CALL() {
     }
 }
 
-/*
-| <if>     ::= "if" '(' <ex0> ')' <body> { "elif" '(' <ex0> ')' <body> } [ "else" <body> | eps ]
-*/
 void SyntaxAnalyzer::IF() {
     if (lexem_->GetValue() != "(") {
         throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -429,7 +420,6 @@ void SyntaxAnalyzer::IF() {
     }
 }
 
-// <switch> :: = "switch" '(' < ex0 > ')' '{' { "case" < ex0 > ':' { <statement> } }["default" ':' {<statement>} | eps] '}'
 void SyntaxAnalyzer::SWITCH() {
     if (lexem_->GetValue() != "(") {
         throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -498,14 +488,14 @@ void SyntaxAnalyzer::TERM() {
         if (lexem_->GetValue() != "(") {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
-                " expected expression, but found " + lexem_->GetValue();
+                " expected (, but found " + lexem_->GetValue();
         }
         GetLex();
         EXP_ZERO();
         if (lexem_->GetValue() != ")") {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
-                " expected (, but found " + lexem_->GetValue();
+                " expected ), but found " + lexem_->GetValue();
         }
         GetLex();
     } else GetLex();
@@ -652,13 +642,6 @@ void SyntaxAnalyzer::EXP_FOURTEEN() {
     }
 }
 
-/*
-loops
-| <loop>         ::= "loop" [ <loop-while> | <loop-foreach> | <loop-for> ]
-| <loop-while>   ::= '(' <ex0> ')' <body>
-| <loop-foreach> ::= '(' <id> ';' <ex0> ')' <body>
-| <loop-for>     ::= '(' [ <ex0> | <vars-mdef> | eps ] ';' [ <ex0> | eps ] ';' [ <ex0> | eps ] ')' <body>
-*/
 void SyntaxAnalyzer::LOOP() {
     if (lexem_->GetValue() == "for") {
         GetLex();
@@ -769,7 +752,7 @@ void SyntaxAnalyzer::LOOP_FOR() {
         }
         GetLex();
     }
-    //third part
+    // third part
     if (lexem_->GetValue() == ")") {
         GetLex();
     } else {
@@ -782,9 +765,4 @@ void SyntaxAnalyzer::LOOP_FOR() {
         GetLex();
     }
     BODY();
-}
-
-void SyntaxAnalyzer::Analyze() {
-    GetLex();
-    PROGRAM();
 }

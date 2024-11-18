@@ -7,6 +7,9 @@ default
 break
 continue
 loop
+while
+foreach
+for
 int
 float
 bool
