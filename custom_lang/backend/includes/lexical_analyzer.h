@@ -3,6 +3,8 @@
 #include "bor.h"
 #include <iostream>
 #include <vector>
+#include <string>
+#include <fstream>
 
 class LexicalAnalyzer {
 public:

@@ -1,7 +1,16 @@
 #include <vector>
 #include <string>
 
-enum class Type { int, float, bool, char, string, array };
+enum class Type { 
+    Int,
+    Float,
+    Bool,
+    Char,
+    String,
+    Array
+};
+
+class TID;
 
 class Variable {
  public:
@@ -10,8 +19,8 @@ class Variable {
 
  private:
      std::string name_;
-     Type type_;
-     std::string value;
+     Type type_;     
+     std::string value_;
 };
 
 class Function {

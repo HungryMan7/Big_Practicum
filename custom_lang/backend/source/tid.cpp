@@ -21,12 +21,12 @@ Function::Function(std::string name, Type return_type, TID* variables) {
 Function::Function(const Function& function) {
     name_ = function.name_;
     return_type_ = function.return_type_;
-    variables_ = new TID(function->variables_);
+    variables_ = new TID(*(function.variables_));
 }
 
 TID::TID(const TID& other) {
     variables_ = other.variables_;
-    function_ = other.functions_;
+    functions_ = other.functions_;
 }
 
 void TID::AddVariable(std::string name, Type type, std::string value) {

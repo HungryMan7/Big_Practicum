@@ -1,5 +1,4 @@
 #include "../includes/syntax_analyzer.h"
-#include <fstream>
 
 void SyntaxAnalyzer::GetLex() {
     if (lex_index_ < (int)list_of_lexems_.size()) {
@@ -75,8 +74,16 @@ void SyntaxAnalyzer::PROGRAM() {
 void SyntaxAnalyzer::VARS_MDEF() {
     if (lexem_->GetValue() == ";") {
         return;
-    }
-    if (lexem_->GetValue() == "=") {
+    } else if (lexem_->GetValue() == "[") {
+        GetLex();
+        EXP_ZERO();
+        if (lexem_->GetValue() != "]") {
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " expected ], but found " + lexem_->GetValue();
+        }
+        GetLex();
+    } else if (lexem_->GetValue() == "=") {
         GetLex();
         if (lexem_->GetValue() != "{") {
             EXP_ZERO();
@@ -90,6 +97,10 @@ void SyntaxAnalyzer::VARS_MDEF() {
             }
             GetLex();
         }
+    } else if (lexem_->GetValue() != ",") {
+        throw "line: " + std::to_string(lexem_->GetLine()) +
+            " column: " + std::to_string(lexem_->GetColumn() - 1) +
+            " expected ;, but found " + lexem_->GetValue();
     }
     while (lexem_->GetValue() == ",") {
         GetLex();
