@@ -33,7 +33,7 @@ class Function {
  private:
      std::string name_;
      Type return_type_;
-     TID* variables_;
+     TID* variables_ = nullptr;
 };
 
 class TID {
@@ -47,8 +47,10 @@ class TID {
      void AddFunction(const Function& function);
      bool Contains(Variable* variable);
      bool Contains(Function* function);
+     void Connect(TID* ancestor);
 
  private:
      std::vector<Variable*> variables_;
      std::vector<Function*> functions_;
+     TID* ancestor_ = nullptr;
 };

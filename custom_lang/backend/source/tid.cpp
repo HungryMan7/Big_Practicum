@@ -78,3 +78,7 @@ bool TID::Contains(Function* function) {
     }
     return false;
 }
+
+void TID::Connect(TID* ancestor) {
+    ancestor_ = ancestor;
+}
