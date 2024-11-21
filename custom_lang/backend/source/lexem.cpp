@@ -1,4 +1,4 @@
-#include "../includes/lexem.h"
+#include "lexem.h"
 #include <string>
 
 void Lexem::SetType(LexemType type) {
