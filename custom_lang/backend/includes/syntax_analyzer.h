@@ -9,6 +9,7 @@ class SyntaxAnalyzer {
  private:
      void GetLex();
      void PROGRAM();
+     void ARRAY_TYPE();
      void VARS_MDEF();
      void FUNC();
      void BODY();

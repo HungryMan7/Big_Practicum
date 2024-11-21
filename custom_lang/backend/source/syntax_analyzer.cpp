@@ -17,14 +17,17 @@ void SyntaxAnalyzer::Analyze(std::vector<Lexem*> list_of_lexems) {
 
 void SyntaxAnalyzer::PROGRAM() {
     while (true) {
-        if (!(lexem_->GetValue() == "int" || lexem_->GetValue() == "double" ||
-            lexem_->GetValue() == "bool" || lexem_->GetValue() == "char" ||
-            lexem_->GetValue() == "array" || lexem_->GetValue() == "string")) {
+        if (lexem_->GetType() != LexemType::Type) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " expected type, but found " + lexem_->GetValue();
         }
-        GetLex();
+        if (lexem_->GetValue() == "array") {
+            GetLex();
+            ARRAY_TYPE();
+        } else {
+            GetLex();
+        }
         if (lexem_->GetValue() == "main" && list_of_lexems_[lex_index_ - 2]->GetValue() == "int") break;
         else if (lexem_->GetValue() == "main" && list_of_lexems_[lex_index_ - 2]->GetValue() != "int") {
             throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -42,7 +45,6 @@ void SyntaxAnalyzer::PROGRAM() {
             FUNC();
         } else {
             VARS_MDEF();
-            GetLex();
         }
     }
     if (lexem_->GetValue() != "main") {
@@ -71,6 +73,10 @@ void SyntaxAnalyzer::PROGRAM() {
     }
 }
 
+void SyntaxAnalyzer::ARRAY_TYPE() {
+    
+}
+
 void SyntaxAnalyzer::VARS_MDEF() {
     if (lexem_->GetValue() == ";") {
         return;
@@ -83,6 +89,26 @@ void SyntaxAnalyzer::VARS_MDEF() {
                 " expected ], but found " + lexem_->GetValue();
         }
         GetLex();
+        if (lexem_->GetValue() == "=") {
+            GetLex();
+            if (lexem_->GetValue() != "{") {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " expected {, but found " + lexem_->GetValue();
+            }
+            GetLex();
+            EXP_ZERO();
+            while (lexem_->GetValue() == ",") {
+                GetLex();
+                EXP_ZERO();
+            }
+            if (lexem_->GetValue() != "}") {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " expected }, but found " + lexem_->GetValue();
+            }
+            GetLex();
+        }
     } else if (lexem_->GetValue() == "=") {
         GetLex();
         if (lexem_->GetValue() != "{") {
@@ -131,6 +157,7 @@ void SyntaxAnalyzer::VARS_MDEF() {
             " column: " + std::to_string(lexem_->GetColumn()) +
             " expected ;, but found " + lexem_->GetValue();
     }
+    GetLex();
 }
 
 /* Daft FUNC XDDD */
@@ -143,10 +170,13 @@ void SyntaxAnalyzer::FUNC() {
                 " expected ), but found " + lexem_->GetValue();
         }
         GetLex();
-    } else if (lexem_->GetValue() == "int" || lexem_->GetValue() == "double" ||
-        lexem_->GetValue() == "bool" || lexem_->GetValue() == "char" ||
-        lexem_->GetValue() == "array" || lexem_->GetValue() == "string") {
-        GetLex();
+    } else if (lexem_->GetType() == LexemType::Type) {
+        if (lexem_->GetValue() == "array") {
+            GetLex();
+            ARRAY_TYPE();
+        } else {
+            GetLex();
+        }
         if (lexem_->GetType() != LexemType::Identifier) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
@@ -155,14 +185,17 @@ void SyntaxAnalyzer::FUNC() {
         GetLex();
         while (lexem_->GetValue() == ",") {
             GetLex();
-            if (!(lexem_->GetValue() == "int" || lexem_->GetValue() == "double" ||
-                lexem_->GetValue() == "bool" || lexem_->GetValue() == "char" ||
-                lexem_->GetValue() == "array" || lexem_->GetValue() == "string")) {
+            if (lexem_->GetType() != LexemType::Type) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " expected type, but found " + lexem_->GetValue();
             }
-            GetLex();
+            if (lexem_->GetValue() == "array") {
+                GetLex();
+                ARRAY_TYPE();
+            } else {
+                GetLex();
+            }
             if (lexem_->GetType() != LexemType::Identifier) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
@@ -209,10 +242,13 @@ void SyntaxAnalyzer::BODY() {
 }
 
 void SyntaxAnalyzer::STATEMENT() {
-    if (lexem_->GetValue() == "int" || lexem_->GetValue() == "double" ||
-        lexem_->GetValue() == "bool" || lexem_->GetValue() == "char" ||
-        lexem_->GetValue() == "array" || lexem_->GetValue() == "string") {
-        GetLex();
+    if (lexem_->GetType() == LexemType::Type) {
+        if (lexem_->GetValue() == "array") {
+            GetLex();
+            ARRAY_TYPE();
+        } else {
+            GetLex();
+        }
         if (lexem_->GetType() != LexemType::Identifier) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
@@ -220,7 +256,6 @@ void SyntaxAnalyzer::STATEMENT() {
         }
         GetLex();
         VARS_MDEF();
-        GetLex();
     } else if (lexem_->GetType() == LexemType::Identifier) {
         if (lex_index_ < (int)list_of_lexems_.size() && list_of_lexems_[lex_index_]->GetValue() == "(") {
             GetLex();
@@ -232,13 +267,13 @@ void SyntaxAnalyzer::STATEMENT() {
                 VARS_MDEF();
             } else {
                 EXP_ZERO();
-            }
-            if (lexem_->GetValue() != ";") {
+                if (lexem_->GetValue() != ";") {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " expected ;, but found " + lexem_->GetValue();
             }
             GetLex();
+            } 
         }
     } else if (lexem_->GetValue() == "if") {
         GetLex();
@@ -268,11 +303,9 @@ void SyntaxAnalyzer::STATEMENT() {
     } else if (lexem_->GetValue() == "cout") {
         GetLex();
         OUTPUT();
-        GetLex();
     } else if (lexem_->GetValue() == "cin") {
         GetLex();
         INPUT();
-        GetLex();
     } else if (lexem_->GetValue() == "return") {
         GetLex();
         if (lexem_->GetValue() == ";") {
@@ -325,6 +358,7 @@ void SyntaxAnalyzer::INPUT() {
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " expected ;, but found " + lexem_->GetValue();
     }
+    GetLex();
 }
 
 void SyntaxAnalyzer::OUTPUT() {
@@ -363,6 +397,7 @@ void SyntaxAnalyzer::OUTPUT() {
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " expected ;, but found " + lexem_->GetValue();
     }
+    GetLex();
 }
 
 void SyntaxAnalyzer::FUNC_CALL() {
@@ -727,7 +762,12 @@ void SyntaxAnalyzer::LOOP_FOR() {
     if (lexem_->GetValue() == ";") {
         GetLex();
     } else if (lexem_->GetType() == LexemType::Type) {
-        GetLex();
+        if (lexem_->GetValue() == "array") {
+            GetLex();
+            ARRAY_TYPE();
+        } else {
+            GetLex();
+        }
         if (lexem_->GetType() != LexemType::Identifier) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn()) +
@@ -735,12 +775,6 @@ void SyntaxAnalyzer::LOOP_FOR() {
         }
         GetLex();
         VARS_MDEF();
-        if (lexem_->GetValue() != ";") {
-            throw "line: " + std::to_string(lexem_->GetLine()) +
-                " column: " + std::to_string(lexem_->GetColumn()) +
-                " expected ;, but found " + lexem_->GetValue();
-        }
-        GetLex();
     } else {
         EXP_ZERO();
         GetLex();
