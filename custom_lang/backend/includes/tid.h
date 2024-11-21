@@ -16,6 +16,7 @@ class Variable {
  public:
      Variable(std::string name, Type type, std::string value);
      Variable(const Variable& variable);
+     std::string GetName();
 
  private:
      std::string name_;
@@ -27,6 +28,7 @@ class Function {
  public:
      Function(std::string name, Type return_type, TID* variables);
      Function(const Function& function);
+     std::string GetName();
 
  private:
      std::string name_;
@@ -43,6 +45,8 @@ class TID {
      void AddFunction(std::string name, Type return_type, TID* variables);
      void AddFunction(const Function*& function);
      void AddFunction(const Function& function);
+     bool Contains(Variable* variable);
+     bool Contains(Function* function);
 
  private:
      std::vector<Variable*> variables_;
