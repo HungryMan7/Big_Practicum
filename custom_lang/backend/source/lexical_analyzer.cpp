@@ -2,14 +2,12 @@
 #include <fstream>
 #include <string>
 
-LexicalAnalyzer::LexicalAnalyzer(std::string file_name) {
-    bor_ = new Bor;
-    ReadFile(file_name);
-}
-
 LexicalAnalyzer::~LexicalAnalyzer() {
     delete bor_;
     delete program_;
+    for (auto lexem : list_of_lexems_) {
+        delete lexem;
+    }
 }
 
 void LexicalAnalyzer::ReadFile(std::string file_name) {
@@ -31,15 +29,16 @@ void LexicalAnalyzer::ReadFile(std::string file_name) {
     file_size_ = text_size;
 }
 
-void LexicalAnalyzer::Analyze() {
-    current_lexem_.clear();
-    GetChar();
-    H();
-}
-
 void LexicalAnalyzer::SetLanguage(std::string file_name) {
     if (bor_) delete bor_;
     bor_ = new Bor(file_name);
+}
+
+void LexicalAnalyzer::Analyze(std::string file_name) {
+    ReadFile(file_name);
+    current_lexem_.clear();
+    GetChar();
+    H();
 }
 
 Bor* LexicalAnalyzer::GetLanguage() {
@@ -171,7 +170,7 @@ void LexicalAnalyzer::INT() {
         }
         else {
             Lexem* new_lexem = new Lexem;
-            new_lexem->SetType(LexemType::Integer);
+            new_lexem->SetType(LexemType::Type); // LexemType::Integer
             new_lexem->SetLine(line_number_);
             new_lexem->SetValue(current_lexem_);
             list_of_lexems_.push_back(new_lexem);
@@ -189,7 +188,7 @@ void LexicalAnalyzer::INT() {
     }
     else {
         Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Integer);
+        new_lexem->SetType(LexemType::Type); // LexemType::Integer
         new_lexem->SetLine(line_number_);
         new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         line_number_ = current_line_number_;
@@ -208,7 +207,7 @@ void LexicalAnalyzer::FLOAT() {
     }
     else {
         Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::Float);
+        new_lexem->SetType(LexemType::Type); // LexemType::Float
         new_lexem->SetValue(current_lexem_);
         new_lexem->SetLine(line_number_);
         new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
@@ -233,7 +232,7 @@ void LexicalAnalyzer::STR() {
     }
     else if (symbol_ == '"') {
         Lexem* new_lexem = new Lexem;
-        new_lexem->SetType(LexemType::String);
+        new_lexem->SetType(LexemType::Type); // LexemType::String
         new_lexem->SetLine(line_number_);
         new_lexem->SetColumn(current_column_number_ - current_lexem_.size());
         line_number_ = current_line_number_;

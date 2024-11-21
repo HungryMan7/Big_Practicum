@@ -1,68 +1,84 @@
-#include "tid.h"
+#include "../includes/tid.h"
 
-TID::TID() {
-    root_ = new TID_Node;
+Variable::Variable(std::string name, Type type, std::string value) {
+    name_ = name;
+    type_ = type;
+    value_ = value;
 }
 
-void TID::AddID(std::vector<std::string> type, std::string id_name) {
-    root_->ID[id_name] = type;
+Variable::Variable(const Variable& variable) {
+    name_ = variable.name_;
+    type_ = variable.type_;
+    value_ = variable.value_;
 }
 
-bool TID::CheckAddingID(std::string id_name) {
-    TID_Node* temp = root_;
-    while (temp->pred != nullptr) {
-        for (auto id : temp->ID) {
-            if (id.first == id_name) {
-                return false;
-            }
-        }
-        temp = temp->pred;
-    }
-    for (auto id : temp->ID) {
-        if (id.first == id_name) {
-            return false;
-        }
-    }
-    return true;
+std::string Variable::GetName() {
+    return name_;
 }
 
-bool TID::CheckUsingID(std::string id_name) {
-    TID_Node* temp = root_;
-    while (temp->pred != nullptr) {
-        for (auto id : temp->ID) {
-            if (id.first == id_name) {
-                return true;
-            }
-        }
-        temp = temp->pred;
-    }
-    for (auto id : temp->ID) {
-        if (id.first == id_name) {
+Function::Function(std::string name, Type return_type, TID* variables) {
+    name_ = name;
+    return_type_ = return_type;
+    variables_ = new TID(*variables);
+}
+
+Function::Function(const Function& function) {
+    name_ = function.name_;
+    return_type_ = function.return_type_;
+    variables_ = new TID(*(function.variables_));
+}
+
+std::string Function::GetName() {
+    return name_;
+}
+
+TID::TID(const TID& other) {
+    variables_ = other.variables_;
+    functions_ = other.functions_;
+}
+
+void TID::AddVariable(std::string name, Type type, std::string value) {
+    variables_.push_back(new Variable(name, type, value));
+}
+
+void TID::AddVariable(const Variable*& variable) {
+    variables_.push_back(new Variable(*variable));
+}
+
+void TID::AddVariable(const Variable& variable) {
+    variables_.push_back(new Variable(variable));
+}
+
+void TID::AddFunction(std::string name, Type return_type, TID* variables) {
+    functions_.push_back(new Function(name, return_type, variables));
+}
+
+void TID::AddFunction(const Function*& function) {
+    functions_.push_back(new Function(*function));
+}
+
+void TID::AddFunction(const Function& function) {
+    functions_.push_back(new Function(function));
+}
+
+bool TID::Contains(Variable* variable) {
+    for (auto var : variables_) {
+        if (var->GetName() == variable->GetName()) {
             return true;
         }
     }
     return false;
 }
 
-void TID::AddTable() {
-    TID_Node *add_table = new TID_Node;
-    TID_Node* temp = root_;
-    root_->next = add_table;
-    root_ = root_->next;
-    root_->pred = temp;
+bool TID::Contains(Function* function) {
+    for (auto func : functions_) {
+        if (func->GetName() == function->GetName()) {
+            return true;
+        }
+    }
+    return false;
 }
 
-void TID::RemoveTable() {
-    TID_Node* temp = root_;
-    temp = temp->pred;
-    delete root_;
-    root_ = temp;
-}
-
-TID_Node* TID::ReturnCurrentTable() {
-    return root_;
-}
-
-TID::~TID() {
-    delete root_;
+void TID::Connect(TID* ancestor) {
+    ancestor_ = ancestor;
 }
