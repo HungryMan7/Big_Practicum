@@ -1,0 +1,6 @@
+int f() {
+	array<array<array<int>>> y, x;
+}
+
+int main() {
+}
