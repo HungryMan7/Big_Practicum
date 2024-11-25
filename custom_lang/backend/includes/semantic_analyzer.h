@@ -1,15 +1,19 @@
 #pragma once
 #include "lexical_analyzer.h"
 #include "lexem.h"
+#include "tid.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
 
-class SyntaxAnalyzer {
+class SemanticAnalyzer {
 public:
     void Analyze(std::vector<Lexem*> list_of_lexems);
 
 private:
+    void DeclarationCheck();
+    void TypeCheck();
     void GetLex();
     void PROGRAM();
     void ARRAY();
@@ -44,5 +48,7 @@ private:
     void EXP_THIRTEEN();
     Lexem* lexem_;
     int lex_index_ = 0;
+    std::string current_type_, current_id_name_;
     std::vector<Lexem*> list_of_lexems_;
+    TID table_id_;
 };
