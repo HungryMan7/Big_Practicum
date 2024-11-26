@@ -16,7 +16,9 @@ private:
     void VARS_MDEF();
     void FUNC();
     void BODY();
+    void FUNC_BODY();
     void STATEMENT();
+    void FUNC_STATEMENT(bool &check);
     void FUNC_CALL();
     void IF();
     void LOOP();
