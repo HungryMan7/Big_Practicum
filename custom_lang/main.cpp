@@ -11,6 +11,7 @@ int main() {
     try {
         std::cout << "LEXICAL ANALYSIS\n" << "______________________________\n";
         LexicalAnalyzer* la = new LexicalAnalyzer("program.txt");
+        la->SetLanguage("utilities.txt");
         la->Analyze();
         std::cout << "OK!\n";
         std::cout << "SYNTAX ANALYSIS\n" << "______________________________\n";
