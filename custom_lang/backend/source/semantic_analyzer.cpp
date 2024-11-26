@@ -24,15 +24,41 @@ void SemanticAnalyzer::GetLex() {
 
 void SemanticAnalyzer::PROGRAM() {
     while (3 + 5 == 8) {
-        current_type_ = lexem_->GetValue();
-        GetLex(); // type
+        if (lexem_->GetValue() == "array") {
+            current_type_ = { { "array" }, {} };
+            GetLex();
+            int counter = 0;
+            while (lexem_->GetValue() == "<") {
+                counter++;
+                GetLex(); // <
+                if (lexem_->GetValue() == "array") {
+                    GetLex(); // array
+                    current_type_.first.push_back("array");
+                }
+                else {
+                    current_type_.first.push_back(lexem_->GetValue());
+                    GetLex(); // type
+                    break;
+                }
+            }
+            while (counter) {
+                if (lexem_->GetValue() == ">>") counter -= 2;
+                else counter--;
+                GetLex();
+            }
+        }
+        else {
+            current_type_ = { { lexem_->GetValue() }, {} };
+            GetLex(); // type
+        }
         if (lexem_->GetValue() == "main" && list_of_lexems_[lex_index_ - 2]->GetValue() == "int") break;
-        current_id_name_ = lexem_->GetValue();
+        current_id_name_ = { lexem_->GetValue() };
         GetLex(); // id
         if (lexem_->GetValue() == "(") {
             GetLex();
             if (table_id_.CheckAddingID(current_id_name_)) {
-                table_id_.AddID({ "function" , current_type_ }, current_id_name_);
+                current_type_.first.insert(current_type_.first.begin(), "function");
+                table_id_.AddID(current_type_, current_id_name_);
             }
             else {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -40,25 +66,26 @@ void SemanticAnalyzer::PROGRAM() {
                     " the name is already used";
             }
             table_id_.AddTable();
-            FUNC();
+            FUNC(current_id_name_);
             table_id_.RemoveTable();
         }
         else {
             if (table_id_.CheckAddingID(current_id_name_)) {
-                table_id_.AddID({ current_type_ }, current_id_name_);
+                table_id_.AddID( current_type_ , current_id_name_);
             }
             else {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " the name is already used";
             }
-            VARS_MDEF();
+            VARS_MDEF(current_type_.first);
             GetLex();
         }
     }
     current_id_name_ = lexem_->GetValue();
     if (table_id_.CheckAddingID(current_id_name_)) {
-        table_id_.AddID({ "function" , current_type_ }, current_id_name_);
+        current_type_.first.insert(current_type_.first.begin(), "function");
+        table_id_.AddID(current_type_, current_id_name_);
     }
     else {
         throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -69,25 +96,22 @@ void SemanticAnalyzer::PROGRAM() {
     GetLex(); // (
     GetLex(); // )
     table_id_.AddTable();
-    BODY();
+    FUNC_BODY("main");
     table_id_.RemoveTable();
 }
 
-void SemanticAnalyzer::VARS_MDEF() {
+void SemanticAnalyzer::VARS_MDEF(std::vector<std::string> id_type) {
     if (lexem_->GetValue() == ";") {
         return;
     }
     if (lexem_->GetValue() == "=") {
         GetLex();
-        if (lexem_->GetValue() != "{") {
-            EXP_ONE();
-        }
-        else {
-            GetLex();
-            do {
-                EXP_ONE();
-            } while (lexem_->GetValue() == ",");
-            GetLex(); // }
+        std::vector<std::string> type;
+        type = EXP_ONE();
+        if (type != id_type) {
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " found type mismatch";
         }
     }
     while (lexem_->GetValue() == ",") {
@@ -102,32 +126,59 @@ void SemanticAnalyzer::VARS_MDEF() {
                 " the name is already used";
         }
         GetLex(); // id
+        std::vector<std::string> type;
         if (lexem_->GetValue() == "=") {
             GetLex();
-            if (lexem_->GetValue() != "{") {
-                EXP_ONE();
-            }
-            else {
-                GetLex();
-                do {
-                    EXP_ONE();
-                } while (lexem_->GetValue() == ",");
-                GetLex(); // }
+            type = EXP_ONE();
+            if (type != id_type) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " found type mismatch";
             }
         }
     }
 }
 
-void SemanticAnalyzer::FUNC() {
-    if (lexem_->GetValue() == "void") {
-        GetLex(); // void
+void SemanticAnalyzer::FUNC(std::string id_name) {
+    if (lexem_->GetValue() == ")") {
         GetLex(); // )
     }
     else if (lexem_->GetType() == LexemType::Type) {
-        GetLex();
+        if (lexem_->GetValue() == "array") {
+            current_type_ = { { "array" }, {} };
+            GetLex();
+            int counter = 0;
+            while (lexem_->GetValue() == "<") {
+                counter++;
+                GetLex(); // <
+                if (lexem_->GetValue() == "array") {
+                    GetLex(); // array
+                    current_type_.first.push_back("array");
+                }
+                else {
+                    current_type_.first.push_back(lexem_->GetValue());
+                    GetLex(); // type
+                    break;
+                }
+            }
+            while (counter) {
+                if (lexem_->GetValue() == ">>") counter -= 2;
+                else counter--;
+                GetLex();
+            }
+        }
+        else {
+            current_type_ = { { lexem_->GetValue() }, {} };
+            GetLex(); // type
+        }
         current_id_name_ = lexem_->GetValue();
         if (table_id_.CheckAddingID(current_id_name_)) {
-            table_id_.AddID({ current_type_ }, current_id_name_);
+            std::pair<std::vector<std::string>, std::vector<std::string>> new_type = table_id_.GetType(id_name);
+            for (int i = 0; i < (int)current_type_.first.size(); ++i) {
+                new_type.second.push_back(current_type_.first[i]);
+            }
+            table_id_.ChangeType(id_name, new_type);
+            table_id_.AddID(current_type_, current_id_name_);
         }
         else {
             throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -137,10 +188,41 @@ void SemanticAnalyzer::FUNC() {
         GetLex(); // id
         while (lexem_->GetValue() == ",") {
             GetLex();
-            GetLex(); // type
+            if (lexem_->GetValue() == "array") {
+                current_type_ = { { "array" }, {} };
+                GetLex();
+                int counter = 0;
+                while (lexem_->GetValue() == "<") {
+                    counter++;
+                    GetLex(); // <
+                    if (lexem_->GetValue() == "array") {
+                        GetLex(); // array
+                        current_type_.first.push_back("array");
+                    }
+                    else {
+                        current_type_.first.push_back(lexem_->GetValue());
+                        GetLex(); // type
+                        break;
+                    }
+                }
+                while (counter) {
+                    if (lexem_->GetValue() == ">>") counter -= 2;
+                    else counter--;
+                    GetLex();
+                }
+            }
+            else {
+                current_type_ = { { lexem_->GetValue() }, {} };
+                GetLex(); // type
+            }
             current_id_name_ = lexem_->GetValue();
             if (table_id_.CheckAddingID(current_id_name_)) {
-                table_id_.AddID({ current_type_ }, current_id_name_);
+                std::pair<std::vector<std::string>, std::vector<std::string>> new_type = table_id_.GetType(id_name);
+                for (int i = 0; i < (int)current_type_.first.size(); ++i) {
+                    new_type.second.push_back(current_type_.first[i]);
+                }
+                table_id_.ChangeType(id_name, new_type);
+                table_id_.AddID(current_type_, current_id_name_);
             }
             else {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -158,22 +240,56 @@ void SemanticAnalyzer::FUNC() {
         GetLex();
     }
     else if (lexem_->GetValue() == "{") {
-        BODY();
+        FUNC_BODY(id_name);
     }
 }
 
-void SemanticAnalyzer::BODY() {
+void SemanticAnalyzer::BODY(std::string func_name) {
     GetLex(); // {
     while (lexem_->GetValue() != "}") {
-        STATEMENT();
+        STATEMENT(func_name);
     }
     GetLex(); // }
 }
 
-void SemanticAnalyzer::STATEMENT() {
+void SemanticAnalyzer::FUNC_BODY(std::string func_name) {
+    GetLex(); // {
+    bool checker = false;
+    while (lexem_->GetValue() != "}") {
+        FUNC_STATEMENT(checker, func_name);
+    }
+    GetLex(); // }
+}
+
+void SemanticAnalyzer::STATEMENT(std::string func_name) {
     if (lexem_->GetType() == LexemType::Type) {
-        current_type_ = lexem_->GetValue();
-        GetLex(); // type
+        if (lexem_->GetValue() == "array") {
+            current_type_ = { { "array" }, {} };
+            GetLex();
+            int counter = 0;
+            while (lexem_->GetValue() == "<") {
+                counter++;
+                GetLex(); // <
+                if (lexem_->GetValue() == "array") {
+                    GetLex(); // array
+                    current_type_.first.push_back("array");
+                }
+                else {
+                    current_type_.first.push_back(lexem_->GetValue());
+                    GetLex(); // type
+                    break;
+                }
+            }
+            while (counter) {
+                if (lexem_->GetValue() == ">>") counter -= 2;
+                else counter--;
+                GetLex();
+            }
+        }
+        else {
+            current_type_ = { { lexem_->GetValue() }, {} };
+            GetLex(); // type
+        }
         current_id_name_ = lexem_->GetValue();
         if (table_id_.CheckAddingID(current_id_name_)) {
             table_id_.AddID({ current_type_ }, current_id_name_);
@@ -184,7 +300,7 @@ void SemanticAnalyzer::STATEMENT() {
                 " the name is already used";
         }
         GetLex(); // id
-        VARS_MDEF();
+        VARS_MDEF(current_type_.first);
         GetLex();
     }
     else if (lexem_->GetType() == LexemType::Identifier) {
@@ -196,7 +312,7 @@ void SemanticAnalyzer::STATEMENT() {
         }
         if (lex_index_ < (int)list_of_lexems_.size() && (list_of_lexems_[lex_index_]->GetValue() == "=")) {
             GetLex();
-            VARS_MDEF();
+            VARS_MDEF(table_id_.GetType(current_id_name_).first);
         }
         else {
             do {
@@ -210,15 +326,15 @@ void SemanticAnalyzer::STATEMENT() {
     }
     else if (lexem_->GetValue() == "if") {
         GetLex();
-        IF();
+        IF(func_name);
     }
     else if (lexem_->GetValue() == "switch") {
         GetLex();
-        SWITCH();
+        SWITCH(func_name);
     }
     else if (lexem_->GetValue() == "loop") {
         GetLex();
-        LOOP();
+        LOOP(func_name);
     }
     else if (lexem_->GetValue() == "break") {
         GetLex(); // break
@@ -241,7 +357,86 @@ void SemanticAnalyzer::STATEMENT() {
     else if (lexem_->GetValue() == "return") {
         GetLex();
         if (lexem_->GetValue() == ";") {
+            std::vector<std::string> type = { "void" };
+            type.insert(type.begin(), "function");
+            if (type != table_id_.GetType(func_name).first) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " function has a different type";
+            }
             GetLex();
+        }
+        else {
+            std::vector<std::string> type;
+            do {
+                if (lexem_->GetValue() == ",") {
+                    GetLex();
+                }
+                type = EXP_ONE();
+            } while (lexem_->GetValue() == ",");
+            type.insert(type.begin(), "function");
+            if (type != table_id_.GetType(func_name).first) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " function has a different type";
+            }
+            GetLex(); // ;
+        }
+    }
+}
+
+void SemanticAnalyzer::FUNC_STATEMENT(bool &check, std::string func_name) {
+    if (lexem_->GetType() == LexemType::Type) {
+        if (lexem_->GetValue() == "array") {
+            current_type_ = { { "array" }, {} };
+            GetLex();
+            int counter = 0;
+            while (lexem_->GetValue() == "<") {
+                counter++;
+                GetLex(); // <
+                if (lexem_->GetValue() == "array") {
+                    GetLex(); // array
+                    current_type_.first.push_back("array");
+                }
+                else {
+                    current_type_.first.push_back(lexem_->GetValue());
+                    GetLex(); // type
+                    break;
+                }
+            }
+            while (counter) {
+                if (lexem_->GetValue() == ">>") counter -= 2;
+                else counter--;
+                GetLex();
+            }
+        }
+        else {
+            current_type_ = { { lexem_->GetValue() }, {} };
+            GetLex(); // type
+        }
+        current_id_name_ = lexem_->GetValue();
+        if (table_id_.CheckAddingID(current_id_name_)) {
+            table_id_.AddID({ current_type_ }, current_id_name_);
+        }
+        else {
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " the name is already used";
+        }
+        GetLex(); // id
+        VARS_MDEF(current_type_.first);
+        GetLex();
+    }
+    else if (lexem_->GetType() == LexemType::Identifier) {
+        current_id_name_ = lexem_->GetValue();
+        if (!table_id_.CheckUsingID(current_id_name_)) {
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " ID was not declared";
+        }
+        if (lex_index_ < (int)list_of_lexems_.size() && (list_of_lexems_[lex_index_]->GetValue() == "=")) {
+            GetLex();
+            VARS_MDEF(table_id_.GetType(current_id_name_).first);
         }
         else {
             do {
@@ -250,6 +445,66 @@ void SemanticAnalyzer::STATEMENT() {
                 }
                 EXP_ONE();
             } while (lexem_->GetValue() == ",");
+        }
+        GetLex(); // ,
+    }
+    else if (lexem_->GetValue() == "if") {
+        GetLex();
+        IF(func_name);
+    }
+    else if (lexem_->GetValue() == "switch") {
+        GetLex();
+        SWITCH(func_name);
+    }
+    else if (lexem_->GetValue() == "loop") {
+        GetLex();
+        LOOP(func_name);
+    }
+    else if (lexem_->GetValue() == "break") {
+        GetLex(); // break
+        GetLex(); // ;
+    }
+    else if (lexem_->GetValue() == "continue") {
+        GetLex(); // continue
+        GetLex(); // ;
+    }
+    else if (lexem_->GetValue() == "cout") {
+        GetLex();
+        OUTPUT();
+        GetLex();
+    }
+    else if (lexem_->GetValue() == "cin") {
+        GetLex();
+        INPUT();
+        GetLex();
+    }
+    else if (lexem_->GetValue() == "return") {
+        check = true;
+        GetLex();
+        if (lexem_->GetValue() == ";") {
+            std::vector<std::string> type = { "void" };
+            type.insert(type.begin(), "function");
+            if (type != table_id_.GetType(func_name).first) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " function has a different type";
+            }
+            GetLex();
+        }
+        else {
+            std::vector<std::string> type;
+            do {
+                if (lexem_->GetValue() == ",") {
+                    GetLex();
+                }
+                type = EXP_ONE();
+            } while (lexem_->GetValue() == ",");
+            type.insert(type.begin(), "function");
+            if (type != table_id_.GetType(func_name).first) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " function has a different type";
+            }
             GetLex(); // ;
         }
     }
@@ -285,31 +540,56 @@ void SemanticAnalyzer::OUTPUT() {
     }
 }
 
-void SemanticAnalyzer::FUNC_CALL() {
+std::vector<std::string> SemanticAnalyzer::FUNC_CALL(std::string id_name) {
+    std::vector<std::string> parameter_types = table_id_.GetType(id_name).second;
+    std::vector<std::string> all_types;
+    int index = 0;
     GetLex(); // (
     while (lexem_->GetType() == LexemType::Identifier || lexem_->GetType() == LexemType::String ||
-        lexem_->GetType() == LexemType::Integer || lexem_->GetType() == LexemType::Float) {
+        lexem_->GetType() == LexemType::Integer || lexem_->GetType() == LexemType::Float || lexem_->GetValue() == "{" || lexem_->GetValue() == "(") {
+        std::vector<std::string> type;
         do {
             if (lexem_->GetValue() == ",") {
                 GetLex();
             }
-            EXP_ONE();
+            type = EXP_ONE();
         } while (lexem_->GetValue() == ",");
+        for (int i = 0; i < (int)type.size(); ++i) {
+            all_types.push_back(type[i]);
+        }
         GetLex(); // )
     }
+    GetLex(); // )
+    if (parameter_types != all_types) {
+        throw "line: " + std::to_string(lexem_->GetLine()) +
+            " column: " + std::to_string(lexem_->GetColumn() - 1) +
+            " incorrect function call";
+    }
+    return table_id_.GetType(id_name).first;
 }
 
-void SemanticAnalyzer::IF() {
+void SemanticAnalyzer::IF(std::string func_name) {
     GetLex(); // (
+    std::vector<std::string> type;
     do {
         if (lexem_->GetValue() == ",") {
             GetLex();
         }
-        EXP_ONE();
+        type = EXP_ONE();
     } while (lexem_->GetValue() == ",");
+    std::vector<std::string> bool_num = { "bool" };
+    if (type != bool_num) {
+        std::string error = "";
+        for (int i = 0; i < (int)type.size(); ++i) {
+            error += type[i] + " ";
+        }
+        throw "line: " + std::to_string(lexem_->GetLine()) +
+            " column: " + std::to_string(lexem_->GetColumn() - 1) +
+            " expected bool, but found " + error;
+    }
     GetLex(); // )
     table_id_.AddTable();
-    BODY();
+    BODY(func_name);
     table_id_.RemoveTable();
     while (lexem_->GetValue() == "elif") {
         GetLex(); // elif
@@ -318,43 +598,60 @@ void SemanticAnalyzer::IF() {
             if (lexem_->GetValue() == ",") {
                 GetLex();
             }
-            EXP_ONE();
+            type = EXP_ONE();
         } while (lexem_->GetValue() == ",");
+        std::vector<std::string> bool_num = { "bool" };
+        if (type != bool_num) {
+            std::string error = "";
+            for (int i = 0; i < (int)type.size(); ++i) {
+                error += type[i] + " ";
+            }
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " expected bool, but found " + error;
+        }
         GetLex(); // )
         table_id_.AddTable();
-        BODY();
+        BODY(func_name);
         table_id_.RemoveTable();
     }
     if (lexem_->GetValue() == "else") {
         GetLex(); // else
         table_id_.AddTable();
-        BODY();
+        BODY(func_name);
         table_id_.RemoveTable();
     }
 }
 
-void SemanticAnalyzer::SWITCH() {
+void SemanticAnalyzer::SWITCH(std::string func_name) {
     GetLex(); // (
+    std::vector<std::string> type;
     do {
         if (lexem_->GetValue() == ",") {
             GetLex();
         }
-        EXP_ONE();
+        type = EXP_ONE();
     } while (lexem_->GetValue() == ",");
     GetLex(); // )
     GetLex(); // {
+    std::vector<std::string> case_type;
     while (lexem_->GetValue() == "case") {
         GetLex();
         do {
             if (lexem_->GetValue() == ",") {
                 GetLex();
             }
-            EXP_ONE();
+            case_type = EXP_ONE();
         } while (lexem_->GetValue() == ",");
+        if (case_type != type) {
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " found type mismatch";
+        }
         GetLex(); // :
         while (lexem_->GetValue() != "case" && lexem_->GetValue() != "default" && lexem_->GetValue() != "}") {
             table_id_.AddTable();
-            STATEMENT();
+            STATEMENT(func_name);
             table_id_.RemoveTable();
         }
     }
@@ -363,14 +660,14 @@ void SemanticAnalyzer::SWITCH() {
         GetLex(); // :
         while (lexem_->GetValue() != "}") {
             table_id_.AddTable();
-            STATEMENT();
+            STATEMENT(func_name);
             table_id_.RemoveTable();
         }
     }
     GetLex(); // }
 }
 
-void SemanticAnalyzer::ID() {
+std::vector<std::string> SemanticAnalyzer::ID() {
     current_id_name_ = lexem_->GetValue();
     if (!table_id_.CheckUsingID(current_id_name_)) {
         throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -378,147 +675,417 @@ void SemanticAnalyzer::ID() {
             " ID was not declared";
     }
     GetLex();
+    return table_id_.GetType(current_id_name_).first;
 }
 
-void SemanticAnalyzer::TERM() {
+std::vector<std::string> SemanticAnalyzer::TERM() {
     if (lexem_->GetType() != LexemType::Integer && lexem_->GetType() != LexemType::Float &&
-        lexem_->GetType() != LexemType::String) {
-        GetLex(); // (
-        do {
-            if (lexem_->GetValue() == ",") {
-                GetLex();
+        lexem_->GetType() != LexemType::String && lexem_->GetValue() != "true" && lexem_->GetValue() != "false") {
+        std::vector<std::string> type;
+        if (lexem_->GetValue() == "(") {
+            GetLex(); // (
+            do {
+                if (lexem_->GetValue() == ",") {
+                    GetLex();
+                }
+                type = EXP_ONE();
+            } while (lexem_->GetValue() == ",");
+            GetLex(); // )
+            return type;
+        }
+        else {
+            GetLex(); // {
+            type.push_back("array");
+            do {
+                if (lexem_->GetValue() == ",") {
+                    GetLex();
+                }
+                std::vector<std::string> exp_type = EXP_ONE();
+                for (int i = 0; i < (int)exp_type.size(); ++i) {
+                    type.push_back(exp_type[i]);
+                }
+                type.push_back("disarray");
+            } while (lexem_->GetValue() == ",");
+            GetLex(); // }
+            type.push_back("disarray");
+            std::vector<std::string> final_type;
+            int count_brackets = 0;
+            for (int i = 0; i < (int)type.size(); ++i) {
+                if (i != (int)type.size() - 1) {
+                    if (type[i] != "array") {
+                        final_type.push_back(type[i]);
+                        break;
+                    }
+                    else {
+                        final_type.push_back(type[i]);
+                        count_brackets++;
+                    }
+                }
             }
-            EXP_ONE();
-        } while (lexem_->GetValue() == ",");
-        GetLex(); // )
+            for (int i = 0; i < (int)type.size(); ++i) {
+                if (type[i] == "array") {
+                    count_brackets--;
+                }
+                else if (type[i] == "disarray") {
+                    count_brackets++;
+                }
+                else if (type[i] != final_type[(int)final_type.size() - 1]) {
+                    throw "line: " + std::to_string(lexem_->GetLine()) +
+                        " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                        " too many types in one array";
+                }
+                if (count_brackets < 0) {
+                    throw "line: " + std::to_string(lexem_->GetLine()) +
+                        " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                        " incorrect array identification";
+                }
+            }
+            return final_type;
+        }
     }
-    else GetLex();
+    else {
+        if (lexem_->GetType() == LexemType::Integer) {
+            GetLex();
+            return { "int" };
+        } else if (lexem_->GetType() == LexemType::Float) {
+            GetLex();
+            return { "double" };
+        }
+        else if (lexem_->GetValue() == "true" && lexem_->GetValue() == "false") {
+            GetLex();
+            return { "bool" };
+        }
+        else {
+            GetLex();
+            return { "string" };
+        }
+    }
 }
 
-void SemanticAnalyzer::EXP_ZERO() {
-    EXP_ONE();
+std::vector<std::string> SemanticAnalyzer::EXP_ZERO() {
+    std::vector<std::string> type;
+    type = EXP_ONE();
     while (lexem_->GetValue() == ",") {
         GetLex();
-        EXP_ONE();
+        type = EXP_ONE();
     }
+    return type;
 }
 
-void SemanticAnalyzer::EXP_ONE() {
-    EXP_TWO();
-    while (lexem_->GetValue() == "+=" || lexem_->GetValue() == "-=" || lexem_->GetValue() == "*=" || lexem_->GetValue() == "/=" ||
-        lexem_->GetValue() == "%=" || lexem_->GetValue() == "=" || lexem_->GetValue() == ">>=" || lexem_->GetValue() == "<<=" ||
-        lexem_->GetValue() == "|=" || lexem_->GetValue() == "&=" || lexem_->GetValue() == "^=") {
-        GetLex();
-        EXP_TWO();
+std::vector<std::string> SemanticAnalyzer::EXP_ONE() {
+    std::vector<std::string> integer = { "int" };
+    std::vector<std::string> float_num = { "double" };
+    std::vector<std::string> string_num = { "string" };
+    std::vector<std::string> type_first = EXP_TWO();
+    bool checker = false;
+    while (lexem_->GetValue() == "+=" || lexem_->GetValue() == "-=" || lexem_->GetValue() == "*=" || lexem_->GetValue() == "/=" || lexem_->GetValue() == "%=") {
+        checker = true;
+        if (lexem_->GetValue() == "%=") {
+            GetLex();
+            std::vector<std::string> type_second = EXP_TWO();
+            if (!(type_first == type_second && type_first == integer)) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " found type mismatch";
+            }
+        }
+        else if (lexem_->GetValue() == "/=" || lexem_->GetValue() == "-=" || lexem_->GetValue() == "*=") {
+            GetLex();
+            std::vector<std::string> type_second = EXP_TWO();
+            if (!(type_first == type_second && (type_first == integer || type_first == float_num))) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " found type mismatch";
+            }
+        }
+        else {
+            GetLex();
+            std::vector<std::string> type_second = EXP_TWO();
+            if (!(type_first == type_second && (type_first == integer || type_first == float_num || type_first == string_num))) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " found type mismatch";
+            }
+        }
     }
+    return type_first;
 }
 
-void SemanticAnalyzer::EXP_TWO() {
-    EXP_THREE();
+std::vector<std::string> SemanticAnalyzer::EXP_TWO() {
+    std::vector<std::string> bool_num = { "bool" };
+    std::vector<std::string> type_first = EXP_THREE();
+    bool checker = false;
     while (lexem_->GetValue() == "||") {
+        checker = true;
         GetLex();
-        EXP_THREE();
+        std::vector<std::string> type_second = EXP_THREE();
+        if (!(type_first == type_second && type_first == bool_num)) {
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " found type mismatch";
+        }
     }
+    if (!checker) return type_first;
+    else return { "bool" };
 }
 
-void SemanticAnalyzer::EXP_THREE() {
-    EXP_FOUR();
+std::vector<std::string> SemanticAnalyzer::EXP_THREE() {
+    std::vector<std::string> bool_num = { "bool" };
+    std::vector<std::string> type_first = EXP_FOUR();
+    bool checker = false;
     while (lexem_->GetValue() == "&&") {
+        checker = true;
         GetLex();
-        EXP_FOUR();
+        std::vector<std::string> type_second = EXP_FOUR();
+        if (!(type_first == type_second && type_first == bool_num)) {
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " found type mismatch";
+        }
     }
+    if (!checker) return type_first;
+    else return { "bool" };
 }
 
-void SemanticAnalyzer::EXP_FOUR() {
-    EXP_FIVE();
-    while (lexem_->GetValue() == "|") {
+std::vector<std::string> SemanticAnalyzer::EXP_FOUR() {
+    return EXP_FIVE();
+    /*while (lexem_->GetValue() == "|") {
         GetLex();
         EXP_FIVE();
-    }
+    }*/
 }
 
-void SemanticAnalyzer::EXP_FIVE() {
-    EXP_SIX();
-    while (lexem_->GetValue() == "^") {
+std::vector<std::string> SemanticAnalyzer::EXP_FIVE() {
+    return EXP_SIX();
+    /*while (lexem_->GetValue() == "^") {
         GetLex();
         EXP_SIX();
-    }
+    }*/
 }
 
-void SemanticAnalyzer::EXP_SIX() {
-    EXP_SEVEN();
-    while (lexem_->GetValue() == "&") {
+std::vector<std::string> SemanticAnalyzer::EXP_SIX() {
+    return EXP_SEVEN();
+    /*while (lexem_->GetValue() == "&") {
         GetLex();
         EXP_SEVEN();
-    }
+    }*/
 }
 
-void SemanticAnalyzer::EXP_SEVEN() {
-    EXP_EIGHT();
+std::vector<std::string> SemanticAnalyzer::EXP_SEVEN() {
+    std::vector<std::string> integer = { "int" };
+    std::vector<std::string> float_num = { "double" };
+    std::vector<std::string> string_num = { "string" };
+    std::vector<std::string> bool_num = { "bool" };
+    std::vector<std::string> type_first = EXP_EIGHT();
+    bool checker = false;
     while (lexem_->GetValue() == "==" || lexem_->GetValue() == "!=") {
+        checker = true;
         GetLex();
-        EXP_EIGHT();
+        std::vector<std::string> type_second = EXP_EIGHT();
+        if (!(type_first == type_second && (type_first == integer || type_first == float_num || type_first == string_num || type_first == bool_num))) {
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " found type mismatch";
+        }
     }
+    if (!checker) return type_first;
+    else return { "bool" };
 }
 
-void SemanticAnalyzer::EXP_EIGHT() {
-    EXP_NINE();
+std::vector<std::string> SemanticAnalyzer::EXP_EIGHT() {
+    std::vector<std::string> integer = { "int" };
+    std::vector<std::string> float_num = { "double" };
+    std::vector<std::string> string_num = { "string" };
+    std::vector<std::string> type_first = EXP_NINE();
+    bool checker = false;
     while (lexem_->GetValue() == ">=" || lexem_->GetValue() == "<=" || lexem_->GetValue() == "<" || lexem_->GetValue() == ">") {
+        checker = true;
         GetLex();
-        EXP_NINE();
+        std::vector<std::string> type_second = EXP_NINE();
+        if (!(type_first == type_second && (type_first == integer || type_first == float_num || type_first == string_num))) {
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " found type mismatch";
+        }
     }
+    if (!checker) return type_first;
+    else return { "bool" };
 }
 
-void SemanticAnalyzer::EXP_NINE() {
-    EXP_TEN();
+std::vector<std::string> SemanticAnalyzer::EXP_NINE() {
+    return EXP_TEN();
     /*while (lexem_->GetValue() == ">>" || lexem_->GetValue() == "<<") {
         GetLex();
         EXP_TEN();
     }*/
 }
 
-void SemanticAnalyzer::EXP_TEN() {
-    EXP_ELEVEN();
+std::vector<std::string> SemanticAnalyzer::EXP_TEN() {
+    std::vector<std::string> integer = { "int" };
+    std::vector<std::string> float_num = { "double" };
+    std::vector<std::string> string_num = { "string" };
+    std::vector<std::string> type_first = EXP_ELEVEN();
+    bool checker = false;
     while (lexem_->GetValue() == "+" || lexem_->GetValue() == "-") {
-        GetLex();
-        EXP_ELEVEN();
+        checker = true;
+        if (lexem_->GetValue() != "+") {
+            GetLex();
+            std::vector<std::string> type_second = EXP_TWELVE();
+            if (!(type_first == type_second && (type_first == integer || type_first == float_num || type_first == string_num))) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " found type mismatch";
+            }
+        }
+        else {
+            GetLex();
+            std::vector<std::string> type_second = EXP_TWELVE();
+            if (!(type_first == type_second && type_first == integer || type_first == float_num)) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " found type mismatch";
+            }
+        }
     }
+    return type_first;
 }
 
-void SemanticAnalyzer::EXP_ELEVEN() {
-    EXP_TWELVE();
+std::vector<std::string> SemanticAnalyzer::EXP_ELEVEN() {
+    std::vector<std::string> integer = { "int" };
+    std::vector<std::string> float_num = { "double" };
+    std::vector<std::string> type_first = EXP_TWELVE();
+    bool checker = false;
     while (lexem_->GetValue() == "*" || lexem_->GetValue() == "/" || lexem_->GetValue() == "%") {
-        GetLex();
-        EXP_TWELVE();
+        checker = true;
+        if (lexem_->GetValue() != "%") {
+            GetLex();
+            std::vector<std::string> type_second = EXP_TWELVE();
+            if (!(type_first == type_second && (type_first == integer || type_first == float_num))) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " found type mismatch";
+            }
+        }
+        else {
+            GetLex();
+            std::vector<std::string> type_second = EXP_TWELVE();
+            if (!(type_first == type_second && type_first == integer)) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " found type mismatch";
+            }
+        }
     }
+    return type_first;
 }
 
-void SemanticAnalyzer::EXP_TWELVE() {
+std::vector<std::string> SemanticAnalyzer::EXP_TWELVE() {
+    bool checker = false;
+    std::string sign;
     while (lexem_->GetValue() == "+" || lexem_->GetValue() == "-" || lexem_->GetValue() == "++"
         || lexem_->GetValue() == "--" || lexem_->GetValue() == "!") {
+        checker = true;
+        sign = lexem_->GetValue();
         GetLex();
     }
-    EXP_THIRTEEN();
-}
-
-void SemanticAnalyzer::EXP_THIRTEEN() {
-    EXP_FOURTEEN();
-    while (lexem_->GetValue() == "++" || lexem_->GetValue() == "--") {
-        GetLex();
-    }
-    while (lexem_->GetValue() == "[") {
-        GetLex();
-        EXP_ZERO();
-        if (lexem_->GetValue() != "]") {
+    std::vector<std::string> type = EXP_THIRTEEN();
+    std::vector<std::string> integer = { "int" };
+    std::vector<std::string> bool_num = { "bool" };
+    std::vector<std::string> float_num = { "double" };
+    if (checker && (sign == "--" || sign == "++")) {
+        if (type != integer) {
+            std::string error = "";
+            for (int i = 0; i < (int)type.size(); ++i) {
+                error += type[i] + " ";
+            }
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
-                " expected ], but found " + lexem_->GetValue();
+                " expected integer, but found " + error;
+        }
+        else return { "int" };
+    } else if (checker && (sign == "-" || sign == "+")) {
+        if (type != integer && type != float_num) {
+            std::string error = "";
+            for (int i = 0; i < (int)type.size(); ++i) {
+                error += type[i] + " ";
+            }
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " expected integer, but found " + error;
+        }
+        else return type;
+    } else if (checker) {
+        if (type != bool_num) {
+            std::string error = "";
+            for (int i = 0; i < (int)type.size(); ++i) {
+                error += type[i] + " ";
+            }
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " expected integer, but found " + error;
+        }
+        else return { "bool" };
+    }
+    else return type;
+}
+
+std::vector<std::string> SemanticAnalyzer::EXP_THIRTEEN() {
+    std::vector<std::string> type = EXP_FOURTEEN();
+    std::vector<std::string> integer = { "int" };
+    int count_indexation = 0;
+    if (lexem_->GetValue() == "[") {
+        while (lexem_->GetValue() == "[") {
+            count_indexation++;
+            GetLex(); // [
+            std::vector<std::string> index_type = EXP_ZERO();
+            if (index_type != integer) {
+                std::string error = "";
+                for (int i = 0; i < (int)type.size(); ++i) {
+                    error += type[i] + " ";
+                }
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " expected integer, but found " + error;
+            }
+            GetLex(); // ]
+        }
+        for (int i = 0; i < (int)type.size(); ++i) {
+            if (type[i] == "array") {
+                count_indexation--;
+            }
+        }
+        if (count_indexation > 0) {
+            std::string error = "";
+            for (int i = 0; i < (int)type.size(); ++i) {
+                error += type[i] + " ";
+            }
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " expected more multidimensional array, but found " + error;
+        }
+        std::vector<std::string> new_type;
+        for (int i = 0; i < count_indexation; ++i) {
+            new_type.push_back("array");
+        }
+        new_type.push_back(type[(int)type.size() - 1]);
+        type = new_type;
+    }
+    while (lexem_->GetValue() == "++" || lexem_->GetValue() == "--") {
+        if (type != integer) {
+            std::string error = "";
+            for (int i = 0; i < (int)type.size(); ++i) {
+                error += type[i] + " ";
+            }
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " expected integer, but found " + error;
         }
         GetLex();
     }
+    return type;
 }
 
-void SemanticAnalyzer::EXP_FOURTEEN() {
+std::vector<std::string> SemanticAnalyzer::EXP_FOURTEEN() {
     if (lexem_->GetType() == LexemType::Identifier) {
         current_id_name_ = lexem_->GetValue();
         if (!table_id_.CheckUsingID(current_id_name_)) {
@@ -526,53 +1093,64 @@ void SemanticAnalyzer::EXP_FOURTEEN() {
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " ID was not declared";
         }
-        if (lex_index_ < (int)list_of_lexems_.size() && list_of_lexems_[lex_index_]->GetValue() == "(") {
-            GetLex();
-            FUNC_CALL();
+        else if (lex_index_ < (int)list_of_lexems_.size() && list_of_lexems_[lex_index_]->GetValue() == "(") {
+            GetLex(); // id
+            return FUNC_CALL(current_id_name_);
         }
         else {
             GetLex();
+            return table_id_.GetType(current_id_name_).first;
         }
         while (lexem_->GetValue() == "::") {
             GetLex();
-            ID();
+            return ID();
         }
-    }
-    else {
-        TERM();
+    } else {
+        return TERM();
     }
 }
 
-void SemanticAnalyzer::LOOP() {
+void SemanticAnalyzer::LOOP(std::string func_name) {
     if (lexem_->GetValue() == "for") {
         GetLex();
-        LOOP_FOR();
+        LOOP_FOR(func_name);
     }
     else if (lexem_->GetValue() == "foreach") {
         GetLex();
-        LOOP_FOREACH();
+        LOOP_FOREACH(func_name);
     }
     else if (lexem_->GetValue() == "while") {
         GetLex();
-        LOOP_WHILE();
+        LOOP_WHILE(func_name);
     }
 }
 
-void SemanticAnalyzer::LOOP_WHILE() {
+void SemanticAnalyzer::LOOP_WHILE(std::string func_name) {
     GetLex(); // (
+    std::vector<std::string> type;
     do {
         if (lexem_->GetValue() == ",") {
             GetLex();
         }
-        EXP_ONE();
+        type = EXP_ONE();
     } while (lexem_->GetValue() == ",");
+    std::vector<std::string> bool_num = { "bool" };
+    if (type != bool_num) {
+        std::string error = "";
+        for (int i = 0; i < (int)type.size(); ++i) {
+            error += type[i] + " ";
+        }
+        throw "line: " + std::to_string(lexem_->GetLine()) +
+            " column: " + std::to_string(lexem_->GetColumn() - 1) +
+            " expected bool, but found " + error;
+    }
     GetLex(); // )
     table_id_.AddTable();
-    BODY();
+    BODY(func_name);
     table_id_.RemoveTable();
 }
 
-void SemanticAnalyzer::LOOP_FOREACH() {
+void SemanticAnalyzer::LOOP_FOREACH(std::string func_name) {
     GetLex(); // (
     current_id_name_ = lexem_->GetValue();
     if (!table_id_.CheckUsingID(current_id_name_)) {
@@ -580,30 +1158,70 @@ void SemanticAnalyzer::LOOP_FOREACH() {
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " ID was not declared";
     }
-    GetLex();
+    GetLex(); // id
+    std::vector<std::string> id_type = table_id_.GetType(current_id_name_).first;
+    std::vector<std::string> exp_type;
     GetLex(); // ;
     do {
         if (lexem_->GetValue() == ",") {
             GetLex();
         }
-        EXP_ONE();
+        exp_type = EXP_ONE();
     } while (lexem_->GetValue() == ",");
+    if ((int)exp_type.size() <= (int)id_type.size() || (int)exp_type.size() - (int)id_type.size() > 1) {
+        throw "line: " + std::to_string(lexem_->GetLine()) +
+            " column: " + std::to_string(lexem_->GetColumn() - 1) +
+            " found type mismatch";
+    }
+    while ((int)exp_type.size() > (int)id_type.size()) {
+        exp_type.erase(exp_type.begin());
+    }
+    if (exp_type != id_type) {
+        throw "line: " + std::to_string(lexem_->GetLine()) +
+            " column: " + std::to_string(lexem_->GetColumn() - 1) +
+            " found type mismatch";
+    }
     GetLex(); // )
     table_id_.AddTable();
-    BODY();
+    BODY(func_name);
     table_id_.RemoveTable();
 }
 
-void SemanticAnalyzer::LOOP_FOR() {
+void SemanticAnalyzer::LOOP_FOR(std::string func_name) {
     table_id_.AddTable();
     GetLex(); // (
     // first part
     if (lexem_->GetValue() == ";") {
         GetLex();
     }
-    else if (lexem_->GetType() == LexemType::Type) {
-        current_type_ = lexem_->GetValue();
-        GetLex();
+    else { // type
+        if (lexem_->GetValue() == "array") {
+            current_type_ = { { "array" }, {} };
+            GetLex();
+            int counter = 0;
+            while (lexem_->GetValue() == "<") {
+                counter++;
+                GetLex(); // <
+                if (lexem_->GetValue() == "array") {
+                    GetLex(); // array
+                    current_type_.first.push_back("array");
+                }
+                else {
+                    current_type_.first.push_back(lexem_->GetValue());
+                    GetLex(); // type
+                    break;
+                }
+            }
+            while (counter) {
+                if (lexem_->GetValue() == ">>") counter -= 2;
+                else counter--;
+                GetLex();
+            }
+        }
+        else {
+            current_type_ = { { lexem_->GetValue() }, {} };
+            GetLex(); // type
+        }
         current_id_name_ = lexem_->GetValue();
         if (table_id_.CheckAddingID(current_id_name_)) {
             table_id_.AddID({ current_type_ }, current_id_name_);
@@ -614,16 +1232,7 @@ void SemanticAnalyzer::LOOP_FOR() {
                 " the name is already used";
         }
         GetLex();
-        VARS_MDEF();
-        GetLex(); // ;
-    }
-    else {
-        do {
-            if (lexem_->GetValue() == ",") {
-                GetLex();
-            }
-            EXP_ONE();
-        } while (lexem_->GetValue() == ",");
+        VARS_MDEF(current_type_.first);
         GetLex(); // ;
     }
     // second part
@@ -631,12 +1240,23 @@ void SemanticAnalyzer::LOOP_FOR() {
         GetLex();
     }
     else {
+        std::vector<std::string> type;
+        std::vector<std::string> bool_num = { "bool" };
         do {
             if (lexem_->GetValue() == ",") {
                 GetLex();
             }
-            EXP_ONE();
+            type = EXP_ONE();
         } while (lexem_->GetValue() == ",");
+        if (type != bool_num) {
+            std::string error = "";
+            for (int i = 0; i < (int)type.size(); ++i) {
+                error += type[i] + " ";
+            }
+            throw "line: " + std::to_string(lexem_->GetLine()) +
+                " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                " expected bool, but found " + error;
+        }
         GetLex(); // ;
     }
     //third part
@@ -652,16 +1272,11 @@ void SemanticAnalyzer::LOOP_FOR() {
         } while (lexem_->GetValue() == ",");
         GetLex(); // )
     }
-    BODY();
+    BODY(func_name);
     table_id_.RemoveTable();
 }
 
-void SemanticAnalyzer::DeclarationCheck() {
+void SemanticAnalyzer::Analyze() {
     GetLex();
     PROGRAM();
-}
-
-void SemanticAnalyzer::Analyze() {
-    DeclarationCheck();
-    //TypeCheck();
 }
