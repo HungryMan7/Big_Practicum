@@ -41,10 +41,6 @@ private:
     void EXP_EIGHT();
     void EXP_NINE();
     void EXP_TEN();
-    void EXP_ELEVEN();
-    void EXP_TWELVE();
-    void EXP_THIRTEEN();
-    void EXP_FOURTEEN();
     Lexem* lexem_;
     int lex_index_ = 0;
     std::vector<Lexem*> list_of_lexems_;
