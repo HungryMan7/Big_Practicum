@@ -13,6 +13,7 @@ private:
     void GetLex();
     void PROGRAM();
     void VARS_MDEF();
+    void ARRAY();
     void FUNC();
     void BODY();
     void FUNC_BODY();
