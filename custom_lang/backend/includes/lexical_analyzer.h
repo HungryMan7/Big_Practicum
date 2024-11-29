@@ -8,11 +8,10 @@
 
 class LexicalAnalyzer {
 public:
-    LexicalAnalyzer(std::string file_name);
     virtual ~LexicalAnalyzer();
-    void ReadFile(std::string file_name);
-    void Analyze();
-    void SetLanguage(const std::string& file_name);
+    void ReadFile(const std::string& filename);
+    void Analyze(const std::string& filename);
+    void SetLanguage(const std::string& filename);
     std::vector<Lexem*> GetLexems();
 
 private:

@@ -9,9 +9,7 @@
 
 class SemanticsAnalyzer {
 public:
-    SemanticsAnalyzer(std::string file_name);
-    virtual ~SemanticsAnalyzer();
-    void Analyze();
+    void Analyze(const std::vector<Lexem*>& list_of_lexems);
 
 private:
     void GetLex();
@@ -48,7 +46,6 @@ private:
     std::vector<std::string> EXP_TWELVE();
     std::vector<std::string> EXP_THIRTEEN();
     std::vector<std::string> EXP_FOURTEEN();
-    LexicalAnalyzer* la;
     Lexem* lexem_;
     int lex_index_ = 0;
     std::pair<std::vector<std::string>, std::vector<std::string>> current_type_;

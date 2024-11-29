@@ -2,20 +2,15 @@
 #include <fstream>
 #include <string>
 
-LexicalAnalyzer::LexicalAnalyzer(std::string file_name) {
-    bor_ = new Bor;
-    ReadFile(file_name);
-}
-
 LexicalAnalyzer::~LexicalAnalyzer() {
     delete bor_;
     delete program_;
 }
 
-void LexicalAnalyzer::ReadFile(std::string file_name) {
+void LexicalAnalyzer::ReadFile(const std::string& filename) {
     std::ifstream file;
     try {
-        file.open(file_name, std::ifstream::binary);
+        file.open(filename, std::ifstream::binary);
     }
     catch (const std::exception& e) {
         std::cout << "ERROR! " << e.what() << "\n";
@@ -31,15 +26,16 @@ void LexicalAnalyzer::ReadFile(std::string file_name) {
     file_size_ = text_size;
 }
 
-void LexicalAnalyzer::Analyze() {
+void LexicalAnalyzer::Analyze(const std::string& filename) {
+    ReadFile(filename);
     current_lexem_.clear();
     GetChar();
     H();
 }
 
-void LexicalAnalyzer::SetLanguage(const std::string& file_name) {
+void LexicalAnalyzer::SetLanguage(const std::string& filename) {
     if (bor_) delete bor_;
-    bor_ = new Bor(file_name);
+    bor_ = new Bor(filename);
 }
 
 std::vector<Lexem*> LexicalAnalyzer::GetLexems() {

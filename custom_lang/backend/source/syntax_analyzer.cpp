@@ -1,15 +1,10 @@
 #include "../includes/syntax_analyzer.h"
 #include <fstream>
 
-SyntaxAnalyzer::SyntaxAnalyzer(std::string file_name) {
-    la = new LexicalAnalyzer(file_name);
-    la->SetLanguage("resources/lang.txt");
-    la->Analyze();
-    list_of_lexems_ = la->GetLexems();
-}
-
-SyntaxAnalyzer::~SyntaxAnalyzer() {
-    delete la;
+void SyntaxAnalyzer::Analyze(const std::vector<Lexem*>& list_of_lexems) {
+    list_of_lexems_ = list_of_lexems;
+    GetLex();
+    PROGRAM();
 }
 
 void SyntaxAnalyzer::GetLex() {
@@ -1185,9 +1180,4 @@ void SyntaxAnalyzer::LOOP_FOR() {
         GetLex();
     }
     BODY();
-}
-
-void SyntaxAnalyzer::Analyze() {
-    GetLex();
-    PROGRAM();
 }

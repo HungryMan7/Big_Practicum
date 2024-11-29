@@ -1,15 +1,10 @@
 #include "../includes/semantics_analyzer.h"
 #include <fstream>
 
-SemanticsAnalyzer::SemanticsAnalyzer(std::string file_name) {
-    la = new LexicalAnalyzer(file_name);
-    la->SetLanguage("resources/lang.txt");
-    la->Analyze();
-    list_of_lexems_ = la->GetLexems();
-}
-
-SemanticsAnalyzer::~SemanticsAnalyzer() {
-    delete la;
+void SemanticsAnalyzer::Analyze(const std::vector<Lexem*>& list_of_lexems) {
+    list_of_lexems_ = list_of_lexems;
+    GetLex();
+    PROGRAM();
 }
 
 void SemanticsAnalyzer::GetLex() {
@@ -1274,9 +1269,4 @@ void SemanticsAnalyzer::LOOP_FOR(std::string func_name) {
     }
     BODY(func_name);
     table_id_.RemoveTable();
-}
-
-void SemanticsAnalyzer::Analyze() {
-    GetLex();
-    PROGRAM();
 }
