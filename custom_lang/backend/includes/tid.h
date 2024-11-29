@@ -23,4 +23,3 @@ public:
 private:
     TID_Node* root_;
 };
-

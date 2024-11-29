@@ -1,4 +1,4 @@
-#include "tid.h"
+#include "../includes/tid.h"
 
 TID::TID() {
     root_ = new TID_Node;
@@ -62,11 +62,14 @@ std::pair<std::vector<std::string>, std::vector<std::string>> TID::GetType(std::
         }
         temp = temp->pred;
     }
+    std::pair<std::vector<std::string>, std::vector<std::string>> return_value;
     for (auto id : temp->ID) {
         if (id.first == id_name) {
-            return id.second;
+            return_value = id.second;
+            break;
         }
     }
+    return return_value;
 }
 
 void TID::ChangeType(std::string id_name, std::pair<std::vector<std::string>, std::vector<std::string>> &new_type) {
