@@ -540,8 +540,10 @@ std::vector<std::string> SemanticsAnalyzer::FUNC_CALL(std::string id_name) {
     std::vector<std::string> all_types;
     int index = 0;
     GetLex(); // (
+    bool checker = false;
     while (lexem_->GetType() == LexemType::Identifier || lexem_->GetType() == LexemType::String ||
         lexem_->GetType() == LexemType::Integer || lexem_->GetType() == LexemType::Float || lexem_->GetValue() == "{" || lexem_->GetValue() == "(") {
+        checker = true;
         std::vector<std::string> type;
         do {
             if (lexem_->GetValue() == ",") {
@@ -554,7 +556,7 @@ std::vector<std::string> SemanticsAnalyzer::FUNC_CALL(std::string id_name) {
         }
         GetLex(); // )
     }
-    GetLex(); // )
+    if (!checker) GetLex(); // )
     if (parameter_types != all_types) {
         throw "line: " + std::to_string(lexem_->GetLine()) +
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
