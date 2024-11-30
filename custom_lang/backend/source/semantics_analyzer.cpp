@@ -550,10 +550,10 @@ std::vector<std::string> SemanticsAnalyzer::FUNC_CALL(std::string id_name) {
                 GetLex();
             }
             type = EXP_ONE();
+            for (int i = 0; i < (int)type.size(); ++i) {
+                all_types.push_back(type[i]);
+            }
         } while (lexem_->GetValue() == ",");
-        for (int i = 0; i < (int)type.size(); ++i) {
-            all_types.push_back(type[i]);
-        }
         GetLex(); // )
     }
     if (!checker) GetLex(); // )
