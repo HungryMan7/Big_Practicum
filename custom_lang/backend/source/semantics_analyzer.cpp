@@ -551,6 +551,7 @@ std::vector<std::string> SemanticsAnalyzer::FUNC_CALL(std::string id_name) {
             }
             type = EXP_ONE();
             for (int i = 0; i < (int)type.size(); ++i) {
+                if (type[i] == "function") continue;
                 all_types.push_back(type[i]);
             }
         } while (lexem_->GetValue() == ",");
