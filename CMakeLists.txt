@@ -9,4 +9,4 @@ file(GLOB ALL_FILES
 	 custom_lang/backend/resources/*.txt
 )
 
-add_executable (main ${ALL_FILES})
+add_executable (custom-lang ${ALL_FILES})
