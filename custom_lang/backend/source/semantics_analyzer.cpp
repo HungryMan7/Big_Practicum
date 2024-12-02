@@ -1,10 +1,6 @@
 #include "../includes/semantics_analyzer.h"
 #include <fstream>
 
-SemanticsAnalyzer::~SemanticsAnalyzer() {
-    delete table_id_;
-}
-
 void SemanticsAnalyzer::Analyze(const std::vector<Lexem*>& list_of_lexems) {
     list_of_lexems_ = list_of_lexems;
     GetLex();
@@ -55,22 +51,22 @@ void SemanticsAnalyzer::PROGRAM() {
         GetLex(); // id
         if (lexem_->GetValue() == "(") {
             GetLex();
-            if (table_id_->CheckAddingID(current_id_name_)) {
+            if (table_id_.CheckAddingID(current_id_name_)) {
                 current_type_.first.insert(current_type_.first.begin(), "function");
-                table_id_->AddID(current_type_, current_id_name_);
+                table_id_.AddID(current_type_, current_id_name_);
             }
             else {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " the name is already used";
             }
-            table_id_->AddTable();
+            table_id_.AddTable();
             FUNC(current_id_name_);
-            table_id_->RemoveTable();
+            table_id_.RemoveTable();
         }
         else {
-            if (table_id_->CheckAddingID(current_id_name_)) {
-                table_id_->AddID( current_type_ , current_id_name_);
+            if (table_id_.CheckAddingID(current_id_name_)) {
+                table_id_.AddID( current_type_ , current_id_name_);
             }
             else {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -82,9 +78,9 @@ void SemanticsAnalyzer::PROGRAM() {
         }
     }
     current_id_name_ = lexem_->GetValue();
-    if (table_id_->CheckAddingID(current_id_name_)) {
+    if (table_id_.CheckAddingID(current_id_name_)) {
         current_type_.first.insert(current_type_.first.begin(), "function");
-        table_id_->AddID(current_type_, current_id_name_);
+        table_id_.AddID(current_type_, current_id_name_);
     }
     else {
         throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -94,9 +90,9 @@ void SemanticsAnalyzer::PROGRAM() {
     GetLex(); // main
     GetLex(); // (
     GetLex(); // )
-    table_id_->AddTable();
+    table_id_.AddTable();
     FUNC_BODY("main");
-    table_id_->RemoveTable();
+    table_id_.RemoveTable();
 }
 
 void SemanticsAnalyzer::VARS_MDEF(std::vector<std::string> id_type) {
@@ -116,8 +112,8 @@ void SemanticsAnalyzer::VARS_MDEF(std::vector<std::string> id_type) {
     while (lexem_->GetValue() == ",") {
         GetLex();
         current_id_name_ = lexem_->GetValue();
-        if (table_id_->CheckAddingID(current_id_name_)) {
-            table_id_->AddID({ current_type_ }, current_id_name_);
+        if (table_id_.CheckAddingID(current_id_name_)) {
+            table_id_.AddID({ current_type_ }, current_id_name_);
         }
         else {
             throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -171,13 +167,13 @@ void SemanticsAnalyzer::FUNC(std::string id_name) {
             GetLex(); // type
         }
         current_id_name_ = lexem_->GetValue();
-        if (table_id_->CheckAddingID(current_id_name_)) {
-            std::pair<std::vector<std::string>, std::vector<std::string>> new_type = table_id_->GetType(id_name);
+        if (table_id_.CheckAddingID(current_id_name_)) {
+            std::pair<std::vector<std::string>, std::vector<std::string>> new_type = table_id_.GetType(id_name);
             for (int i = 0; i < (int)current_type_.first.size(); ++i) {
                 new_type.second.push_back(current_type_.first[i]);
             }
-            table_id_->ChangeType(id_name, new_type);
-            table_id_->AddID(current_type_, current_id_name_);
+            table_id_.ChangeType(id_name, new_type);
+            table_id_.AddID(current_type_, current_id_name_);
         }
         else {
             throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -215,13 +211,13 @@ void SemanticsAnalyzer::FUNC(std::string id_name) {
                 GetLex(); // type
             }
             current_id_name_ = lexem_->GetValue();
-            if (table_id_->CheckAddingID(current_id_name_)) {
-                std::pair<std::vector<std::string>, std::vector<std::string>> new_type = table_id_->GetType(id_name);
+            if (table_id_.CheckAddingID(current_id_name_)) {
+                std::pair<std::vector<std::string>, std::vector<std::string>> new_type = table_id_.GetType(id_name);
                 for (int i = 0; i < (int)current_type_.first.size(); ++i) {
                     new_type.second.push_back(current_type_.first[i]);
                 }
-                table_id_->ChangeType(id_name, new_type);
-                table_id_->AddID(current_type_, current_id_name_);
+                table_id_.ChangeType(id_name, new_type);
+                table_id_.AddID(current_type_, current_id_name_);
             }
             else {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -290,8 +286,8 @@ void SemanticsAnalyzer::STATEMENT(std::string func_name) {
             GetLex(); // type
         }
         current_id_name_ = lexem_->GetValue();
-        if (table_id_->CheckAddingID(current_id_name_)) {
-            table_id_->AddID({ current_type_ }, current_id_name_);
+        if (table_id_.CheckAddingID(current_id_name_)) {
+            table_id_.AddID({ current_type_ }, current_id_name_);
         }
         else {
             throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -304,14 +300,14 @@ void SemanticsAnalyzer::STATEMENT(std::string func_name) {
     }
     else if (lexem_->GetType() == LexemType::Identifier) {
         current_id_name_ = lexem_->GetValue();
-        if (!table_id_->CheckUsingID(current_id_name_)) {
+        if (!table_id_.CheckUsingID(current_id_name_)) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " ID was not declared";
         }
         if (lex_index_ < (int)list_of_lexems_.size() && (list_of_lexems_[lex_index_]->GetValue() == "=")) {
             GetLex();
-            VARS_MDEF(table_id_->GetType(current_id_name_).first);
+            VARS_MDEF(table_id_.GetType(current_id_name_).first);
         }
         else {
             do {
@@ -358,7 +354,7 @@ void SemanticsAnalyzer::STATEMENT(std::string func_name) {
         if (lexem_->GetValue() == ";") {
             std::vector<std::string> type = { "void" };
             type.insert(type.begin(), "function");
-            if (type != table_id_->GetType(func_name).first) {
+            if (type != table_id_.GetType(func_name).first) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " function has a different type";
@@ -374,7 +370,7 @@ void SemanticsAnalyzer::STATEMENT(std::string func_name) {
                 type = EXP_ONE();
             } while (lexem_->GetValue() == ",");
             type.insert(type.begin(), "function");
-            if (type != table_id_->GetType(func_name).first) {
+            if (type != table_id_.GetType(func_name).first) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " function has a different type";
@@ -414,8 +410,8 @@ void SemanticsAnalyzer::FUNC_STATEMENT(bool &check, std::string func_name) {
             GetLex(); // type
         }
         current_id_name_ = lexem_->GetValue();
-        if (table_id_->CheckAddingID(current_id_name_)) {
-            table_id_->AddID({ current_type_ }, current_id_name_);
+        if (table_id_.CheckAddingID(current_id_name_)) {
+            table_id_.AddID({ current_type_ }, current_id_name_);
         }
         else {
             throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -428,14 +424,14 @@ void SemanticsAnalyzer::FUNC_STATEMENT(bool &check, std::string func_name) {
     }
     else if (lexem_->GetType() == LexemType::Identifier) {
         current_id_name_ = lexem_->GetValue();
-        if (!table_id_->CheckUsingID(current_id_name_)) {
+        if (!table_id_.CheckUsingID(current_id_name_)) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " ID was not declared";
         }
         if (lex_index_ < (int)list_of_lexems_.size() && (list_of_lexems_[lex_index_]->GetValue() == "=")) {
             GetLex();
-            VARS_MDEF(table_id_->GetType(current_id_name_).first);
+            VARS_MDEF(table_id_.GetType(current_id_name_).first);
         }
         else {
             do {
@@ -483,7 +479,7 @@ void SemanticsAnalyzer::FUNC_STATEMENT(bool &check, std::string func_name) {
         if (lexem_->GetValue() == ";") {
             std::vector<std::string> type = { "void" };
             type.insert(type.begin(), "function");
-            if (type != table_id_->GetType(func_name).first) {
+            if (type != table_id_.GetType(func_name).first) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " function has a different type";
@@ -499,7 +495,7 @@ void SemanticsAnalyzer::FUNC_STATEMENT(bool &check, std::string func_name) {
                 type = EXP_ONE();
             } while (lexem_->GetValue() == ",");
             type.insert(type.begin(), "function");
-            if (type != table_id_->GetType(func_name).first) {
+            if (type != table_id_.GetType(func_name).first) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " function has a different type";
@@ -512,7 +508,7 @@ void SemanticsAnalyzer::FUNC_STATEMENT(bool &check, std::string func_name) {
 void SemanticsAnalyzer::INPUT() {
     GetLex(); // >>
     current_id_name_ = lexem_->GetValue();
-    if (!table_id_->CheckUsingID(current_id_name_)) {
+    if (!table_id_.CheckUsingID(current_id_name_)) {
         throw "line: " + std::to_string(lexem_->GetLine()) +
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " ID was not declared";
@@ -521,7 +517,7 @@ void SemanticsAnalyzer::INPUT() {
     while (lexem_->GetValue() == ">>") {
         GetLex(); // >>
         current_id_name_ = lexem_->GetValue();
-        if (!table_id_->CheckUsingID(current_id_name_)) {
+        if (!table_id_.CheckUsingID(current_id_name_)) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " ID was not declared";
@@ -540,7 +536,7 @@ void SemanticsAnalyzer::OUTPUT() {
 }
 
 std::vector<std::string> SemanticsAnalyzer::FUNC_CALL(std::string id_name) {
-    std::vector<std::string> parameter_types = table_id_->GetType(id_name).second;
+    std::vector<std::string> parameter_types = table_id_.GetType(id_name).second;
     std::vector<std::string> all_types;
     int index = 0;
     GetLex(); // (
@@ -567,7 +563,7 @@ std::vector<std::string> SemanticsAnalyzer::FUNC_CALL(std::string id_name) {
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " incorrect function call";
     }
-    return table_id_->GetType(id_name).first;
+    return table_id_.GetType(id_name).first;
 }
 
 void SemanticsAnalyzer::IF(std::string func_name) {
@@ -590,9 +586,9 @@ void SemanticsAnalyzer::IF(std::string func_name) {
             " expected bool, but found " + error;
     }
     GetLex(); // )
-    table_id_->AddTable();
+    table_id_.AddTable();
     BODY(func_name);
-    table_id_->RemoveTable();
+    table_id_.RemoveTable();
     while (lexem_->GetValue() == "elif") {
         GetLex(); // elif
         GetLex(); // (
@@ -613,15 +609,15 @@ void SemanticsAnalyzer::IF(std::string func_name) {
                 " expected bool, but found " + error;
         }
         GetLex(); // )
-        table_id_->AddTable();
+        table_id_.AddTable();
         BODY(func_name);
-        table_id_->RemoveTable();
+        table_id_.RemoveTable();
     }
     if (lexem_->GetValue() == "else") {
         GetLex(); // else
-        table_id_->AddTable();
+        table_id_.AddTable();
         BODY(func_name);
-        table_id_->RemoveTable();
+        table_id_.RemoveTable();
     }
 }
 
@@ -652,18 +648,18 @@ void SemanticsAnalyzer::SWITCH(std::string func_name) {
         }
         GetLex(); // :
         while (lexem_->GetValue() != "case" && lexem_->GetValue() != "default" && lexem_->GetValue() != "}") {
-            table_id_->AddTable();
+            table_id_.AddTable();
             STATEMENT(func_name);
-            table_id_->RemoveTable();
+            table_id_.RemoveTable();
         }
     }
     if (lexem_->GetValue() == "default") {
         GetLex();
         GetLex(); // :
         while (lexem_->GetValue() != "}") {
-            table_id_->AddTable();
+            table_id_.AddTable();
             STATEMENT(func_name);
-            table_id_->RemoveTable();
+            table_id_.RemoveTable();
         }
     }
     GetLex(); // }
@@ -671,13 +667,13 @@ void SemanticsAnalyzer::SWITCH(std::string func_name) {
 
 std::vector<std::string> SemanticsAnalyzer::ID() {
     current_id_name_ = lexem_->GetValue();
-    if (!table_id_->CheckUsingID(current_id_name_)) {
+    if (!table_id_.CheckUsingID(current_id_name_)) {
         throw "line: " + std::to_string(lexem_->GetLine()) +
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " ID was not declared";
     }
     GetLex();
-    return table_id_->GetType(current_id_name_).first;
+    return table_id_.GetType(current_id_name_).first;
 }
 
 std::vector<std::string> SemanticsAnalyzer::TERM() {
@@ -1090,7 +1086,7 @@ std::vector<std::string> SemanticsAnalyzer::EXP_THIRTEEN() {
 std::vector<std::string> SemanticsAnalyzer::EXP_FOURTEEN() {
     if (lexem_->GetType() == LexemType::Identifier) {
         current_id_name_ = lexem_->GetValue();
-        if (!table_id_->CheckUsingID(current_id_name_)) {
+        if (!table_id_.CheckUsingID(current_id_name_)) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " ID was not declared";
@@ -1101,7 +1097,7 @@ std::vector<std::string> SemanticsAnalyzer::EXP_FOURTEEN() {
         }
         else {
             GetLex();
-            return table_id_->GetType(current_id_name_).first;
+            return table_id_.GetType(current_id_name_).first;
         }
         while (lexem_->GetValue() == "::") {
             GetLex();
@@ -1147,21 +1143,21 @@ void SemanticsAnalyzer::LOOP_WHILE(std::string func_name) {
             " expected bool, but found " + error;
     }
     GetLex(); // )
-    table_id_->AddTable();
+    table_id_.AddTable();
     BODY(func_name);
-    table_id_->RemoveTable();
+    table_id_.RemoveTable();
 }
 
 void SemanticsAnalyzer::LOOP_FOREACH(std::string func_name) {
     GetLex(); // (
     current_id_name_ = lexem_->GetValue();
-    if (!table_id_->CheckUsingID(current_id_name_)) {
+    if (!table_id_.CheckUsingID(current_id_name_)) {
         throw "line: " + std::to_string(lexem_->GetLine()) +
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " ID was not declared";
     }
     GetLex(); // id
-    std::vector<std::string> id_type = table_id_->GetType(current_id_name_).first;
+    std::vector<std::string> id_type = table_id_.GetType(current_id_name_).first;
     std::vector<std::string> exp_type;
     GetLex(); // ;
     do {
@@ -1184,13 +1180,13 @@ void SemanticsAnalyzer::LOOP_FOREACH(std::string func_name) {
             " found type mismatch";
     }
     GetLex(); // )
-    table_id_->AddTable();
+    table_id_.AddTable();
     BODY(func_name);
-    table_id_->RemoveTable();
+    table_id_.RemoveTable();
 }
 
 void SemanticsAnalyzer::LOOP_FOR(std::string func_name) {
-    table_id_->AddTable();
+    table_id_.AddTable();
     GetLex(); // (
     // first part
     if (lexem_->GetValue() == ";") {
@@ -1225,8 +1221,8 @@ void SemanticsAnalyzer::LOOP_FOR(std::string func_name) {
             GetLex(); // type
         }
         current_id_name_ = lexem_->GetValue();
-        if (table_id_->CheckAddingID(current_id_name_)) {
-            table_id_->AddID({ current_type_ }, current_id_name_);
+        if (table_id_.CheckAddingID(current_id_name_)) {
+            table_id_.AddID({ current_type_ }, current_id_name_);
         }
         else {
             throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -1275,5 +1271,5 @@ void SemanticsAnalyzer::LOOP_FOR(std::string func_name) {
         GetLex(); // )
     }
     BODY(func_name);
-    table_id_->RemoveTable();
+    table_id_.RemoveTable();
 }
