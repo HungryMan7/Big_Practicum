@@ -9,12 +9,11 @@
 | <digit>  ::= '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
 
 # type & id
-| <type> ::= "int" | "double" | "bool" | "char" | "array" | "string"
+| <type> ::= "int" | "double" | "bool" | "char" | "array" '<' <type> '>' | "string"
 | <id>   ::= <letter> { [ <letter> | <digit> ] }
 
 # expressions & statements
 | <term>      ::= <id> | <literal> | '(' <ex0> ')'
-| <expr-list> ::= [ <ex0> | <ex0> ',' <expr-list> ]
 | <statement> ::= <vars-mdef> ';' | <ex0> ';' | <if> | <switch> ';' | <loop> | <func-call> ';' | "break" ';' | "continue" ';' | <input> | <output> | "return" | eps
 | <body>      ::= '{' { <statement> } '}'
 
@@ -42,10 +41,8 @@
   
 # vars
 | <vars-mdef>  ::= <type> <vars>
-| <vars>       ::= <var-def> | <var-def> ',' <vars>
-| <var-def>    ::= <id> | <id> '=' <ex0> | <id> "={" <expr-list> '}'
-| <var-array>  ::= <id> [';' | '=' '{' <ex0> '}' ';']
-| <var-common> ::= <var-array> | <var-def>
+| <vars>       ::= <var-def> ',' <vars> | <var-def>
+| <var-def>    ::= <id> | <id> '=' <ex0> | <id> '=' '{' <ex0> '}' | <id> '[' <ex0> ']' | <id> '[' <ex0> ']' '=' '{' <ex0> '}'
 
 # input and output
 | <output> ::= "cout" "<<" <id> | <literal> { "<<" <id> | <literal> } ';'

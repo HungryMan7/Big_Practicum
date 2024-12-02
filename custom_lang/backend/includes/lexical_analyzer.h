@@ -1,17 +1,17 @@
 #pragma once
-#include "lexem.h"
-#include "bor.h"
 #include <iostream>
 #include <vector>
+#include <string>
+
+#include "lexem.h"
+#include "bor.h"
 
 class LexicalAnalyzer {
 public:
-    LexicalAnalyzer(std::string file_name);
     virtual ~LexicalAnalyzer();
-    void ReadFile(std::string file_name);
-    void Analyze();
-    void SetLanguage(std::string file_name);
-    Bor* GetLanguage();
+    void ReadFile(const std::string& filename);
+    void Analyze(const std::string& filename);
+    void SetLanguage(const std::string& filename);
     std::vector<Lexem*> GetLexems();
 
 private:
@@ -27,7 +27,7 @@ private:
     void BRK();
     void SPC();
     void FLOAT();
-    char* program_, * iter_;
+    char* program_, *iter_;
     int file_size_, current_size_ = 0;
     int line_number_ = 1, current_line_number_ = 1;
     int current_column_number_ = 1;

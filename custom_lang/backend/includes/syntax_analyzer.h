@@ -7,17 +7,18 @@
 
 class SyntaxAnalyzer {
 public:
-    SyntaxAnalyzer(std::string file_name);
-    virtual ~SyntaxAnalyzer();
-    void Analyze();
+    void Analyze(const std::vector<Lexem*>& list_of_lexems);
 
 private:
     void GetLex();
     void PROGRAM();
     void VARS_MDEF();
+    void ARRAY();
     void FUNC();
     void BODY();
+    void FUNC_BODY();
     void STATEMENT();
+    void FUNC_STATEMENT(bool &check);
     void FUNC_CALL();
     void IF();
     void LOOP();
@@ -40,11 +41,6 @@ private:
     void EXP_EIGHT();
     void EXP_NINE();
     void EXP_TEN();
-    void EXP_ELEVEN();
-    void EXP_TWELVE();
-    void EXP_THIRTEEN();
-    void EXP_FOURTEEN();
-    LexicalAnalyzer* la;
     Lexem* lexem_;
     int lex_index_ = 0;
     std::vector<Lexem*> list_of_lexems_;
