@@ -1,3 +1,7 @@
 int main() {
-	return 0;
+    array<bool>a;
+    array<int>prkg;
+    int s;
+    a[prkg[s]];
+    return 0;
 }
