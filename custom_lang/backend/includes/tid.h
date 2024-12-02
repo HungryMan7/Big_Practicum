@@ -11,6 +11,7 @@ struct TID_Node {
 class TID {
 public:
     TID();
+    virtual ~TID();
     bool CheckAddingID(std::string id_name);
     bool CheckUsingID(std::string id_name);
     void AddID(std::pair<std::vector<std::string>, std::vector<std::string>> type, std::string id_name);
@@ -19,7 +20,7 @@ public:
     void RemoveTable();
     void AddTable();
     TID_Node* ReturnCurrentTable();
-    ~TID();
+
 private:
     TID_Node* root_;
 };

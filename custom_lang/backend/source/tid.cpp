@@ -4,6 +4,10 @@ TID::TID() {
     root_ = new TID_Node;
 }
 
+TID::~TID() {
+    delete root_;
+}
+
 void TID::AddID(std::pair<std::vector<std::string>, std::vector<std::string>> type, std::string id_name) {
     root_->ID[id_name] = type;
 }
@@ -101,8 +105,4 @@ void TID::RemoveTable() {
 
 TID_Node* TID::ReturnCurrentTable() {
     return root_;
-}
-
-TID::~TID() {
-    delete root_;
 }

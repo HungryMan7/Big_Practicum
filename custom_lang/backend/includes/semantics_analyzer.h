@@ -9,6 +9,7 @@
 
 class SemanticsAnalyzer {
 public:
+    virtual ~SemanticsAnalyzer();
     void Analyze(const std::vector<Lexem*>& list_of_lexems);
 
 private:
@@ -51,5 +52,5 @@ private:
     std::pair<std::vector<std::string>, std::vector<std::string>> current_type_;
     std::string current_id_name_;
     std::vector<Lexem*> list_of_lexems_;
-    TID table_id_;
+    TID* table_id_;
 };
