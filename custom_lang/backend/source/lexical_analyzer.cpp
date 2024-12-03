@@ -354,8 +354,8 @@ void LexicalAnalyzer::SIGN() {
         if (symbol_ == '=') {
             current_lexem_.push_back(symbol_);
             GetChar();
-        } else if (current_symbol_ == ">" && symbol_ == '>' ||
-                   current_symbol_ == "<" && symbol_ == '<') {
+        } else if (current_lexem_ == ">" && symbol_ == '>' ||
+                   current_lexem_ == "<" && symbol_ == '<') {
             current_lexem_.push_back(symbol_);
             GetChar();
             if (symbol_ == '=') {

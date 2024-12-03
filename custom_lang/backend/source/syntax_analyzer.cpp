@@ -438,7 +438,7 @@ void SyntaxAnalyzer::OUTPUT() {
     if (lexem_->GetValue() != "<<") {
         throw "line: " + std::to_string(lexem_->GetLine()) +
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " expected >>, but found " + lexem_->GetValue();
+            " expected <<, but found " + lexem_->GetValue();
     }
     GetLex();
     if (lexem_->GetType() != LexemType::Identifier && lexem_->GetType() != LexemType::String &&
@@ -454,7 +454,7 @@ void SyntaxAnalyzer::OUTPUT() {
         if (lexem_->GetValue() != "<<") {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
-                " expected >>, but found " + lexem_->GetValue();
+                " expected <<, but found " + lexem_->GetValue();
         }
         GetLex();
         if (lexem_->GetType() != LexemType::Identifier && lexem_->GetType() != LexemType::String &&
