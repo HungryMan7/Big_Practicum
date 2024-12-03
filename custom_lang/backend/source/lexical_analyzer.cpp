@@ -354,6 +354,14 @@ void LexicalAnalyzer::SIGN() {
         if (symbol_ == '=') {
             current_lexem_.push_back(symbol_);
             GetChar();
+        } else if (current_symbol_ == ">" && symbol_ == '>' ||
+                   current_symbol_ == "<" && symbol_ == '<') {
+            current_lexem_.push_back(symbol_);
+            GetChar();
+            if (symbol_ == '=') {
+                current_lexem_.push_back(symbol_);
+                GetChar();
+            }
         }
         Lexem* new_lexem = new Lexem;
         new_lexem->SetType(LexemType::Operator);
