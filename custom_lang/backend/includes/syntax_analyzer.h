@@ -7,13 +7,12 @@
 
 class SyntaxAnalyzer {
 public:
-    void Analyze(const std::vector<Lexem*>& list_of_lexems);
+    void Analyze(std::vector<Lexem*> list_of_lexems);
 
 private:
     void GetLex();
     void PROGRAM();
     void VARS_MDEF();
-    void ARRAY();
     void FUNC();
     void BODY();
     void FUNC_BODY();
@@ -41,6 +40,10 @@ private:
     void EXP_EIGHT();
     void EXP_NINE();
     void EXP_TEN();
+    void EXP_ELEVEN();
+    void EXP_TWELVE();
+    void EXP_THIRTEEN();
+    void EXP_FOURTEEN();
     Lexem* lexem_;
     int lex_index_ = 0;
     std::vector<Lexem*> list_of_lexems_;
