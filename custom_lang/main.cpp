@@ -1,6 +1,3 @@
-#include <iostream>
-#include <vector>
-
 #include "backend/includes/lexical_analyzer.h"
 #include "backend/includes/syntax_analyzer.h"
 #include "backend/includes/semantics_analyzer.h"
