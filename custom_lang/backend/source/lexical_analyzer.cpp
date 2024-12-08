@@ -54,7 +54,7 @@ void LexicalAnalyzer::GetChar() {
                     " wrong lexem";
             }
         }
-        return;
+        throw "OK!\n";
     }
     symbol_ = *iter_;
     ++iter_;
