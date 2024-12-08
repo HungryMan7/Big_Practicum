@@ -18,7 +18,7 @@ void SemanticsAnalyzer::GetLex() {
 }
 
 void SemanticsAnalyzer::PROGRAM() {
-    while (3 + 5 == 8) {
+    while (true) {
         if (lexem_->GetValue() == "array") {
             current_type_ = { { "array" }, {} };
             GetLex();

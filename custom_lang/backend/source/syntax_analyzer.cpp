@@ -18,7 +18,7 @@ void SyntaxAnalyzer::GetLex() {
 }
 
 void SyntaxAnalyzer::PROGRAM() {
-    while (3 + 5 == 8) {
+    while (true) {
         if (lexem_->GetType() != LexemType::Type) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
