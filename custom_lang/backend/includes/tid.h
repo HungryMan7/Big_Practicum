@@ -1,30 +1,34 @@
 #pragma once
+#include <iostream>
 #include <vector>
 #include <string>
 #include <map>
 
-struct Variable {
-    Variable(std::string name, std::pair<std::vector<std::string>, std::vector<std::string>> type):
-    name_(name), type_(type), value_("") {}
-    Variable(std::string name, std::pair<std::vector<std::string>, std::vector<std::string>> type, 
-    std::string value): name_(name), type_(type), value_(value) {}
+enum class Variant { Variable, Function };
+
+class Cell {
+public:
+    void setName(std::string);
+    void setVariant(Variant);
+    void setType(std::pair<std::vector<std::string>, std::vector<std::string>>);
+    void setValue(std::string);
+    std::string getName();
+    Variant getVariant();
+    std::pair<std::vector<std::string>, std::vector<std::string>> getType();
+    std::string getValue();
+
+private:
     std::string name_;
+    Variant variant_;
     std::pair<std::vector<std::string>, std::vector<std::string>> type_;
     std::string value_;
 };
 
-struct Function {
-    Function(std::string name, std::pair<std::vector<std::string>, std::vector<std::string>> type):
-    name_(name), type_(type) {}
-    std::string name_;
-    std::pair<std::vector<std::string>, std::vector<std::string>> type_;
-};
-
-struct TID_Node {
+class TID_Node {
+public:
+    virtual ~TID_Node();
     TID_Node* pred = nullptr, *next = nullptr;
-    std::map<std::string, Variable*> VAR;
-    std::map<std::string, Function*> FUNC;
-    std::map<std::string, std::pair<std::vector<std::string>, std::vector<std::string>>> ID;
+    std::map<std::string, Cell*> ID;
 };
 
 class TID {
