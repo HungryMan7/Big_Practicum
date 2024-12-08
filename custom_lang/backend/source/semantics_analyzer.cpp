@@ -353,7 +353,6 @@ void SemanticsAnalyzer::STATEMENT(std::string func_name) {
         GetLex();
         if (lexem_->GetValue() == ";") {
             std::vector<std::string> type = { "void" };
-            type.insert(type.begin(), "function");
             if (type != table_id_.GetType(func_name).first) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
@@ -369,7 +368,6 @@ void SemanticsAnalyzer::STATEMENT(std::string func_name) {
                 }
                 type = EXP_ONE();
             } while (lexem_->GetValue() == ",");
-            type.insert(type.begin(), "function");
             if (type != table_id_.GetType(func_name).first) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
@@ -478,7 +476,6 @@ void SemanticsAnalyzer::FUNC_STATEMENT(bool &check, std::string func_name) {
         GetLex();
         if (lexem_->GetValue() == ";") {
             std::vector<std::string> type = { "void" };
-            type.insert(type.begin(), "function");
             if (type != table_id_.GetType(func_name).first) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
@@ -494,7 +491,6 @@ void SemanticsAnalyzer::FUNC_STATEMENT(bool &check, std::string func_name) {
                 }
                 type = EXP_ONE();
             } while (lexem_->GetValue() == ",");
-            type.insert(type.begin(), "function");
             if (type != table_id_.GetType(func_name).first) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +

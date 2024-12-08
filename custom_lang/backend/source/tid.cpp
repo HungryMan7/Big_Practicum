@@ -61,9 +61,6 @@ TID::~TID() {
 }
 
 void TID::AddID(std::pair<std::vector<std::string>, std::vector<std::string>> type, std::string id_name) {
-    if (!type.first.empty()) {
-        throw "type is empty";
-    }
     Cell* new_cell = new Cell;
     new_cell->setName(id_name);
     if (type.first[0] == "function") {
