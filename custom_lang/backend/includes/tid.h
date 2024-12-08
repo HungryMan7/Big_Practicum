@@ -8,6 +8,7 @@ enum class Variant { Variable, Function };
 
 class Cell {
 public:
+    virtual ~Cell();
     void setName(std::string);
     void setVariant(Variant);
     void setType(std::pair<std::vector<std::string>, std::vector<std::string>>);

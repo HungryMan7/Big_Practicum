@@ -1,5 +1,12 @@
 #include "../includes/tid.h"
 
+Cell::~Cell() {
+    name_.clear();
+    type_.first.clear();
+    type_.second.clear();
+    value_.clear();
+}
+
 void Cell::setName(std::string name) {
     name_ = name;
 }
