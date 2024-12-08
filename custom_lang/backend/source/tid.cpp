@@ -87,7 +87,36 @@ bool TID::IsUsed(std::string id_name) {
     return false;
 }
 
-std::pair<std::vector<std::string>, std::vector<std::string>> TID::GetType(std::string id_name) {
+void TID::setType(std::string id_name, std::pair<std::vector<std::string>, std::vector<std::string>> &new_type) {
+    TID_Node* temp = root_;
+    do {
+        for (auto id : temp->ID) {
+            if (id.first == id_name) {
+                id.second->setType(new_type);
+                break;
+            }
+        }
+        temp = temp->pred;
+    } while(temp);
+}
+
+void TID::setValue(std::string id_name, std::string value) {
+    TID_Node* temp = root_;
+    do {
+        for (auto id : temp->ID) {
+            if (id.first == id_name) {
+                if (id.second->getVariant() == Variant::Function) {
+                    throw "function doesn't contain any values";
+                }
+                id.second->setValue(value);
+                break;
+            }
+        }
+        temp = temp->pred;
+    } while(temp);
+}
+
+std::pair<std::vector<std::string>, std::vector<std::string>> TID::getType(std::string id_name) {
     TID_Node* temp = root_;
     std::pair<std::vector<std::string>, std::vector<std::string>> return_value;
     do {
@@ -100,19 +129,6 @@ std::pair<std::vector<std::string>, std::vector<std::string>> TID::GetType(std::
         temp = temp->pred;
     } while (temp);
     return return_value;
-}
-
-void TID::ChangeType(std::string id_name, std::pair<std::vector<std::string>, std::vector<std::string>> &new_type) {
-    TID_Node* temp = root_;
-    do {
-        for (auto id : temp->ID) {
-            if (id.first == id_name) {
-                id.second->setType(new_type);
-                break;
-            }
-        }
-        temp = temp->pred;
-    } while(temp);
 }
 
 void TID::AddTable() {

@@ -38,8 +38,9 @@ public:
     virtual ~TID();
     bool IsUsed(std::string id_name);
     void AddID(std::pair<std::vector<std::string>, std::vector<std::string>> type, std::string id_name);
-    std::pair<std::vector<std::string>, std::vector<std::string>> GetType(std::string id_name);
-    void ChangeType(std::string id_name, std::pair<std::vector<std::string>, std::vector<std::string>> &new_type);
+    void setType(std::string id_name, std::pair<std::vector<std::string>, std::vector<std::string>> &new_type);
+    void setValue(std::string id_name, std::string value);
+    std::pair<std::vector<std::string>, std::vector<std::string>> getType(std::string id_name);
     void AddTable();
     void RemoveTable();
     TID_Node* ReturnCurrentTable();
