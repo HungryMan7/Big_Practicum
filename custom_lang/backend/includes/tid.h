@@ -40,8 +40,8 @@ public:
     void AddID(std::pair<std::vector<std::string>, std::vector<std::string>> type, std::string id_name);
     std::pair<std::vector<std::string>, std::vector<std::string>> GetType(std::string id_name);
     void ChangeType(std::string id_name, std::pair<std::vector<std::string>, std::vector<std::string>> &new_type);
-    void RemoveTable();
     void AddTable();
+    void RemoveTable();
     TID_Node* ReturnCurrentTable();
 
 private:

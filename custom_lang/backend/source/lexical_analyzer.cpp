@@ -5,6 +5,9 @@
 LexicalAnalyzer::~LexicalAnalyzer() {
     delete bor_;
     delete program_;
+    for (auto lexem : list_of_lexems_) {
+        delete lexem;
+    }
 }
 
 void LexicalAnalyzer::ReadFile(const std::string& filename) {

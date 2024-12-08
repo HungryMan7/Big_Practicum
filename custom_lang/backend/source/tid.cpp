@@ -90,14 +90,6 @@ bool TID::IsUsed(std::string id_name) {
     return false;
 }
 
-void TID::AddTable() {
-    TID_Node *add_table = new TID_Node;
-    TID_Node* temp = root_;
-    root_->next = add_table;
-    root_ = root_->next;
-    root_->pred = temp;
-}
-
 std::pair<std::vector<std::string>, std::vector<std::string>> TID::GetType(std::string id_name) {
     TID_Node* temp = root_;
     std::pair<std::vector<std::string>, std::vector<std::string>> return_value;
@@ -124,6 +116,14 @@ void TID::ChangeType(std::string id_name, std::pair<std::vector<std::string>, st
         }
         temp = temp->pred;
     } while(temp);
+}
+
+void TID::AddTable() {
+    TID_Node *add_table = new TID_Node;
+    TID_Node* temp = root_;
+    root_->next = add_table;
+    root_ = root_->next;
+    root_->pred = temp;
 }
 
 void TID::RemoveTable() {

@@ -2,6 +2,9 @@
 #include <fstream>
 
 void SyntaxAnalyzer::Analyze(std::vector<Lexem*> list_of_lexems) {
+    if (!list_of_lexems.size()) {
+        throw "the file is empty";
+    }
     list_of_lexems_ = list_of_lexems;
     GetLex();
     PROGRAM();
