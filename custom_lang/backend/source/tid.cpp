@@ -9,28 +9,11 @@ TID::~TID() {
 }
 
 void TID::AddID(std::pair<std::vector<std::string>, std::vector<std::string>> type, std::string id_name) {
+    // Variable* new_var = new Variable(id_name, type);
     root_->ID[id_name] = type;
 }
 
-bool TID::CheckAddingID(std::string id_name) {
-    TID_Node* temp = root_;
-    while (temp->pred != nullptr) {
-        for (auto id : temp->ID) {
-            if (id.first == id_name) {
-                return false;
-            }
-        }
-        temp = temp->pred;
-    }
-    for (auto id : temp->ID) {
-        if (id.first == id_name) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool TID::CheckUsingID(std::string id_name) {
+bool TID::IsUsed(std::string id_name) {
     TID_Node* temp = root_;
     while (temp->pred != nullptr) {
         for (auto id : temp->ID) {
