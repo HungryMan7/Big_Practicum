@@ -6,97 +6,6 @@
 #include "../includes/lexem.h"
 #include "../includes/tid.h"
 
-class RPN {
-public:
-    RPN() { chain_ = {}; }
-    ~RPN() { chain_ = {}; }
-    void Analyze(const std::vector<Lexem*>& list_of_lexems);
-    std::vector<RPN_Node*> GetChain() { return chain_; }
-    void AddCell(Lexem* element, std::vector<RPN_Node*> &container) { 
-        RPN_Node* new_cell = new RPN_Node(element, table_id);
-        if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
-    }
-    void AddCell(std::vector<RPN_Node*> arg, std::vector<std::vector<int>> value, std::vector<RPN_Node*> &container) { 
-        RPN_Node* new_cell = new RPN_Node(value, arg);
-        if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
-    }
-    void AddCell(bool flag, std::vector<RPN_Node*> &container) { 
-        RPN_Node* new_cell = new RPN_Node(flag);
-        if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
-    }
-    void AddCell(int number, std::vector<RPN_Node*> &container) { 
-        RPN_Node* new_cell = new RPN_Node(number);
-        if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
-    }
-    void AddCell(Lexem* lex, std::string utility, std::vector<RPN_Node*> &container) { 
-        RPN_Node* new_cell = new RPN_Node(lex, utility);
-        if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
-    }
-    void AddCell(bool flag, int number, std::vector<RPN_Node*> &container) { 
-        RPN_Node* new_cell = new RPN_Node(flag, number);
-        if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
-    }
-    void AddCell(std::string empty_label, std::vector<RPN_Node*> &container) { 
-        RPN_Node* new_cell = new RPN_Node(empty_label);
-        if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
-    }
-    void AddCell(RPN_Node* new_cell, std::vector<RPN_Node*> &container) {
-        if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
-    }
-    void setTID(TID table) { table_id = table; }
-private:
-    void GetLex();
-    void PROGRAM();
-    void VARS_MDEF();
-    void FUNC(std::string id_name);
-    void BODY(std::string func_name);
-    void FUNC_BODY(std::string func_name);
-    void STATEMENT(std::string func_name);
-    void FUNC_STATEMENT(bool &check, std::string func_name);
-    void FUNC_CALL(std::string id_name);
-    void IF(std::string func_name);
-    void LOOP(std::string func_name);
-    void LOOP_WHILE(std::string func_name);
-    void LOOP_FOR(std::string func_name);
-    void LOOP_FOREACH(std::string func_name);
-    void SWITCH(std::string func_name);
-    void ID();
-    void TERM();
-    void INPUT();
-    void OUTPUT();
-    void EXP_ZERO(std::vector<RPN_Node*> &container);
-    void EXP_ONE(std::vector<RPN_Node*> &container);
-    void EXP_TWO(std::vector<RPN_Node*> &container);
-    void EXP_THREE(std::vector<RPN_Node*> &container);
-    void EXP_FOUR(std::vector<RPN_Node*> &container);
-    void EXP_FIVE(std::vector<RPN_Node*> &container);
-    void EXP_SIX(std::vector<RPN_Node*> &container);
-    void EXP_SEVEN(std::vector<RPN_Node*> &container);
-    void EXP_EIGHT(std::vector<RPN_Node*> &container);
-    void EXP_NINE(std::vector<RPN_Node*> &container);
-    void EXP_TEN(std::vector<RPN_Node*> &container);
-    void EXP_ELEVEN(std::vector<RPN_Node*> &container);
-    void EXP_TWELVE(std::vector<RPN_Node*> &container);
-    void EXP_THIRTEEN(std::vector<RPN_Node*> &container);
-    void EXP_FOURTEEN(std::vector<RPN_Node*> &container);
-    void FindFunction(std::string id_name);
-    Lexem* lexem_;
-    TID table_id;
-    RPN_TID value_table;
-    int lex_index_ = 0;
-    int label_number_ = 0;
-    std::vector<Lexem*> list_of_lexems_;
-    std::vector<RPN_Node*> chain_;
-};
-
 struct RPN_Node {
 public:
     RPN_Node(Lexem* lex, TID table) {
@@ -190,4 +99,95 @@ public:
 
 private:
     RPN_TID_Node* root_;
+};
+
+class RPN {
+public:
+    RPN() { chain_ = {}; }
+    ~RPN() { chain_ = {}; }
+    void Analyze(const std::vector<Lexem*>& list_of_lexems);
+    std::vector<RPN_Node*> GetChain() { return chain_; }
+    void AddCell(Lexem* element, std::vector<RPN_Node*> &container) { 
+        RPN_Node* new_cell = new RPN_Node(element, table_id);
+        if (container.size() == 0) chain_.push_back(new_cell); 
+        else container.push_back(new_cell);
+    }
+    void AddCell(std::vector<RPN_Node*> arg, std::vector<std::vector<int>> value, std::vector<RPN_Node*> &container) { 
+        RPN_Node* new_cell = new RPN_Node(value, arg);
+        if (container.size() == 0) chain_.push_back(new_cell); 
+        else container.push_back(new_cell);
+    }
+    void AddCell(bool flag, std::vector<RPN_Node*> &container) { 
+        RPN_Node* new_cell = new RPN_Node(flag);
+        if (container.size() == 0) chain_.push_back(new_cell); 
+        else container.push_back(new_cell);
+    }
+    void AddCell(int number, std::vector<RPN_Node*> &container) { 
+        RPN_Node* new_cell = new RPN_Node(number);
+        if (container.size() == 0) chain_.push_back(new_cell); 
+        else container.push_back(new_cell);
+    }
+    void AddCell(Lexem* lex, std::string utility, std::vector<RPN_Node*> &container) { 
+        RPN_Node* new_cell = new RPN_Node(lex, utility);
+        if (container.size() == 0) chain_.push_back(new_cell); 
+        else container.push_back(new_cell);
+    }
+    void AddCell(bool flag, int number, std::vector<RPN_Node*> &container) { 
+        RPN_Node* new_cell = new RPN_Node(flag, number);
+        if (container.size() == 0) chain_.push_back(new_cell); 
+        else container.push_back(new_cell);
+    }
+    void AddCell(std::string empty_label, std::vector<RPN_Node*> &container) { 
+        RPN_Node* new_cell = new RPN_Node(empty_label);
+        if (container.size() == 0) chain_.push_back(new_cell); 
+        else container.push_back(new_cell);
+    }
+    void AddCell(RPN_Node* new_cell, std::vector<RPN_Node*> &container) {
+        if (container.size() == 0) chain_.push_back(new_cell); 
+        else container.push_back(new_cell);
+    }
+    void setTID(TID table) { table_id = table; }
+private:
+    void GetLex();
+    void PROGRAM();
+    void VARS_MDEF();
+    void FUNC(std::string id_name);
+    void BODY(std::string func_name);
+    void FUNC_BODY(std::string func_name);
+    void STATEMENT(std::string func_name);
+    void FUNC_STATEMENT(bool &check, std::string func_name);
+    void FUNC_CALL(std::string id_name);
+    void IF(std::string func_name);
+    void LOOP(std::string func_name);
+    void LOOP_WHILE(std::string func_name);
+    void LOOP_FOR(std::string func_name);
+    void LOOP_FOREACH(std::string func_name);
+    void SWITCH(std::string func_name);
+    void ID();
+    void TERM();
+    void INPUT();
+    void OUTPUT();
+    void EXP_ZERO(std::vector<RPN_Node*> &container);
+    void EXP_ONE(std::vector<RPN_Node*> &container);
+    void EXP_TWO(std::vector<RPN_Node*> &container);
+    void EXP_THREE(std::vector<RPN_Node*> &container);
+    void EXP_FOUR(std::vector<RPN_Node*> &container);
+    void EXP_FIVE(std::vector<RPN_Node*> &container);
+    void EXP_SIX(std::vector<RPN_Node*> &container);
+    void EXP_SEVEN(std::vector<RPN_Node*> &container);
+    void EXP_EIGHT(std::vector<RPN_Node*> &container);
+    void EXP_NINE(std::vector<RPN_Node*> &container);
+    void EXP_TEN(std::vector<RPN_Node*> &container);
+    void EXP_ELEVEN(std::vector<RPN_Node*> &container);
+    void EXP_TWELVE(std::vector<RPN_Node*> &container);
+    void EXP_THIRTEEN(std::vector<RPN_Node*> &container);
+    void EXP_FOURTEEN(std::vector<RPN_Node*> &container);
+    void FindFunction(std::string id_name);
+    Lexem* lexem_;
+    TID table_id;
+    RPN_TID value_table;
+    int lex_index_ = 0;
+    int label_number_ = 0;
+    std::vector<Lexem*> list_of_lexems_;
+    std::vector<RPN_Node*> chain_;
 };
