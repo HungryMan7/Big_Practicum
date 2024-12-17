@@ -29,6 +29,9 @@ void Cell::setColumn(int column) {
 }
     
 void Cell::setValue(std::string value) {
+    if (variant_ == Variant::Function) {
+        throw "function doesn't receive any values";
+    }
     value_ = value;
 }
 
@@ -87,7 +90,7 @@ void TID::AddID(std::pair<std::vector<std::string>, std::pair<std::vector<std::s
         new_cell->setVariant(Variant::Variable);
     }
     new_cell->setType(type);
-    new_cell->setValue("");
+    if (new_cell->getVariant() == Variant::Variable) new_cell->setValue("");
     new_cell->setLine(line);
     new_cell->setColumn(column);
     root_->ID[id_name] = new_cell;

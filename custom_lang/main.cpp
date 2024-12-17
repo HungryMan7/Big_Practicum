@@ -28,8 +28,8 @@ int main() {
     } catch (char const* e) {
         std::cout << e;
     }
-
     RPN* rpn_chain = new RPN;
     rpn_chain->Analyze(la->GetLexems());
     std::vector<RPN_Node*> answer = rpn_chain->GetChain();
+    return 0;
 }
