@@ -999,15 +999,17 @@ void RPN_TID::setValue(std::string id_name, RPN_Node* value) {
 }
 //OK
 RPN_Node* RPN_TID::getValue(std::string id_name) {
+    RPN_Node* value = new RPN_Node("empty_label");
     RPN_TID_Node* temp = root_;
     do {
         for (auto id : temp->ID) {
             if (id.first == id_name) {
-                return id.second;
+                value = id.second;
             }
         }
         temp = temp->pred;
     } while(temp);
+    return value;
 }
 //OK
 void RPN_TID::AddTable() {
