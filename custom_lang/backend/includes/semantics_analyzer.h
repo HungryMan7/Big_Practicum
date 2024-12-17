@@ -48,7 +48,8 @@ private:
     std::vector<std::string> EXP_FOURTEEN();
     Lexem* lexem_;
     int lex_index_ = 0;
-    std::pair<std::vector<std::string>, std::vector<std::string>> current_type_;
+    int id_line_, id_column_;
+    std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> current_type_;
     std::string current_id_name_;
     std::vector<Lexem*> list_of_lexems_;
     TID table_id_;

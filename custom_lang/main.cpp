@@ -1,6 +1,7 @@
 #include "backend/includes/lexical_analyzer.h"
 #include "backend/includes/syntax_analyzer.h"
 #include "backend/includes/semantics_analyzer.h"
+#include "backend/includes/rpn.h"
 
 int main() {
     LexicalAnalyzer* la = new LexicalAnalyzer;
@@ -21,4 +22,8 @@ int main() {
     catch (const std::string e) {
         std::cout << e;
     }
+
+    RPN* rpn_chain = new RPN;
+    rpn_chain->Analyze(la->GetLexems());
+    std::vector<RPN_Node*> answer = rpn_chain->GetChain();
 }

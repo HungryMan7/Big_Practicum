@@ -11,17 +11,22 @@ public:
     virtual ~Cell();
     void setName(std::string);
     void setVariant(Variant);
-    void setType(std::pair<std::vector<std::string>, std::vector<std::string>>);
+    void setType(std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>>);
     void setValue(std::string);
+    void setLine(int line);
+    void setColumn(int line);
     std::string getName();
     Variant getVariant();
-    std::pair<std::vector<std::string>, std::vector<std::string>> getType();
+    int getLine();
+    int getColumn();
+    std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> getType();
     std::string getValue();
 
 private:
+    int line_, column_;
     std::string name_;
     Variant variant_;
-    std::pair<std::vector<std::string>, std::vector<std::string>> type_;
+    std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> type_;
     std::string value_;
 };
 
@@ -37,10 +42,10 @@ public:
     TID();
     virtual ~TID();
     bool IsUsed(std::string id_name);
-    void AddID(std::pair<std::vector<std::string>, std::vector<std::string>> type, std::string id_name);
-    void setType(std::string id_name, std::pair<std::vector<std::string>, std::vector<std::string>> &new_type);
+    void AddID(std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> type, std::string id_name, int line, int column);
+    void setType(std::string id_name, std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> &new_type);
     void setValue(std::string id_name, std::string value);
-    std::pair<std::vector<std::string>, std::vector<std::string>> getType(std::string id_name);
+    std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> getType(std::string id_name);
     void AddTable();
     void RemoveTable();
     TID_Node* ReturnCurrentTable();

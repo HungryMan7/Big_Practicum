@@ -3,7 +3,8 @@
 Cell::~Cell() {
     name_.clear();
     type_.first.clear();
-    type_.second.clear();
+    type_.second.first.clear();
+    type_.second.second.clear();
     value_.clear();
 }
 
@@ -15,8 +16,16 @@ void Cell::setVariant(Variant variant) {
     variant_ = variant;
 }
 
-void Cell::setType(std::pair<std::vector<std::string>, std::vector<std::string>> type) {
+void Cell::setType(std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> type) {
     type_ = type;
+}
+
+void Cell::setLine(int line) {
+    line_ = line;
+}
+
+void Cell::setColumn(int column) {
+    column_ = column;
 }
     
 void Cell::setValue(std::string value) {
@@ -31,8 +40,16 @@ Variant Cell::getVariant() {
     return variant_;
 }
 
-std::pair<std::vector<std::string>, std::vector<std::string>> Cell::getType() {
+std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> Cell::getType() {
     return type_;
+}
+
+int Cell::getLine() {
+    return line_;
+}
+
+int Cell::getColumn() {
+    return column_;
 }
 
 std::string Cell::getValue() {
@@ -60,7 +77,7 @@ TID::~TID() {
     }
 }
 
-void TID::AddID(std::pair<std::vector<std::string>, std::vector<std::string>> type, std::string id_name) {
+void TID::AddID(std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> type, std::string id_name, int line, int column) {
     Cell* new_cell = new Cell;
     new_cell->setName(id_name);
     if (type.first[0] == "function") {
@@ -71,6 +88,8 @@ void TID::AddID(std::pair<std::vector<std::string>, std::vector<std::string>> ty
     }
     new_cell->setType(type);
     new_cell->setValue("");
+    new_cell->setLine(line);
+    new_cell->setColumn(column);
     root_->ID[id_name] = new_cell;
 }
 
@@ -87,7 +106,7 @@ bool TID::IsUsed(std::string id_name) {
     return false;
 }
 
-void TID::setType(std::string id_name, std::pair<std::vector<std::string>, std::vector<std::string>> &new_type) {
+void TID::setType(std::string id_name, std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> &new_type) {
     TID_Node* temp = root_;
     do {
         for (auto id : temp->ID) {
@@ -116,9 +135,9 @@ void TID::setValue(std::string id_name, std::string value) {
     } while(temp);
 }
 
-std::pair<std::vector<std::string>, std::vector<std::string>> TID::getType(std::string id_name) {
+std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> TID::getType(std::string id_name) {
     TID_Node* temp = root_;
-    std::pair<std::vector<std::string>, std::vector<std::string>> return_value;
+    std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> return_value;
     do {
         for (auto id : temp->ID) {
             if (id.first == id_name) {
