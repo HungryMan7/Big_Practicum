@@ -109,12 +109,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab69e573285533fcd772525a3a41f6059" id="r_ab69e573285533fcd772525a3a41f6059"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBor.html#ab69e573285533fcd772525a3a41f6059">Bor</a> (std::string file_name)</td></tr>
 <tr class="separator:ab69e573285533fcd772525a3a41f6059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8efc9fe965bf9a7ba2d21d74b9641dd" id="r_af8efc9fe965bf9a7ba2d21d74b9641dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBor.html#af8efc9fe965bf9a7ba2d21d74b9641dd">AddString</a> (std::string &amp;s)</td></tr>
+<tr class="memdesc:af8efc9fe965bf9a7ba2d21d74b9641dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create trie by file.  <br /></td></tr>
 <tr class="separator:af8efc9fe965bf9a7ba2d21d74b9641dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c0d0c94c1651e717c3c6b24308437a0" id="r_a1c0d0c94c1651e717c3c6b24308437a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBor.html#a1c0d0c94c1651e717c3c6b24308437a0">FindString</a> (std::string &amp;s)</td></tr>
+<tr class="memdesc:a1c0d0c94c1651e717c3c6b24308437a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add string to trie.  <br /></td></tr>
 <tr class="separator:a1c0d0c94c1651e717c3c6b24308437a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3f914e5dca4b8c43dfb701d12ed1d94" id="r_af3f914e5dca4b8c43dfb701d12ed1d94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBor.html#af3f914e5dca4b8c43dfb701d12ed1d94">Delete</a> (<a class="el" href="structNode.html">Node</a> *vertex)</td></tr>
+<tr class="memdesc:af3f914e5dca4b8c43dfb701d12ed1d94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find string in trie.  <br /></td></tr>
 <tr class="separator:af3f914e5dca4b8c43dfb701d12ed1d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7dee3bae642cb1537bacf7258788cd62" id="r_a7dee3bae642cb1537bacf7258788cd62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBor.html#a7dee3bae642cb1537bacf7258788cd62">~Bor</a> ()</td></tr>
+<tr class="memdesc:a7dee3bae642cb1537bacf7258788cd62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete trie.  <br /></td></tr>
 <tr class="separator:a7dee3bae642cb1537bacf7258788cd62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -172,7 +176,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   18</span>    }</div>
 <div class="line"><span class="lineno">   19</span>    file.close();</div>
 <div class="line"><span class="lineno">   20</span>}</div>
-<div class="ttc" id="aclassBor_html_af8efc9fe965bf9a7ba2d21d74b9641dd"><div class="ttname"><a href="classBor.html#af8efc9fe965bf9a7ba2d21d74b9641dd">Bor::AddString</a></div><div class="ttdeci">void AddString(std::string &amp;s)</div><div class="ttdef"><b>Definition</b> <a href="bor_8cpp_source.html#l00022">bor.cpp:22</a></div></div>
+<div class="ttc" id="aclassBor_html_af8efc9fe965bf9a7ba2d21d74b9641dd"><div class="ttname"><a href="classBor.html#af8efc9fe965bf9a7ba2d21d74b9641dd">Bor::AddString</a></div><div class="ttdeci">void AddString(std::string &amp;s)</div><div class="ttdoc">Create trie by file.</div><div class="ttdef"><b>Definition</b> <a href="bor_8cpp_source.html#l00022">bor.cpp:22</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -191,11 +195,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Delete trie. </p>
+
 <p class="definition">Definition at line <a class="el" href="bor_8cpp_source.html#l00059">59</a> of file <a class="el" href="bor_8cpp_source.html">bor.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   59</span>          {</div>
 <div class="line"><span class="lineno">   60</span>    <a class="code hl_function" href="classBor.html#af3f914e5dca4b8c43dfb701d12ed1d94">Delete</a>(root);</div>
 <div class="line"><span class="lineno">   61</span>}</div>
-<div class="ttc" id="aclassBor_html_af3f914e5dca4b8c43dfb701d12ed1d94"><div class="ttname"><a href="classBor.html#af3f914e5dca4b8c43dfb701d12ed1d94">Bor::Delete</a></div><div class="ttdeci">void Delete(Node *vertex)</div><div class="ttdef"><b>Definition</b> <a href="bor_8cpp_source.html#l00049">bor.cpp:49</a></div></div>
+<div class="ttc" id="aclassBor_html_af3f914e5dca4b8c43dfb701d12ed1d94"><div class="ttname"><a href="classBor.html#af3f914e5dca4b8c43dfb701d12ed1d94">Bor::Delete</a></div><div class="ttdeci">void Delete(Node *vertex)</div><div class="ttdoc">Find string in trie.</div><div class="ttdef"><b>Definition</b> <a href="bor_8cpp_source.html#l00049">bor.cpp:49</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -215,6 +221,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Create trie by file. </p>
 
 <p class="definition">Definition at line <a class="el" href="bor_8cpp_source.html#l00022">22</a> of file <a class="el" href="bor_8cpp_source.html">bor.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   22</span>                                {</div>
@@ -249,6 +257,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Find string in trie. </p>
+
 <p class="definition">Definition at line <a class="el" href="bor_8cpp_source.html#l00049">49</a> of file <a class="el" href="bor_8cpp_source.html">bor.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   49</span>                             {</div>
 <div class="line"><span class="lineno">   50</span>    <span class="keywordflow">if</span> (!vertex) <span class="keywordflow">return</span>;</div>
@@ -277,6 +287,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Add string to trie. </p>
 
 <p class="definition">Definition at line <a class="el" href="bor_8cpp_source.html#l00034">34</a> of file <a class="el" href="bor_8cpp_source.html">bor.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   34</span>                                 {</div>
