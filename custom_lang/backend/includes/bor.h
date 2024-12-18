@@ -16,10 +16,14 @@ struct Node {
 class Bor {
 public:
     Bor();
-    Bor(std::string file_name); /*! Create trie by file */
-    void AddString(std::string &s); /*! Add string to trie */
-    bool FindString(std::string &s); /*! Find string in trie */
-    void Delete(Node* vertex); /*! Delete trie */
+    /*! Create trie by file */
+    Bor(std::string file_name);
+    /*! Add string to trie */
+    void AddString(std::string &s);
+    /*! Find string in trie */
+    bool FindString(std::string &s);
+    /*! Delete trie */
+    void Delete(Node* vertex);
     ~Bor();
 private:
     Node *root = new Node;
