@@ -8,64 +8,70 @@
 
 struct RPN_Node {
 public:
-    RPN_Node(Lexem* lex, TID table) {
+    RPN_Node(Lexem* lex, TID &table) {
         if (lex->GetType() == LexemType::Integer) {
             value_int = std::stoi(lex->GetValue());
-            type = "integer";
+            type_ = "integer";
         } else if (lex->GetType() == LexemType::Float) {
             value_double = std::stod(lex->GetValue());
-            type = "double";
+            type_ = "double";
         } else if (lex->GetValue() == "true" || lex->GetValue() == "false") {
             value_bool = (lex->GetValue() == "true");
-            type = "bool";
+            type_ = "bool";
         } else if (lex->GetType() == LexemType::Identifier) {
             id_name = lex->GetValue();
             if (table.getType(id_name).first[0] == "function") {
-                type = "function";
-            } else type = "identifier";
+                type_ = "function";
+            } else type_ = "identifier";
         } else {
             operation = lex->GetValue();
-            type = "other";
+            type_ = "other";
         }
         line = lex->GetLine();
         column = lex->GetColumn();
     }
     RPN_Node(std::vector<std::vector<int>> value, std::vector<RPN_Node*> arg) {
-        type = "array";
+        type_ = "array";
         value_array = value;
         array_elements = arg;
     }
     RPN_Node(int number) {
-        type = "label";
+        type_ = "label";
         label_number = number;
         rpn_label = true;
     }
-    RPN_Node(bool flag) {
-        type = "label";
-        rpn_true_label = true;
-    }
     RPN_Node(bool flag, int number) {
-        type = "label";
+        type_ = "label";
         label_number = number;
         rpn_go_label = true;
     }
     RPN_Node(Lexem* lex, std::string utility) {
-        type = "utility";
+        type_ = "utility";
         keyword = lex->GetValue();
     }
-    RPN_Node(std::string empty_label) {
-        type = "label";
+    RPN_Node() {
+        type_ = "label";
         rpn_empty_label = true;
     }
     RPN_Node(std::string name, std::string type) {
-        type = type;
-        id_name = name;
+        type_ = type;
+        if (type == "other") {
+            operation = name;
+        } else if (type == "identifier" || type == "function") {
+            id_name = name;
+        } else if (type == "utility") {
+            keyword = name;
+        }
     }
-    std::string GetType() { return type; }
+    RPN_Node(bool flag) {
+        type_ = "label";
+        rpn_true_label = true;
+    }
+    std::string GetType() { return type_; }
     std::string GetName() { return id_name; }
     bool IsEmptyLabel() { return rpn_empty_label; }
 private:
-    std::string type;
+    std::string type_;
     int label_number;
     int value_int;
     double value_double;
@@ -110,41 +116,57 @@ public:
     void AddCell(Lexem* element, std::vector<RPN_Node*> &container) { 
         RPN_Node* new_cell = new RPN_Node(element, table_id);
         if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
+        else {
+            container.push_back(new_cell);
+        }
     }
     void AddCell(std::vector<RPN_Node*> arg, std::vector<std::vector<int>> value, std::vector<RPN_Node*> &container) { 
         RPN_Node* new_cell = new RPN_Node(value, arg);
         if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
+        else {
+            container.push_back(new_cell);
+        }
     }
     void AddCell(bool flag, std::vector<RPN_Node*> &container) { 
         RPN_Node* new_cell = new RPN_Node(flag);
         if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
+        else {
+            container.push_back(new_cell);
+        }
     }
     void AddCell(int number, std::vector<RPN_Node*> &container) { 
         RPN_Node* new_cell = new RPN_Node(number);
         if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
+        else {
+            container.push_back(new_cell);
+        }
     }
     void AddCell(Lexem* lex, std::string utility, std::vector<RPN_Node*> &container) { 
         RPN_Node* new_cell = new RPN_Node(lex, utility);
         if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
+        else {
+            container.push_back(new_cell);
+        }
     }
     void AddCell(bool flag, int number, std::vector<RPN_Node*> &container) { 
         RPN_Node* new_cell = new RPN_Node(flag, number);
         if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
+        else {
+            container.push_back(new_cell);
+        }
     }
-    void AddCell(std::string empty_label, std::vector<RPN_Node*> &container) { 
-        RPN_Node* new_cell = new RPN_Node(empty_label);
+    void AddCell(std::vector<RPN_Node*> &container) { 
+        RPN_Node* new_cell = new RPN_Node();
         if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
+        else {
+            container.push_back(new_cell);
+        }
     }
     void AddCell(RPN_Node* new_cell, std::vector<RPN_Node*> &container) {
         if (container.size() == 0) chain_.push_back(new_cell); 
-        else container.push_back(new_cell);
+        else {
+            container.push_back(new_cell);
+        }
     }
     void setTID(TID table) { table_id = table; }
 private:
@@ -163,8 +185,8 @@ private:
     void LOOP_FOR(std::string func_name);
     void LOOP_FOREACH(std::string func_name);
     void SWITCH(std::string func_name);
-    void ID();
-    void TERM();
+    void ID(std::vector<RPN_Node*> &container);
+    void TERM(std::vector<RPN_Node*> &container);
     void INPUT();
     void OUTPUT();
     void EXP_ZERO(std::vector<RPN_Node*> &container);
