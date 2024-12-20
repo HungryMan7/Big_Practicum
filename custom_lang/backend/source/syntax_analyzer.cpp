@@ -839,13 +839,17 @@ void SyntaxAnalyzer::TERM() {
         }
         else {
             GetLex();
-            EXP_ZERO();
-            if (lexem_->GetValue() != "}") {
-                throw "line: " + std::to_string(lexem_->GetLine()) +
-                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
-                    " expected }, but found " + lexem_->GetValue();
+            if (lexem_->GetValue() == "}") {
+                GetLex();
+            } else {
+                EXP_ZERO();
+                if (lexem_->GetValue() != "}") {
+                    throw "line: " + std::to_string(lexem_->GetLine()) +
+                        " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                        " expected }, but found " + lexem_->GetValue();
+                }
+                GetLex();
             }
-            GetLex();
         }
     }
     else GetLex();

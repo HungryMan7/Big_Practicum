@@ -705,6 +705,11 @@ std::vector<std::string> SemanticsAnalyzer::TERM() {
         }
         else {
             GetLex(); // {
+            if (lexem_->GetValue() == "}") {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " can't define the type of array"; 
+            }
             type.push_back("array");
             do {
                 if (lexem_->GetValue() == ",") {

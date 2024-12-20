@@ -3,7 +3,9 @@
 
 std::vector<RPN_Node*> empty = {};
 std::vector<RPN_Node*> while_loop = {new RPN_Node("while", "utility")};
+std::vector<RPN_Node*> for_loop = {new RPN_Node("for", "utility")};
 
+std::vector<int> first_array, last_array;
 int first_common_label_number;
 int last_common_label_number;
 
@@ -12,12 +14,16 @@ void RPN::FindFunction(std::string id_name) {
     for (auto elem : chain_) {
         if (elem->GetType() == "function") {
             if (elem->GetName() == id_name) {
+                bool flag = false;
                 for (auto label_elem : chain_) {
+                    if (label_elem != elem && !flag) {
+                        continue;
+                    } else flag = true;
                     if (label_elem->IsEmptyLabel()) {
                         chain_.insert(chain_.begin() + counter, new RPN_Node(true, label_number_));
                         label_number_++;
                         break;
-                    }
+                    } else counter++;
                 }
                 break;
             } else counter++;
@@ -121,6 +127,19 @@ void RPN::VARS_MDEF() {
     std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> current_type_;
     std::string current_id_name_;
     if (lexem_->GetValue() == ";") {
+        current_id_name_ = list_of_lexems_[lex_index_ - 2]->GetValue();
+        if (table_id.getType(current_id_name_).first[0] == "int") {
+            AddCell(new RPN_Node("0", "int"), empty);
+        } else if (table_id.getType(current_id_name_).first[0] == "double") {
+            AddCell(new RPN_Node("0.0", "double"), empty);
+        } else if (table_id.getType(current_id_name_).first[0] == "string") {
+            AddCell(new RPN_Node("", "string"), empty);
+        } else if (table_id.getType(current_id_name_).first[0] == "array") {
+            AddCell({new RPN_Node("0", "int")}, {{1}}, empty);
+        } else {
+            AddCell(new RPN_Node("true", "bool"), empty);
+        }
+        AddCell(new RPN_Node("=", "other"), empty);
         return;
     }
     if (lexem_->GetValue() == "=") {
@@ -261,6 +280,8 @@ void RPN::BODY(std::string func_name) {
     if (while_loop.size() > 1) {
         first_common_label_number = label_number_;
         last_common_label_number = label_number_ + 1;
+        first_array.push_back(first_common_label_number);
+        last_array.push_back(last_common_label_number);
         label_number_ += 2;
         for (int i = 1; i < while_loop.size() - 2; ++i) {
             chain_.push_back(while_loop[i]);
@@ -274,6 +295,8 @@ void RPN::BODY(std::string func_name) {
         STATEMENT(func_name);
     }
     if (flag) chain_.push_back(last_elem);
+    first_array.pop_back();
+    last_array.pop_back();
     GetLex(); // }
 }
 //OK
@@ -382,12 +405,12 @@ void RPN::STATEMENT(std::string func_name) {
         LOOP(func_name);
     }
     else if (lexem_->GetValue() == "break") {
-        AddCell(new RPN_Node(true, last_common_label_number), empty);
+        AddCell(new RPN_Node(true, last_array[last_array.size() - 1]), empty);
         GetLex(); // break
         GetLex(); // ;
     }
     else if (lexem_->GetValue() == "continue") {
-        AddCell(new RPN_Node(true, first_common_label_number), empty);
+        AddCell(new RPN_Node(true, first_array[first_array.size() - 1]), empty);
         GetLex(); // continue
         GetLex(); // ;
     }
@@ -500,12 +523,12 @@ void RPN::FUNC_STATEMENT(bool &check, std::string func_name) {
         LOOP(func_name);
     }
     else if (lexem_->GetValue() == "break") {
-        AddCell(new RPN_Node(true, last_common_label_number), empty);
+        AddCell(new RPN_Node(true, last_array[last_array.size() - 1]), empty);
         GetLex(); // break
         GetLex(); // ;
     }
     else if (lexem_->GetValue() == "continue") {
-        AddCell(new RPN_Node(true, first_common_label_number), empty);
+        AddCell(new RPN_Node(true, first_array[first_array.size() - 1]), empty);
         GetLex(); // continue
         GetLex(); // ;
     }
@@ -571,6 +594,7 @@ void RPN::FUNC_CALL(std::string id_name) {
     bool checker = false;
     while (lexem_->GetType() == LexemType::Identifier || lexem_->GetType() == LexemType::String ||
         lexem_->GetType() == LexemType::Integer || lexem_->GetType() == LexemType::Float || lexem_->GetValue() == "{" || lexem_->GetValue() == "(") {
+        checker = true;
         do {
             if (lexem_->GetValue() == ",") {
                 GetLex();
@@ -580,6 +604,7 @@ void RPN::FUNC_CALL(std::string id_name) {
             EXP_ONE(empty);
             RPN_Node* sign = new RPN_Node("=", "other");
             AddCell(sign, empty);
+            index++;
         } while (lexem_->GetValue() == ",");
         GetLex(); // )
     }
@@ -692,6 +717,7 @@ void RPN::TERM(std::vector<RPN_Node*> &container) {
             std::vector<RPN_Node*> elements = {new RPN_Node("elem", "string")};
             while (lexem_->GetValue() == "{") {
                 counter++;
+                GetLex();
             }
             std::vector<std::vector<int>> sizes(counter);
             int elem_counter = 0;
@@ -713,17 +739,25 @@ void RPN::TERM(std::vector<RPN_Node*> &container) {
                 while (lexem_->GetValue() == "}") {
                     if (counter - 1 >= 0) {
                         if (sizes[counter - 1].size() == 0) {
-                            sizes[counter - 1].push_back(1);
-                        } else sizes[counter - 1][sizes[counter - 1].size() - 1]++;
+                            sizes[counter - 1].push_back(sizes[counter].size());
+                        } else if (counter != sizes.size()) {
+                            sizes[counter - 1][sizes[counter - 1].size() - 1] = sizes[counter].size();
+                            for (int i = 0; i < sizes[counter - 1].size() - 1; ++i) {
+                                sizes[counter - 1][sizes[counter - 1].size() - 1] -= sizes[counter - 1][i];
+                            }
+                        }
                     }
                     counter--;
                     GetLex();
                 }
                 if (lexem_->GetValue() == ",") {
-                    sizes[counter].push_back(0);
+                    for (int i = counter; i < sizes.size(); ++i) {
+                        sizes[i].push_back(0);
+                    }
                     GetLex();
                 }
             }
+            elements.erase(elements.begin());
             AddCell(elements, sizes, container);
         }
     }
@@ -947,14 +981,18 @@ void RPN::LOOP_FOREACH(std::string func_name) {
 }
 //OK
 void RPN::LOOP_FOR(std::string func_name) {
-    GetLex(); // (
+    int id_line_, id_column_;
+    std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> current_type_;
+    std::string current_id_name_;
     table_id.AddTable();
+    GetLex(); // (
     // first part
     if (lexem_->GetValue() == ";") {
         GetLex();
     }
     else { // type
         if (lexem_->GetValue() == "array") {
+            current_type_ = { { "array" }, {} };
             GetLex();
             int counter = 0;
             while (lexem_->GetValue() == "<") {
@@ -962,8 +1000,10 @@ void RPN::LOOP_FOR(std::string func_name) {
                 GetLex(); // <
                 if (lexem_->GetValue() == "array") {
                     GetLex(); // array
+                    current_type_.first.push_back("array");
                 }
                 else {
+                    current_type_.first.push_back(lexem_->GetValue());
                     GetLex(); // type
                     break;
                 }
@@ -975,8 +1015,12 @@ void RPN::LOOP_FOR(std::string func_name) {
             }
         }
         else {
+            current_type_ = { { lexem_->GetValue() }, {} };
             GetLex(); // type
         }
+        current_id_name_ = lexem_->GetValue();
+        id_line_ = lexem_->GetLine();
+        id_column_ = lexem_->GetColumn();
         if (!table_id.IsUsed(current_id_name_)) {
             table_id.AddID({ current_type_ }, current_id_name_, id_line_, id_column_);
         }
@@ -985,12 +1029,19 @@ void RPN::LOOP_FOR(std::string func_name) {
         VARS_MDEF();
         GetLex(); // ;
     }
+    first_common_label_number = label_number_;
+    last_common_label_number = label_number_ + 1;
+    first_array.push_back(first_common_label_number);
+    last_array.push_back(last_common_label_number);
+    label_number_ += 2;
+    AddCell(first_common_label_number, empty);
     // second part
-    AddCell(label_number_, empty);
     if (lexem_->GetValue() == ";") {
         GetLex();
     }
     else {
+        std::vector<std::string> type;
+        std::vector<std::string> bool_num = { "bool" };
         do {
             if (lexem_->GetValue() == ",") {
                 GetLex();
@@ -999,25 +1050,31 @@ void RPN::LOOP_FOR(std::string func_name) {
         } while (lexem_->GetValue() == ",");
         GetLex(); // ;
     }
-    AddCell(true, label_number_ + 1, empty);
+    AddCell(true, last_common_label_number, empty);
     AddCell(true, empty);
     //third part
-    std::vector<RPN_Node*> third_cycle_part;
     if (lexem_->GetValue() == ")") {
         GetLex();
     }
     else {
-        EXP_ZERO(third_cycle_part);
+        do {
+            if (lexem_->GetValue() == ",") {
+                GetLex();
+            }
+            EXP_ONE(for_loop);
+        } while (lexem_->GetValue() == ",");
         GetLex(); // )
     }
     BODY(func_name);
     table_id.RemoveTable();
-    for (int i = 0; i < third_cycle_part.size(); ++i) {
-        chain_.push_back(third_cycle_part[i]);
+    for (int i = 1; i < for_loop.size(); ++i) {
+        chain_.push_back(for_loop[i]);
     }
-    AddCell(true, label_number_, empty);
-    AddCell(label_number_ + 1, empty);
-    label_number_ += 2;
+    for_loop = {new RPN_Node("for", "utility")};
+    AddCell(true, first_common_label_number, empty);
+    AddCell(last_common_label_number, empty);
+    first_array.pop_back();
+    last_array.pop_back();
 }
 //OK
 
