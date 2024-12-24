@@ -8,6 +8,7 @@
 
 struct RPN_Node {
 public:
+    RPN_Node(const RPN_Node& other);
     RPN_Node(Lexem* lex, TID &table) {
         if (lex->GetType() == LexemType::Integer) {
             value_int = std::stoi(lex->GetValue());
@@ -61,16 +62,33 @@ public:
             id_name = name;
         } else if (type == "utility") {
             keyword = name;
+        } else if (type == "integer") {
+            value_int = std::stoi(name);
+        } else if (type == "double") {
+            value_double = std::stod(name);
+        } else if (type == "string") {
+            value_string = name;
+        } else if (type == "array") {
+            value_bool = (name == "true");
         }
     }
     RPN_Node(bool flag) {
         type_ = "label";
         rpn_true_label = true;
     }
+    void SetIntegerValue(int val) { value_int = val; }
+    void SetDoubleValue(double val) { value_double = val; }
+    void SetBoolValue(bool val) { value_bool = val; }
+    void SetStringValue(std::string val) { value_string = val; }
     std::string GetType() { return type_; }
     std::string GetName() { return id_name; }
     int GetLabelNumber() { return label_number; }
     std::string GetKeyword() { return keyword; }
+    std::string GetOperation() { return operation; }
+    int GetIntegerValue() { return value_int; }
+    double GetDoubleValue() { return value_double; }
+    bool GetBoolValue() { return value_bool; }
+    std::string GetStringValue() { return value_string; }
     bool IsCommonLabel() { return rpn_label; }
     bool IsTrueLabel() { return rpn_true_label; }
     bool IsGoLabel() { return rpn_go_label; }
@@ -129,6 +147,7 @@ public:
     void AddTable();
     void RemoveTable();
     void AddID(std::string id_name, RPN_Node* value);
+    bool FindID(std::string id_name);
     void setValue(std::string id_name, RPN_Node* value);
     RPN_Node* getValue(std::string id_name);
 
