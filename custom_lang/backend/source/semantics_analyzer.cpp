@@ -793,9 +793,11 @@ std::vector<std::string> SemanticsAnalyzer::EXP_ONE() {
     std::vector<std::string> string_num = { "string" };
     std::vector<std::string> type_first = EXP_TWO();
     bool checker = false;
-    while (lexem_->GetValue() == "+=" || lexem_->GetValue() == "-=" || lexem_->GetValue() == "*=" || lexem_->GetValue() == "/=" || lexem_->GetValue() == "%=") {
+    while (lexem_->GetValue() == "+=" || lexem_->GetValue() == "-=" || lexem_->GetValue() == "*=" || lexem_->GetValue() == "/=" || lexem_->GetValue() == "%=" ||
+        lexem_->GetValue() == ">>=" || lexem_->GetValue() == "<<=" || lexem_->GetValue() == "^=" || lexem_->GetValue() == "|=" || lexem_->GetValue() == "&=") {
         checker = true;
-        if (lexem_->GetValue() == "%=") {
+        if (lexem_->GetValue() == "%=" || lexem_->GetValue() == ">>=" || lexem_->GetValue() == "<<=" || lexem_->GetValue() == "^=" ||
+            lexem_->GetValue() == "|=" || lexem_->GetValue() == "&=") {
             GetLex();
             std::vector<std::string> type_second = EXP_TWO();
             if (!(type_first == type_second && type_first == integer)) {
@@ -864,14 +866,13 @@ std::vector<std::string> SemanticsAnalyzer::EXP_THREE() {
 
 std::vector<std::string> SemanticsAnalyzer::EXP_FOUR() {
     std::vector<std::string> integer = { "int" };
-    std::vector<std::string> float_num = { "double" };
     std::vector<std::string> type_first = EXP_FIVE();
     bool checker = false;
     while (lexem_->GetValue() == "|") {
         checker = true;
         GetLex();
         std::vector<std::string> type_second = EXP_FIVE();
-        if (!(type_first == type_second && type_first == integer || type_first == float_num)) {
+        if (!(type_first == type_second && type_first == integer)) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " found type mismatch";
@@ -882,14 +883,13 @@ std::vector<std::string> SemanticsAnalyzer::EXP_FOUR() {
 
 std::vector<std::string> SemanticsAnalyzer::EXP_FIVE() {
     std::vector<std::string> integer = { "int" };
-    std::vector<std::string> float_num = { "double" };
     std::vector<std::string> type_first = EXP_SIX();
     bool checker = false;
     while (lexem_->GetValue() == "^") {
         checker = true;
         GetLex();
         std::vector<std::string> type_second = EXP_SIX();
-        if (!(type_first == type_second && type_first == integer || type_first == float_num)) {
+        if (!(type_first == type_second && type_first == integer)) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " found type mismatch";
@@ -900,14 +900,13 @@ std::vector<std::string> SemanticsAnalyzer::EXP_FIVE() {
 
 std::vector<std::string> SemanticsAnalyzer::EXP_SIX() {
     std::vector<std::string> integer = { "int" };
-    std::vector<std::string> float_num = { "double" };
     std::vector<std::string> type_first = EXP_SEVEN();
     bool checker = false;
     while (lexem_->GetValue() == "&") {
         checker = true;
         GetLex();
         std::vector<std::string> type_second = EXP_SEVEN();
-        if (!(type_first == type_second && type_first == integer || type_first == float_num)) {
+        if (!(type_first == type_second && type_first == integer)) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " found type mismatch";
@@ -959,13 +958,11 @@ std::vector<std::string> SemanticsAnalyzer::EXP_EIGHT() {
 
 std::vector<std::string> SemanticsAnalyzer::EXP_NINE() {
     std::vector<std::string> integer = { "int" };
-    std::vector<std::string> float_num = { "double" };
-    std::vector<std::string> string_num = { "string" };
     std::vector<std::string> type_first = EXP_TEN();
     while (lexem_->GetValue() == ">>" || lexem_->GetValue() == "<<") {
         GetLex();
         std::vector<std::string> type_second = EXP_TEN();
-        if (!(type_first == type_second && (type_first == integer || type_first == float_num || type_first == string_num))) {
+        if (!(type_first == type_second && (type_first == integer))) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " found type mismatch";

@@ -912,12 +912,29 @@ void RPN::EXP_TWELVE(std::vector<RPN_Node*> &container) {
     std::vector<std::string> oper;
     while (lexem_->GetValue() == "+" || lexem_->GetValue() == "-" || lexem_->GetValue() == "++"
         || lexem_->GetValue() == "--" || lexem_->GetValue() == "!") {
+        if (lexem_->GetValue() == "+" || lexem_->GetValue() == "-") {
+            oper.push_back("0");
+        }
         oper.push_back(lexem_->GetValue());
         GetLex();
     }
-    EXP_THIRTEEN(container);
+    std::vector<std::string> new_oper;
     for (int i = 0; i < oper.size(); ++i) {
-        RPN_Node* operation = new RPN_Node(oper[i], "other");
+        if (oper[i] == "0") {
+            RPN_Node* elem = new RPN_Node(oper[i], "integer");
+            AddCell(elem, container);
+        } else {
+            if (oper[i] == "+" || oper[i] == "-") {
+                RPN_Node* operation = new RPN_Node(oper[i], "other");
+                AddCell(operation, container);
+            } else {
+                new_oper.push_back(oper[i]);
+            }
+        }
+    }
+    EXP_THIRTEEN(container);
+    for (int i = 0; i < new_oper.size(); ++i) {
+        RPN_Node* operation = new RPN_Node(new_oper[i], "other");
         AddCell(operation, container);
     }
 }
