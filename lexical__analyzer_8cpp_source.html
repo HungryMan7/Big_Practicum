@@ -156,7 +156,7 @@ $(document).ready(function(){initNavTree('lexical__analyzer_8cpp_source.html',''
 </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keywordtype">void</span> LexicalAnalyzer::GetChar() {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">if</span> (current_size_ == file_size_ + 1) {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">if</span> (current_size_ &gt; file_size_) {</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> x : list_of_lexems_) {</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <span class="keywordflow">if</span> (x-&gt;GetType() == <a class="code hl_enumvalue" href="lexem_8h.html#a36d3ea63d0a0e8d6b72ac94cf088d42ea902b0d55fddef6f8d651fe1035b7d4bd">LexemType::Error</a>) {</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                <span class="keywordflow">throw</span> <span class="stringliteral">&quot;line: &quot;</span> + std::to_string(x-&gt;GetLine()) +</div>
@@ -164,7 +164,7 @@ $(document).ready(function(){initNavTree('lexical__analyzer_8cpp_source.html',''
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                    <span class="stringliteral">&quot; wrong lexem&quot;</span>;</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            }</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        }</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keywordflow">throw</span> <span class="stringliteral">&quot;OK!\n&quot;</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    symbol_ = *iter_;</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    ++iter_;</div>
