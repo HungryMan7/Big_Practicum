@@ -38,7 +38,7 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
             RPN_Node* first = stack.top();
             stack.pop();
             stack.push(Solve(first, second, rpn_[ind]->GetOperation()));
-            std::cout << "solved:" << (stack.top())->GetIntegerValue() << "\n";
+            std::cout << (stack.top())->GetBoolValue() << "\n";
         } else if (rpn_[ind]->GetType() == "identifier" || rpn_[ind]->GetType() == "integer" ||
                    rpn_[ind]->GetType() == "double" || rpn_[ind]->GetType() == "bool" ||
                    rpn_[ind]->GetType() == "string" || rpn_[ind]->GetType() == "array" ||
@@ -52,10 +52,10 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
             }
         }
     }
-    
+
 }
 
-RPN_Node*& Interpreter::Solve(RPN_Node*& first, RPN_Node*& second, std::string operation) {
+RPN_Node* Interpreter::Solve(RPN_Node*& first, RPN_Node*& second, std::string operation) {
     if (operation == "=") {
         if (second->GetType() == "integer") {
             first->SetIntegerValue(second->GetIntegerValue());
@@ -72,6 +72,23 @@ RPN_Node*& Interpreter::Solve(RPN_Node*& first, RPN_Node*& second, std::string o
         } else {
             throw "ne nado...";
         }
-        std::cout << "it workssss!!!!\n";
+    } else if (operation == "==") {
+        RPN_Node* result = new RPN_Node("", "bool");
+        if (second->GetType() == "integer") {
+            result->SetBoolValue(first->GetIntegerValue() == second->GetIntegerValue());
+            return result;
+        } else if (second->GetType() == "double") {
+            result->SetBoolValue(first->GetDoubleValue() == second->GetDoubleValue());
+            return result;
+        } else if (second->GetType() == "bool") {
+            result->SetBoolValue(first->GetBoolValue() == second->GetBoolValue());
+            return result;
+        } else if (second->GetType() == "string") {
+            result->SetBoolValue(first->GetStringValue() == second->GetStringValue());
+            return result;
+        } else {
+            throw "ne nado...";
+        }
     }
+    return new RPN_Node;
 }
