@@ -6,7 +6,7 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
     RunFunc("main", -1);
 }
 
-void Interpreter::RunFunc(std::string func_name, int label_num) {
+void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num == -1 means starting from the title of the function (without seeking concrete label)
     RPN_TID* tid = new RPN_TID;
     std::stack<RPN_Node*> stack;
     int ind = 0;
@@ -30,16 +30,20 @@ void Interpreter::RunFunc(std::string func_name, int label_num) {
     }
     for (; rpn_[ind]->GetType() != "utility" || rpn_[ind]->GetKeyword() != "return"; ++ind) {
         if (rpn_[ind]->GetType() == "function") {
-            RunFunc(rpn_[ind]->GetName(), -1);
-            
-        } else if (rpn_[ind]->GetType() == "other") {
+            RunFunc(rpn_[ind]->GetName(), -1);    
+        }
+        if (rpn_[ind]->GetType() == "other") {
             RPN_Node* second = stack.top();
             stack.pop();
             RPN_Node* first = stack.top();
             stack.pop();
             stack.push(Solve(first, second, rpn_[ind]->GetOperation()));
-        } else if (rpn_[ind]->GetType() == "identifier") {
-            RPN_Node* copy = new RPN_Node(rpn_[ind]);
+            std::cout << "solved:" << (stack.top())->GetIntegerValue() << "\n";
+        } else if (rpn_[ind]->GetType() == "identifier" || rpn_[ind]->GetType() == "integer" ||
+                   rpn_[ind]->GetType() == "double" || rpn_[ind]->GetType() == "bool" ||
+                   rpn_[ind]->GetType() == "string" || rpn_[ind]->GetType() == "array" ||
+                   rpn_[ind]->GetType() == "function") {
+            RPN_Node* copy = new RPN_Node(*rpn_[ind]);
             stack.push(copy);
         }
     }
