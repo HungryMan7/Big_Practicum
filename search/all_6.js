@@ -2,7 +2,7 @@ var searchData=
 [
   ['getboolvalue_0',['GetBoolValue',['../structRPN__Node.html#a79ccc6d6b1c882b4321711cb838b647c',1,'RPN_Node']]],
   ['getchain_1',['GetChain',['../classRPN.html#adbc1b717fc9d13a31e75d6358149c434',1,'RPN']]],
-  ['getcolumn_2',['getcolumn',['../classCell.html#aae8e6d9b518d8936e1212c893febbc0d',1,'Cell::getColumn()'],['../classLexem.html#ae4561959b60f8e8737e0271a735d412f',1,'Lexem::GetColumn()']]],
+  ['getcolumn_2',['getcolumn',['../classLexem.html#ae4561959b60f8e8737e0271a735d412f',1,'Lexem::GetColumn()'],['../classCell.html#aae8e6d9b518d8936e1212c893febbc0d',1,'Cell::getColumn()']]],
   ['getdoublevalue_3',['GetDoubleValue',['../structRPN__Node.html#a8c06e1a7c6932817056e67363887d292',1,'RPN_Node']]],
   ['getintegervalue_4',['GetIntegerValue',['../structRPN__Node.html#a02eedd856703a32e46eed673411fb8e9',1,'RPN_Node']]],
   ['getkeyword_5',['GetKeyword',['../structRPN__Node.html#ace5b7336f72537456de1e580b20e858d',1,'RPN_Node']]],
