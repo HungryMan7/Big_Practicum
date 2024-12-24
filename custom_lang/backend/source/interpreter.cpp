@@ -71,6 +71,7 @@ RPN_Node* Interpreter::Solve(RPN_Node*& first, RPN_Node*& second, std::string op
             return first;
         } else {
             throw "ne nado..."; // юмор - это хорошо :)
+                                // угу)))
         }
     } else if (operation == "==") {
         RPN_Node* result = new RPN_Node("", "bool");
