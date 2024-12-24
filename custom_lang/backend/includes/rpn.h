@@ -19,6 +19,9 @@ public:
         } else if (lex->GetValue() == "true" || lex->GetValue() == "false") {
             value_bool = (lex->GetValue() == "true");
             type_ = "bool";
+        } else if (lex->GetType() == LexemType::String) {
+            value_string = lex->GetValue();
+            type_ = "string";
         } else if (lex->GetType() == LexemType::Identifier) {
             id_name = lex->GetValue();
             if (table.getType(id_name).first[0] == "function") {
