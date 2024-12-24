@@ -1016,305 +1016,322 @@ $(document).ready(function(){initNavTree('rpn_8cpp_source.html',''); initResizab
 <div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span>    std::vector&lt;std::string&gt; oper;</div>
 <div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span>    <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;+&quot;</span> || lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;-&quot;</span> || lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;++&quot;</span></div>
 <div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span>        || lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;--&quot;</span> || lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;!&quot;</span>) {</div>
-<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>        oper.push_back(lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>());</div>
-<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span>        GetLex();</div>
-<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span>    }</div>
-<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span>    EXP_THIRTEEN(container);</div>
-<div class="line"><a id="l00919" name="l00919"></a><span class="lineno">  919</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; oper.size(); ++i) {</div>
-<div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span>        <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* operation = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(oper[i], <span class="stringliteral">&quot;other&quot;</span>);</div>
-<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span>        <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(operation, container);</div>
-<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span>    }</div>
-<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span>}</div>
-<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span> </div>
-<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span><span class="keywordtype">void</span> RPN::EXP_THIRTEEN(std::vector&lt;RPN_Node*&gt; &amp;container) {</div>
-<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span>    EXP_FOURTEEN(container);</div>
-<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;[&quot;</span>) {</div>
-<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span>        <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;[&quot;</span>) {</div>
-<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span>            GetLex(); <span class="comment">// [</span></div>
-<div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span>            EXP_ZERO(container);</div>
-<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>            GetLex(); <span class="comment">// ]</span></div>
-<div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span>            <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* sign = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(<span class="stringliteral">&quot;[&quot;</span>, <span class="stringliteral">&quot;other&quot;</span>);</div>
-<div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span>            <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(sign, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
-<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span>            sign = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(<span class="stringliteral">&quot;]&quot;</span>, <span class="stringliteral">&quot;other&quot;</span>);</div>
-<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>            <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(sign, container);</div>
-<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>        }</div>
-<div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>    }</div>
-<div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span>    <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;++&quot;</span> || lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;--&quot;</span>) {</div>
-<div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span>        <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* sign = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>(), <span class="stringliteral">&quot;other&quot;</span>);</div>
-<div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>        <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(sign, container);</div>
-<div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span>        GetLex();</div>
-<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>    }</div>
-<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>}</div>
-<div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span> </div>
-<div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span><span class="keywordtype">void</span> RPN::EXP_FOURTEEN(std::vector&lt;RPN_Node*&gt; &amp;container) {</div>
-<div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#afa591326d8b243bfa5b66ffed792a1f3">GetType</a>() == <a class="code hl_enumvalue" href="lexem_8h.html#a36d3ea63d0a0e8d6b72ac94cf088d42ea29ee5d1ebcc033234938a5234f1f2075">LexemType::Identifier</a>) {</div>
-<div class="line"><a id="l00947" name="l00947"></a><span class="lineno">  947</span>        <span class="keywordflow">if</span> (lex_index_ &lt; (<span class="keywordtype">int</span>)list_of_lexems_.size() &amp;&amp; list_of_lexems_[lex_index_]-&gt;GetValue() == <span class="stringliteral">&quot;(&quot;</span>) {</div>
-<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>            std::string id_name = lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>();</div>
-<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>            GetLex(); <span class="comment">// id</span></div>
-<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span>            FUNC_CALL(id_name);</div>
-<div class="line"><a id="l00951" name="l00951"></a><span class="lineno">  951</span>        }</div>
-<div class="line"><a id="l00952" name="l00952"></a><span class="lineno">  952</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00953" name="l00953"></a><span class="lineno">  953</span>            ID(container);</div>
-<div class="line"><a id="l00954" name="l00954"></a><span class="lineno">  954</span>        }</div>
-<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span>        <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;::&quot;</span>) {</div>
-<div class="line"><a id="l00956" name="l00956"></a><span class="lineno">  956</span>            GetLex();</div>
-<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>            ID(container);</div>
-<div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span>        }</div>
-<div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span>        TERM(container);</div>
-<div class="line"><a id="l00961" name="l00961"></a><span class="lineno">  961</span>    }</div>
-<div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span>}</div>
-<div class="line"><a id="l00963" name="l00963"></a><span class="lineno">  963</span> </div>
-<div class="line"><a id="l00964" name="l00964"></a><span class="lineno">  964</span><span class="keywordtype">void</span> RPN::LOOP(std::string func_name) {</div>
-<div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;for&quot;</span>) {</div>
-<div class="line"><a id="l00966" name="l00966"></a><span class="lineno">  966</span>        GetLex();</div>
-<div class="line"><a id="l00967" name="l00967"></a><span class="lineno">  967</span>        LOOP_FOR(func_name);</div>
-<div class="line"><a id="l00968" name="l00968"></a><span class="lineno">  968</span>    }</div>
-<div class="line"><a id="l00969" name="l00969"></a><span class="lineno">  969</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;foreach&quot;</span>) {</div>
-<div class="line"><a id="l00970" name="l00970"></a><span class="lineno">  970</span>        GetLex();</div>
-<div class="line"><a id="l00971" name="l00971"></a><span class="lineno">  971</span>        LOOP_FOREACH(func_name);</div>
-<div class="line"><a id="l00972" name="l00972"></a><span class="lineno">  972</span>    }</div>
-<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;while&quot;</span>) {</div>
-<div class="line"><a id="l00974" name="l00974"></a><span class="lineno">  974</span>        GetLex();</div>
-<div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>        LOOP_WHILE(func_name);</div>
-<div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>    }</div>
-<div class="line"><a id="l00977" name="l00977"></a><span class="lineno">  977</span>}</div>
-<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span> </div>
-<div class="line"><a id="l00979" name="l00979"></a><span class="lineno">  979</span><span class="keywordtype">void</span> RPN::LOOP_WHILE(std::string func_name) {</div>
-<div class="line"><a id="l00980" name="l00980"></a><span class="lineno">  980</span>    GetLex(); <span class="comment">// (</span></div>
-<div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(label_number_, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
-<div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span>    EXP_ZERO(<a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
-<div class="line"><a id="l00983" name="l00983"></a><span class="lineno">  983</span>    GetLex(); <span class="comment">// )</span></div>
-<div class="line"><a id="l00984" name="l00984"></a><span class="lineno">  984</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, label_number_ + 1, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
-<div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
-<div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, label_number_, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
-<div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(label_number_ + 1, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
-<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>    table_id.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
-<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>    BODY(func_name);</div>
-<div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>    table_id.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
-<div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>}</div>
-<div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span> </div>
-<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span><span class="keywordtype">void</span> RPN::LOOP_FOREACH(std::string func_name) {</div>
-<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span>    GetLex(); <span class="comment">// (</span></div>
-<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(lexem_, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
-<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>    GetLex(); <span class="comment">// id</span></div>
-<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span>    GetLex(); <span class="comment">// ;</span></div>
-<div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span>    EXP_ZERO(<a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>); <span class="comment">//Комментарий: здесь уже должна быть проверка с массивом и значениями, что делается, кажется, в реализации кода</span></div>
-<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>    GetLex(); <span class="comment">// )</span></div>
-<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>    table_id.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
-<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span>    BODY(func_name);</div>
-<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span>    table_id.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
-<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span>}</div>
-<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span> </div>
-<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span><span class="keywordtype">void</span> RPN::LOOP_FOR(std::string func_name) {</div>
-<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span>    <span class="keywordtype">int</span> id_line_, id_column_;</div>
-<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span>    std::pair&lt;std::vector&lt;std::string&gt;, std::pair&lt;std::vector&lt;std::string&gt;, std::vector&lt;std::string&gt;&gt;&gt; current_type_;</div>
-<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span>    std::string current_id_name_;</div>
-<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span>    table_id.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
-<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span>    GetLex(); <span class="comment">// (</span></div>
-<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span>    <span class="comment">// first part</span></div>
-<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;;&quot;</span>) {</div>
-<div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span>        GetLex();</div>
-<div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span>    }</div>
-<div class="line"><a id="l01015" name="l01015"></a><span class="lineno"> 1015</span>    <span class="keywordflow">else</span> { <span class="comment">// type</span></div>
-<div class="line"><a id="l01016" name="l01016"></a><span class="lineno"> 1016</span>        <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;array&quot;</span>) {</div>
-<div class="line"><a id="l01017" name="l01017"></a><span class="lineno"> 1017</span>            current_type_ = { { <span class="stringliteral">&quot;array&quot;</span> }, {} };</div>
-<div class="line"><a id="l01018" name="l01018"></a><span class="lineno"> 1018</span>            GetLex();</div>
-<div class="line"><a id="l01019" name="l01019"></a><span class="lineno"> 1019</span>            <span class="keywordtype">int</span> counter = 0;</div>
-<div class="line"><a id="l01020" name="l01020"></a><span class="lineno"> 1020</span>            <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;&lt;&quot;</span>) {</div>
-<div class="line"><a id="l01021" name="l01021"></a><span class="lineno"> 1021</span>                counter++;</div>
-<div class="line"><a id="l01022" name="l01022"></a><span class="lineno"> 1022</span>                GetLex(); <span class="comment">// &lt;</span></div>
-<div class="line"><a id="l01023" name="l01023"></a><span class="lineno"> 1023</span>                <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;array&quot;</span>) {</div>
-<div class="line"><a id="l01024" name="l01024"></a><span class="lineno"> 1024</span>                    GetLex(); <span class="comment">// array</span></div>
-<div class="line"><a id="l01025" name="l01025"></a><span class="lineno"> 1025</span>                    current_type_.first.push_back(<span class="stringliteral">&quot;array&quot;</span>);</div>
-<div class="line"><a id="l01026" name="l01026"></a><span class="lineno"> 1026</span>                }</div>
-<div class="line"><a id="l01027" name="l01027"></a><span class="lineno"> 1027</span>                <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l01028" name="l01028"></a><span class="lineno"> 1028</span>                    current_type_.first.push_back(lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>());</div>
-<div class="line"><a id="l01029" name="l01029"></a><span class="lineno"> 1029</span>                    GetLex(); <span class="comment">// type</span></div>
-<div class="line"><a id="l01030" name="l01030"></a><span class="lineno"> 1030</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01031" name="l01031"></a><span class="lineno"> 1031</span>                }</div>
-<div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span>            }</div>
-<div class="line"><a id="l01033" name="l01033"></a><span class="lineno"> 1033</span>            <span class="keywordflow">while</span> (counter) {</div>
-<div class="line"><a id="l01034" name="l01034"></a><span class="lineno"> 1034</span>                <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;&gt;&gt;&quot;</span>) counter -= 2;</div>
-<div class="line"><a id="l01035" name="l01035"></a><span class="lineno"> 1035</span>                <span class="keywordflow">else</span> counter--;</div>
-<div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span>                GetLex();</div>
-<div class="line"><a id="l01037" name="l01037"></a><span class="lineno"> 1037</span>            }</div>
-<div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>        }</div>
-<div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l01040" name="l01040"></a><span class="lineno"> 1040</span>            current_type_ = { { lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() }, {} };</div>
-<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>            GetLex(); <span class="comment">// type</span></div>
-<div class="line"><a id="l01042" name="l01042"></a><span class="lineno"> 1042</span>        }</div>
-<div class="line"><a id="l01043" name="l01043"></a><span class="lineno"> 1043</span>        current_id_name_ = lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>();</div>
-<div class="line"><a id="l01044" name="l01044"></a><span class="lineno"> 1044</span>        id_line_ = lexem_-&gt;<a class="code hl_function" href="classLexem.html#ae1d3e3e82881db03c3ee014198438dbb">GetLine</a>();</div>
-<div class="line"><a id="l01045" name="l01045"></a><span class="lineno"> 1045</span>        id_column_ = lexem_-&gt;<a class="code hl_function" href="classLexem.html#ae4561959b60f8e8737e0271a735d412f">GetColumn</a>();</div>
-<div class="line"><a id="l01046" name="l01046"></a><span class="lineno"> 1046</span>        <span class="keywordflow">if</span> (!table_id.<a class="code hl_function" href="classTID.html#a2a9f158a7d8c99438cbf70563c31a77e">IsUsed</a>(current_id_name_)) {</div>
-<div class="line"><a id="l01047" name="l01047"></a><span class="lineno"> 1047</span>            table_id.<a class="code hl_function" href="classTID.html#a3f4067681a0a793cefe086d4a827e287">AddID</a>({ current_type_ }, current_id_name_, id_line_, id_column_);</div>
-<div class="line"><a id="l01048" name="l01048"></a><span class="lineno"> 1048</span>        }</div>
-<div class="line"><a id="l01049" name="l01049"></a><span class="lineno"> 1049</span>        <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>(), <span class="stringliteral">&quot;identifier&quot;</span>), <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
-<div class="line"><a id="l01050" name="l01050"></a><span class="lineno"> 1050</span>        GetLex();</div>
-<div class="line"><a id="l01051" name="l01051"></a><span class="lineno"> 1051</span>        VARS_MDEF();</div>
-<div class="line"><a id="l01052" name="l01052"></a><span class="lineno"> 1052</span>        GetLex(); <span class="comment">// ;</span></div>
-<div class="line"><a id="l01053" name="l01053"></a><span class="lineno"> 1053</span>    }</div>
-<div class="line"><a id="l01054" name="l01054"></a><span class="lineno"> 1054</span>    <a class="code hl_variable" href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a> = label_number_;</div>
-<div class="line"><a id="l01055" name="l01055"></a><span class="lineno"> 1055</span>    <a class="code hl_variable" href="rpn_8cpp.html#aabbe20959c6a629df957a9e688ddcb6e">last_common_label_number</a> = label_number_ + 1;</div>
-<div class="line"><a id="l01056" name="l01056"></a><span class="lineno"> 1056</span>    <a class="code hl_variable" href="rpn_8cpp.html#afe3b002393b2f55334c18bc6951fb184">first_array</a>.push_back(<a class="code hl_variable" href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a>);</div>
-<div class="line"><a id="l01057" name="l01057"></a><span class="lineno"> 1057</span>    <a class="code hl_variable" href="rpn_8cpp.html#a7d7ac35fac1775605985732417b240d9">last_array</a>.push_back(<a class="code hl_variable" href="rpn_8cpp.html#aabbe20959c6a629df957a9e688ddcb6e">last_common_label_number</a>);</div>
-<div class="line"><a id="l01058" name="l01058"></a><span class="lineno"> 1058</span>    label_number_ += 2;</div>
-<div class="line"><a id="l01059" name="l01059"></a><span class="lineno"> 1059</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<a class="code hl_variable" href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
-<div class="line"><a id="l01060" name="l01060"></a><span class="lineno"> 1060</span>    <span class="comment">// second part</span></div>
-<div class="line"><a id="l01061" name="l01061"></a><span class="lineno"> 1061</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;;&quot;</span>) {</div>
-<div class="line"><a id="l01062" name="l01062"></a><span class="lineno"> 1062</span>        GetLex();</div>
-<div class="line"><a id="l01063" name="l01063"></a><span class="lineno"> 1063</span>    }</div>
-<div class="line"><a id="l01064" name="l01064"></a><span class="lineno"> 1064</span>    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l01065" name="l01065"></a><span class="lineno"> 1065</span>        std::vector&lt;std::string&gt; type;</div>
-<div class="line"><a id="l01066" name="l01066"></a><span class="lineno"> 1066</span>        std::vector&lt;std::string&gt; bool_num = { <span class="stringliteral">&quot;bool&quot;</span> };</div>
-<div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span>        <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span>            <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;,&quot;</span>) {</div>
-<div class="line"><a id="l01069" name="l01069"></a><span class="lineno"> 1069</span>                GetLex();</div>
-<div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span>            }</div>
-<div class="line"><a id="l01071" name="l01071"></a><span class="lineno"> 1071</span>            EXP_ONE(<a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
-<div class="line"><a id="l01072" name="l01072"></a><span class="lineno"> 1072</span>        } <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;,&quot;</span>);</div>
-<div class="line"><a id="l01073" name="l01073"></a><span class="lineno"> 1073</span>        GetLex(); <span class="comment">// ;</span></div>
-<div class="line"><a id="l01074" name="l01074"></a><span class="lineno"> 1074</span>    }</div>
-<div class="line"><a id="l01075" name="l01075"></a><span class="lineno"> 1075</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, <a class="code hl_variable" href="rpn_8cpp.html#aabbe20959c6a629df957a9e688ddcb6e">last_common_label_number</a>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
-<div class="line"><a id="l01076" name="l01076"></a><span class="lineno"> 1076</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
-<div class="line"><a id="l01077" name="l01077"></a><span class="lineno"> 1077</span>    <span class="comment">//third part</span></div>
-<div class="line"><a id="l01078" name="l01078"></a><span class="lineno"> 1078</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;)&quot;</span>) {</div>
+<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>        <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;+&quot;</span> || lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;-&quot;</span>) {</div>
+<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span>            oper.push_back(<span class="stringliteral">&quot;0&quot;</span>);</div>
+<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span>        }</div>
+<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span>        oper.push_back(lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>());</div>
+<div class="line"><a id="l00919" name="l00919"></a><span class="lineno">  919</span>        GetLex();</div>
+<div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span>    }</div>
+<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span>    std::vector&lt;std::string&gt; new_oper;</div>
+<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; oper.size(); ++i) {</div>
+<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span>        <span class="keywordflow">if</span> (oper[i] == <span class="stringliteral">&quot;0&quot;</span>) {</div>
+<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span>            <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* elem = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(oper[i], <span class="stringliteral">&quot;integer&quot;</span>);</div>
+<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span>            <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(elem, container);</div>
+<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span>            <span class="keywordflow">if</span> (oper[i] == <span class="stringliteral">&quot;+&quot;</span> || oper[i] == <span class="stringliteral">&quot;-&quot;</span>) {</div>
+<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span>                <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* operation = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(oper[i], <span class="stringliteral">&quot;other&quot;</span>);</div>
+<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span>                <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(operation, container);</div>
+<div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>                new_oper.push_back(oper[i]);</div>
+<div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span>            }</div>
+<div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span>        }</div>
+<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span>    }</div>
+<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>    EXP_THIRTEEN(container);</div>
+<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; new_oper.size(); ++i) {</div>
+<div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>        <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* operation = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(new_oper[i], <span class="stringliteral">&quot;other&quot;</span>);</div>
+<div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span>        <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(operation, container);</div>
+<div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span>    }</div>
+<div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>}</div>
+<div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span> </div>
+<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span><span class="keywordtype">void</span> RPN::EXP_THIRTEEN(std::vector&lt;RPN_Node*&gt; &amp;container) {</div>
+<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>    EXP_FOURTEEN(container);</div>
+<div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;[&quot;</span>) {</div>
+<div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span>        <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;[&quot;</span>) {</div>
+<div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>            GetLex(); <span class="comment">// [</span></div>
+<div class="line"><a id="l00947" name="l00947"></a><span class="lineno">  947</span>            EXP_ZERO(container);</div>
+<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>            GetLex(); <span class="comment">// ]</span></div>
+<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>            <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* sign = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(<span class="stringliteral">&quot;[&quot;</span>, <span class="stringliteral">&quot;other&quot;</span>);</div>
+<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span>            <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(sign, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l00951" name="l00951"></a><span class="lineno">  951</span>            sign = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(<span class="stringliteral">&quot;]&quot;</span>, <span class="stringliteral">&quot;other&quot;</span>);</div>
+<div class="line"><a id="l00952" name="l00952"></a><span class="lineno">  952</span>            <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(sign, container);</div>
+<div class="line"><a id="l00953" name="l00953"></a><span class="lineno">  953</span>        }</div>
+<div class="line"><a id="l00954" name="l00954"></a><span class="lineno">  954</span>    }</div>
+<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span>    <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;++&quot;</span> || lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;--&quot;</span>) {</div>
+<div class="line"><a id="l00956" name="l00956"></a><span class="lineno">  956</span>        <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* sign = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>(), <span class="stringliteral">&quot;other&quot;</span>);</div>
+<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>        <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(sign, container);</div>
+<div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span>        GetLex();</div>
+<div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span>    }</div>
+<div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span>}</div>
+<div class="line"><a id="l00961" name="l00961"></a><span class="lineno">  961</span> </div>
+<div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span><span class="keywordtype">void</span> RPN::EXP_FOURTEEN(std::vector&lt;RPN_Node*&gt; &amp;container) {</div>
+<div class="line"><a id="l00963" name="l00963"></a><span class="lineno">  963</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#afa591326d8b243bfa5b66ffed792a1f3">GetType</a>() == <a class="code hl_enumvalue" href="lexem_8h.html#a36d3ea63d0a0e8d6b72ac94cf088d42ea29ee5d1ebcc033234938a5234f1f2075">LexemType::Identifier</a>) {</div>
+<div class="line"><a id="l00964" name="l00964"></a><span class="lineno">  964</span>        <span class="keywordflow">if</span> (lex_index_ &lt; (<span class="keywordtype">int</span>)list_of_lexems_.size() &amp;&amp; list_of_lexems_[lex_index_]-&gt;GetValue() == <span class="stringliteral">&quot;(&quot;</span>) {</div>
+<div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span>            std::string id_name = lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>();</div>
+<div class="line"><a id="l00966" name="l00966"></a><span class="lineno">  966</span>            GetLex(); <span class="comment">// id</span></div>
+<div class="line"><a id="l00967" name="l00967"></a><span class="lineno">  967</span>            FUNC_CALL(id_name);</div>
+<div class="line"><a id="l00968" name="l00968"></a><span class="lineno">  968</span>        }</div>
+<div class="line"><a id="l00969" name="l00969"></a><span class="lineno">  969</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00970" name="l00970"></a><span class="lineno">  970</span>            ID(container);</div>
+<div class="line"><a id="l00971" name="l00971"></a><span class="lineno">  971</span>        }</div>
+<div class="line"><a id="l00972" name="l00972"></a><span class="lineno">  972</span>        <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;::&quot;</span>) {</div>
+<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span>            GetLex();</div>
+<div class="line"><a id="l00974" name="l00974"></a><span class="lineno">  974</span>            ID(container);</div>
+<div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>        }</div>
+<div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00977" name="l00977"></a><span class="lineno">  977</span>        TERM(container);</div>
+<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span>    }</div>
+<div class="line"><a id="l00979" name="l00979"></a><span class="lineno">  979</span>}</div>
+<div class="line"><a id="l00980" name="l00980"></a><span class="lineno">  980</span> </div>
+<div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span><span class="keywordtype">void</span> RPN::LOOP(std::string func_name) {</div>
+<div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;for&quot;</span>) {</div>
+<div class="line"><a id="l00983" name="l00983"></a><span class="lineno">  983</span>        GetLex();</div>
+<div class="line"><a id="l00984" name="l00984"></a><span class="lineno">  984</span>        LOOP_FOR(func_name);</div>
+<div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span>    }</div>
+<div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;foreach&quot;</span>) {</div>
+<div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span>        GetLex();</div>
+<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>        LOOP_FOREACH(func_name);</div>
+<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>    }</div>
+<div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;while&quot;</span>) {</div>
+<div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>        GetLex();</div>
+<div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span>        LOOP_WHILE(func_name);</div>
+<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span>    }</div>
+<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span>}</div>
+<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span> </div>
+<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span><span class="keywordtype">void</span> RPN::LOOP_WHILE(std::string func_name) {</div>
+<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span>    GetLex(); <span class="comment">// (</span></div>
+<div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(label_number_, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
+<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>    EXP_ZERO(<a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
+<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>    GetLex(); <span class="comment">// )</span></div>
+<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, label_number_ + 1, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
+<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
+<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, label_number_, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
+<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(label_number_ + 1, <a class="code hl_variable" href="rpn_8cpp.html#a3b477ecaff9392542c2e36e64fae5964">while_loop</a>);</div>
+<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span>    table_id.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
+<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span>    BODY(func_name);</div>
+<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span>    table_id.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
+<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span>}</div>
+<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span> </div>
+<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span><span class="keywordtype">void</span> RPN::LOOP_FOREACH(std::string func_name) {</div>
+<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span>    GetLex(); <span class="comment">// (</span></div>
+<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(lexem_, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span>    GetLex(); <span class="comment">// id</span></div>
+<div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span>    GetLex(); <span class="comment">// ;</span></div>
+<div class="line"><a id="l01015" name="l01015"></a><span class="lineno"> 1015</span>    EXP_ZERO(<a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>); <span class="comment">//Комментарий: здесь уже должна быть проверка с массивом и значениями, что делается, кажется, в реализации кода</span></div>
+<div class="line"><a id="l01016" name="l01016"></a><span class="lineno"> 1016</span>    GetLex(); <span class="comment">// )</span></div>
+<div class="line"><a id="l01017" name="l01017"></a><span class="lineno"> 1017</span>    table_id.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
+<div class="line"><a id="l01018" name="l01018"></a><span class="lineno"> 1018</span>    BODY(func_name);</div>
+<div class="line"><a id="l01019" name="l01019"></a><span class="lineno"> 1019</span>    table_id.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
+<div class="line"><a id="l01020" name="l01020"></a><span class="lineno"> 1020</span>}</div>
+<div class="line"><a id="l01021" name="l01021"></a><span class="lineno"> 1021</span> </div>
+<div class="line"><a id="l01022" name="l01022"></a><span class="lineno"> 1022</span><span class="keywordtype">void</span> RPN::LOOP_FOR(std::string func_name) {</div>
+<div class="line"><a id="l01023" name="l01023"></a><span class="lineno"> 1023</span>    <span class="keywordtype">int</span> id_line_, id_column_;</div>
+<div class="line"><a id="l01024" name="l01024"></a><span class="lineno"> 1024</span>    std::pair&lt;std::vector&lt;std::string&gt;, std::pair&lt;std::vector&lt;std::string&gt;, std::vector&lt;std::string&gt;&gt;&gt; current_type_;</div>
+<div class="line"><a id="l01025" name="l01025"></a><span class="lineno"> 1025</span>    std::string current_id_name_;</div>
+<div class="line"><a id="l01026" name="l01026"></a><span class="lineno"> 1026</span>    table_id.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
+<div class="line"><a id="l01027" name="l01027"></a><span class="lineno"> 1027</span>    GetLex(); <span class="comment">// (</span></div>
+<div class="line"><a id="l01028" name="l01028"></a><span class="lineno"> 1028</span>    <span class="comment">// first part</span></div>
+<div class="line"><a id="l01029" name="l01029"></a><span class="lineno"> 1029</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;;&quot;</span>) {</div>
+<div class="line"><a id="l01030" name="l01030"></a><span class="lineno"> 1030</span>        GetLex();</div>
+<div class="line"><a id="l01031" name="l01031"></a><span class="lineno"> 1031</span>    }</div>
+<div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span>    <span class="keywordflow">else</span> { <span class="comment">// type</span></div>
+<div class="line"><a id="l01033" name="l01033"></a><span class="lineno"> 1033</span>        <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;array&quot;</span>) {</div>
+<div class="line"><a id="l01034" name="l01034"></a><span class="lineno"> 1034</span>            current_type_ = { { <span class="stringliteral">&quot;array&quot;</span> }, {} };</div>
+<div class="line"><a id="l01035" name="l01035"></a><span class="lineno"> 1035</span>            GetLex();</div>
+<div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span>            <span class="keywordtype">int</span> counter = 0;</div>
+<div class="line"><a id="l01037" name="l01037"></a><span class="lineno"> 1037</span>            <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;&lt;&quot;</span>) {</div>
+<div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>                counter++;</div>
+<div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span>                GetLex(); <span class="comment">// &lt;</span></div>
+<div class="line"><a id="l01040" name="l01040"></a><span class="lineno"> 1040</span>                <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;array&quot;</span>) {</div>
+<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>                    GetLex(); <span class="comment">// array</span></div>
+<div class="line"><a id="l01042" name="l01042"></a><span class="lineno"> 1042</span>                    current_type_.first.push_back(<span class="stringliteral">&quot;array&quot;</span>);</div>
+<div class="line"><a id="l01043" name="l01043"></a><span class="lineno"> 1043</span>                }</div>
+<div class="line"><a id="l01044" name="l01044"></a><span class="lineno"> 1044</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l01045" name="l01045"></a><span class="lineno"> 1045</span>                    current_type_.first.push_back(lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>());</div>
+<div class="line"><a id="l01046" name="l01046"></a><span class="lineno"> 1046</span>                    GetLex(); <span class="comment">// type</span></div>
+<div class="line"><a id="l01047" name="l01047"></a><span class="lineno"> 1047</span>                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01048" name="l01048"></a><span class="lineno"> 1048</span>                }</div>
+<div class="line"><a id="l01049" name="l01049"></a><span class="lineno"> 1049</span>            }</div>
+<div class="line"><a id="l01050" name="l01050"></a><span class="lineno"> 1050</span>            <span class="keywordflow">while</span> (counter) {</div>
+<div class="line"><a id="l01051" name="l01051"></a><span class="lineno"> 1051</span>                <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;&gt;&gt;&quot;</span>) counter -= 2;</div>
+<div class="line"><a id="l01052" name="l01052"></a><span class="lineno"> 1052</span>                <span class="keywordflow">else</span> counter--;</div>
+<div class="line"><a id="l01053" name="l01053"></a><span class="lineno"> 1053</span>                GetLex();</div>
+<div class="line"><a id="l01054" name="l01054"></a><span class="lineno"> 1054</span>            }</div>
+<div class="line"><a id="l01055" name="l01055"></a><span class="lineno"> 1055</span>        }</div>
+<div class="line"><a id="l01056" name="l01056"></a><span class="lineno"> 1056</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l01057" name="l01057"></a><span class="lineno"> 1057</span>            current_type_ = { { lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() }, {} };</div>
+<div class="line"><a id="l01058" name="l01058"></a><span class="lineno"> 1058</span>            GetLex(); <span class="comment">// type</span></div>
+<div class="line"><a id="l01059" name="l01059"></a><span class="lineno"> 1059</span>        }</div>
+<div class="line"><a id="l01060" name="l01060"></a><span class="lineno"> 1060</span>        current_id_name_ = lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>();</div>
+<div class="line"><a id="l01061" name="l01061"></a><span class="lineno"> 1061</span>        id_line_ = lexem_-&gt;<a class="code hl_function" href="classLexem.html#ae1d3e3e82881db03c3ee014198438dbb">GetLine</a>();</div>
+<div class="line"><a id="l01062" name="l01062"></a><span class="lineno"> 1062</span>        id_column_ = lexem_-&gt;<a class="code hl_function" href="classLexem.html#ae4561959b60f8e8737e0271a735d412f">GetColumn</a>();</div>
+<div class="line"><a id="l01063" name="l01063"></a><span class="lineno"> 1063</span>        <span class="keywordflow">if</span> (!table_id.<a class="code hl_function" href="classTID.html#a2a9f158a7d8c99438cbf70563c31a77e">IsUsed</a>(current_id_name_)) {</div>
+<div class="line"><a id="l01064" name="l01064"></a><span class="lineno"> 1064</span>            table_id.<a class="code hl_function" href="classTID.html#a3f4067681a0a793cefe086d4a827e287">AddID</a>({ current_type_ }, current_id_name_, id_line_, id_column_);</div>
+<div class="line"><a id="l01065" name="l01065"></a><span class="lineno"> 1065</span>        }</div>
+<div class="line"><a id="l01066" name="l01066"></a><span class="lineno"> 1066</span>        <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>(), <span class="stringliteral">&quot;identifier&quot;</span>), <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span>        GetLex();</div>
+<div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span>        VARS_MDEF();</div>
+<div class="line"><a id="l01069" name="l01069"></a><span class="lineno"> 1069</span>        GetLex(); <span class="comment">// ;</span></div>
+<div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span>    }</div>
+<div class="line"><a id="l01071" name="l01071"></a><span class="lineno"> 1071</span>    <a class="code hl_variable" href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a> = label_number_;</div>
+<div class="line"><a id="l01072" name="l01072"></a><span class="lineno"> 1072</span>    <a class="code hl_variable" href="rpn_8cpp.html#aabbe20959c6a629df957a9e688ddcb6e">last_common_label_number</a> = label_number_ + 1;</div>
+<div class="line"><a id="l01073" name="l01073"></a><span class="lineno"> 1073</span>    <a class="code hl_variable" href="rpn_8cpp.html#afe3b002393b2f55334c18bc6951fb184">first_array</a>.push_back(<a class="code hl_variable" href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a>);</div>
+<div class="line"><a id="l01074" name="l01074"></a><span class="lineno"> 1074</span>    <a class="code hl_variable" href="rpn_8cpp.html#a7d7ac35fac1775605985732417b240d9">last_array</a>.push_back(<a class="code hl_variable" href="rpn_8cpp.html#aabbe20959c6a629df957a9e688ddcb6e">last_common_label_number</a>);</div>
+<div class="line"><a id="l01075" name="l01075"></a><span class="lineno"> 1075</span>    label_number_ += 2;</div>
+<div class="line"><a id="l01076" name="l01076"></a><span class="lineno"> 1076</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<a class="code hl_variable" href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l01077" name="l01077"></a><span class="lineno"> 1077</span>    <span class="comment">// second part</span></div>
+<div class="line"><a id="l01078" name="l01078"></a><span class="lineno"> 1078</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;;&quot;</span>) {</div>
 <div class="line"><a id="l01079" name="l01079"></a><span class="lineno"> 1079</span>        GetLex();</div>
 <div class="line"><a id="l01080" name="l01080"></a><span class="lineno"> 1080</span>    }</div>
 <div class="line"><a id="l01081" name="l01081"></a><span class="lineno"> 1081</span>    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l01082" name="l01082"></a><span class="lineno"> 1082</span>        <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l01083" name="l01083"></a><span class="lineno"> 1083</span>            <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;,&quot;</span>) {</div>
-<div class="line"><a id="l01084" name="l01084"></a><span class="lineno"> 1084</span>                GetLex();</div>
-<div class="line"><a id="l01085" name="l01085"></a><span class="lineno"> 1085</span>            }</div>
-<div class="line"><a id="l01086" name="l01086"></a><span class="lineno"> 1086</span>            EXP_ONE(<a class="code hl_variable" href="rpn_8cpp.html#a96cc2d28851ec053abaff112c968bacd">for_loop</a>);</div>
-<div class="line"><a id="l01087" name="l01087"></a><span class="lineno"> 1087</span>        } <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;,&quot;</span>);</div>
-<div class="line"><a id="l01088" name="l01088"></a><span class="lineno"> 1088</span>        GetLex(); <span class="comment">// )</span></div>
-<div class="line"><a id="l01089" name="l01089"></a><span class="lineno"> 1089</span>    }</div>
-<div class="line"><a id="l01090" name="l01090"></a><span class="lineno"> 1090</span>    BODY(func_name);</div>
-<div class="line"><a id="l01091" name="l01091"></a><span class="lineno"> 1091</span>    table_id.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
-<div class="line"><a id="l01092" name="l01092"></a><span class="lineno"> 1092</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; <a class="code hl_variable" href="rpn_8cpp.html#a96cc2d28851ec053abaff112c968bacd">for_loop</a>.size(); ++i) {</div>
-<div class="line"><a id="l01093" name="l01093"></a><span class="lineno"> 1093</span>        chain_.push_back(<a class="code hl_variable" href="rpn_8cpp.html#a96cc2d28851ec053abaff112c968bacd">for_loop</a>[i]);</div>
-<div class="line"><a id="l01094" name="l01094"></a><span class="lineno"> 1094</span>    }</div>
-<div class="line"><a id="l01095" name="l01095"></a><span class="lineno"> 1095</span>    <a class="code hl_variable" href="rpn_8cpp.html#a96cc2d28851ec053abaff112c968bacd">for_loop</a> = {<span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(<span class="stringliteral">&quot;for&quot;</span>, <span class="stringliteral">&quot;utility&quot;</span>)};</div>
-<div class="line"><a id="l01096" name="l01096"></a><span class="lineno"> 1096</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, <a class="code hl_variable" href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
-<div class="line"><a id="l01097" name="l01097"></a><span class="lineno"> 1097</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<a class="code hl_variable" href="rpn_8cpp.html#aabbe20959c6a629df957a9e688ddcb6e">last_common_label_number</a>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
-<div class="line"><a id="l01098" name="l01098"></a><span class="lineno"> 1098</span>    <a class="code hl_variable" href="rpn_8cpp.html#afe3b002393b2f55334c18bc6951fb184">first_array</a>.pop_back();</div>
-<div class="line"><a id="l01099" name="l01099"></a><span class="lineno"> 1099</span>    <a class="code hl_variable" href="rpn_8cpp.html#a7d7ac35fac1775605985732417b240d9">last_array</a>.pop_back();</div>
-<div class="line"><a id="l01100" name="l01100"></a><span class="lineno"> 1100</span>}</div>
-<div class="line"><a id="l01101" name="l01101"></a><span class="lineno"> 1101</span> </div>
-<div class="line"><a id="l01102" name="l01102"></a><span class="lineno"> 1102</span> </div>
-<div class="foldopen" id="foldopen01103" data-start="{" data-end="}">
-<div class="line"><a id="l01103" name="l01103"></a><span class="lineno"><a class="line" href="classRPN__TID__Node.html#a9bd800b5b4ee8db6f67c56538a5c3372"> 1103</a></span><a class="code hl_function" href="classRPN__TID__Node.html#a9bd800b5b4ee8db6f67c56538a5c3372">RPN_TID_Node::~RPN_TID_Node</a>() {</div>
-<div class="line"><a id="l01104" name="l01104"></a><span class="lineno"> 1104</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : <a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
-<div class="line"><a id="l01105" name="l01105"></a><span class="lineno"> 1105</span>        <span class="keyword">delete</span> <span class="keywordtype">id</span>.second;</div>
+<div class="line"><a id="l01082" name="l01082"></a><span class="lineno"> 1082</span>        std::vector&lt;std::string&gt; type;</div>
+<div class="line"><a id="l01083" name="l01083"></a><span class="lineno"> 1083</span>        std::vector&lt;std::string&gt; bool_num = { <span class="stringliteral">&quot;bool&quot;</span> };</div>
+<div class="line"><a id="l01084" name="l01084"></a><span class="lineno"> 1084</span>        <span class="keywordflow">do</span> {</div>
+<div class="line"><a id="l01085" name="l01085"></a><span class="lineno"> 1085</span>            <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;,&quot;</span>) {</div>
+<div class="line"><a id="l01086" name="l01086"></a><span class="lineno"> 1086</span>                GetLex();</div>
+<div class="line"><a id="l01087" name="l01087"></a><span class="lineno"> 1087</span>            }</div>
+<div class="line"><a id="l01088" name="l01088"></a><span class="lineno"> 1088</span>            EXP_ONE(<a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l01089" name="l01089"></a><span class="lineno"> 1089</span>        } <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;,&quot;</span>);</div>
+<div class="line"><a id="l01090" name="l01090"></a><span class="lineno"> 1090</span>        GetLex(); <span class="comment">// ;</span></div>
+<div class="line"><a id="l01091" name="l01091"></a><span class="lineno"> 1091</span>    }</div>
+<div class="line"><a id="l01092" name="l01092"></a><span class="lineno"> 1092</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, <a class="code hl_variable" href="rpn_8cpp.html#aabbe20959c6a629df957a9e688ddcb6e">last_common_label_number</a>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l01093" name="l01093"></a><span class="lineno"> 1093</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l01094" name="l01094"></a><span class="lineno"> 1094</span>    <span class="comment">//third part</span></div>
+<div class="line"><a id="l01095" name="l01095"></a><span class="lineno"> 1095</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;)&quot;</span>) {</div>
+<div class="line"><a id="l01096" name="l01096"></a><span class="lineno"> 1096</span>        GetLex();</div>
+<div class="line"><a id="l01097" name="l01097"></a><span class="lineno"> 1097</span>    }</div>
+<div class="line"><a id="l01098" name="l01098"></a><span class="lineno"> 1098</span>    <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l01099" name="l01099"></a><span class="lineno"> 1099</span>        <span class="keywordflow">do</span> {</div>
+<div class="line"><a id="l01100" name="l01100"></a><span class="lineno"> 1100</span>            <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;,&quot;</span>) {</div>
+<div class="line"><a id="l01101" name="l01101"></a><span class="lineno"> 1101</span>                GetLex();</div>
+<div class="line"><a id="l01102" name="l01102"></a><span class="lineno"> 1102</span>            }</div>
+<div class="line"><a id="l01103" name="l01103"></a><span class="lineno"> 1103</span>            EXP_ONE(<a class="code hl_variable" href="rpn_8cpp.html#a96cc2d28851ec053abaff112c968bacd">for_loop</a>);</div>
+<div class="line"><a id="l01104" name="l01104"></a><span class="lineno"> 1104</span>        } <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;,&quot;</span>);</div>
+<div class="line"><a id="l01105" name="l01105"></a><span class="lineno"> 1105</span>        GetLex(); <span class="comment">// )</span></div>
 <div class="line"><a id="l01106" name="l01106"></a><span class="lineno"> 1106</span>    }</div>
-<div class="line"><a id="l01107" name="l01107"></a><span class="lineno"> 1107</span>}</div>
+<div class="line"><a id="l01107" name="l01107"></a><span class="lineno"> 1107</span>    BODY(func_name);</div>
+<div class="line"><a id="l01108" name="l01108"></a><span class="lineno"> 1108</span>    table_id.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
+<div class="line"><a id="l01109" name="l01109"></a><span class="lineno"> 1109</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; <a class="code hl_variable" href="rpn_8cpp.html#a96cc2d28851ec053abaff112c968bacd">for_loop</a>.size(); ++i) {</div>
+<div class="line"><a id="l01110" name="l01110"></a><span class="lineno"> 1110</span>        chain_.push_back(<a class="code hl_variable" href="rpn_8cpp.html#a96cc2d28851ec053abaff112c968bacd">for_loop</a>[i]);</div>
+<div class="line"><a id="l01111" name="l01111"></a><span class="lineno"> 1111</span>    }</div>
+<div class="line"><a id="l01112" name="l01112"></a><span class="lineno"> 1112</span>    <a class="code hl_variable" href="rpn_8cpp.html#a96cc2d28851ec053abaff112c968bacd">for_loop</a> = {<span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(<span class="stringliteral">&quot;for&quot;</span>, <span class="stringliteral">&quot;utility&quot;</span>)};</div>
+<div class="line"><a id="l01113" name="l01113"></a><span class="lineno"> 1113</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<span class="keyword">true</span>, <a class="code hl_variable" href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l01114" name="l01114"></a><span class="lineno"> 1114</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(<a class="code hl_variable" href="rpn_8cpp.html#aabbe20959c6a629df957a9e688ddcb6e">last_common_label_number</a>, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l01115" name="l01115"></a><span class="lineno"> 1115</span>    <a class="code hl_variable" href="rpn_8cpp.html#afe3b002393b2f55334c18bc6951fb184">first_array</a>.pop_back();</div>
+<div class="line"><a id="l01116" name="l01116"></a><span class="lineno"> 1116</span>    <a class="code hl_variable" href="rpn_8cpp.html#a7d7ac35fac1775605985732417b240d9">last_array</a>.pop_back();</div>
+<div class="line"><a id="l01117" name="l01117"></a><span class="lineno"> 1117</span>}</div>
+<div class="line"><a id="l01118" name="l01118"></a><span class="lineno"> 1118</span> </div>
+<div class="line"><a id="l01119" name="l01119"></a><span class="lineno"> 1119</span> </div>
+<div class="foldopen" id="foldopen01120" data-start="{" data-end="}">
+<div class="line"><a id="l01120" name="l01120"></a><span class="lineno"><a class="line" href="classRPN__TID__Node.html#a9bd800b5b4ee8db6f67c56538a5c3372"> 1120</a></span><a class="code hl_function" href="classRPN__TID__Node.html#a9bd800b5b4ee8db6f67c56538a5c3372">RPN_TID_Node::~RPN_TID_Node</a>() {</div>
+<div class="line"><a id="l01121" name="l01121"></a><span class="lineno"> 1121</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : <a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
+<div class="line"><a id="l01122" name="l01122"></a><span class="lineno"> 1122</span>        <span class="keyword">delete</span> <span class="keywordtype">id</span>.second;</div>
+<div class="line"><a id="l01123" name="l01123"></a><span class="lineno"> 1123</span>    }</div>
+<div class="line"><a id="l01124" name="l01124"></a><span class="lineno"> 1124</span>}</div>
 </div>
-<div class="line"><a id="l01108" name="l01108"></a><span class="lineno"> 1108</span> </div>
-<div class="foldopen" id="foldopen01109" data-start="{" data-end="}">
-<div class="line"><a id="l01109" name="l01109"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a559bbaa46c124a4c2c48a8bc117cc4ac"> 1109</a></span><a class="code hl_function" href="classRPN__TID.html#a559bbaa46c124a4c2c48a8bc117cc4ac">RPN_TID::RPN_TID</a>() {</div>
-<div class="line"><a id="l01110" name="l01110"></a><span class="lineno"> 1110</span>    root_ = <span class="keyword">new</span> <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>;</div>
-<div class="line"><a id="l01111" name="l01111"></a><span class="lineno"> 1111</span>}</div>
+<div class="line"><a id="l01125" name="l01125"></a><span class="lineno"> 1125</span> </div>
+<div class="foldopen" id="foldopen01126" data-start="{" data-end="}">
+<div class="line"><a id="l01126" name="l01126"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a559bbaa46c124a4c2c48a8bc117cc4ac"> 1126</a></span><a class="code hl_function" href="classRPN__TID.html#a559bbaa46c124a4c2c48a8bc117cc4ac">RPN_TID::RPN_TID</a>() {</div>
+<div class="line"><a id="l01127" name="l01127"></a><span class="lineno"> 1127</span>    root_ = <span class="keyword">new</span> <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>;</div>
+<div class="line"><a id="l01128" name="l01128"></a><span class="lineno"> 1128</span>}</div>
 </div>
-<div class="line"><a id="l01112" name="l01112"></a><span class="lineno"> 1112</span> </div>
-<div class="foldopen" id="foldopen01113" data-start="{" data-end="}">
-<div class="line"><a id="l01113" name="l01113"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a9cc9f235692099be69a1d27e58856905"> 1113</a></span><a class="code hl_function" href="classRPN__TID.html#a9cc9f235692099be69a1d27e58856905">RPN_TID::~RPN_TID</a>() {</div>
-<div class="line"><a id="l01114" name="l01114"></a><span class="lineno"> 1114</span>    <span class="keywordflow">while</span> (root_) {</div>
-<div class="line"><a id="l01115" name="l01115"></a><span class="lineno"> 1115</span>        <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* pred_ = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
-<div class="line"><a id="l01116" name="l01116"></a><span class="lineno"> 1116</span>        <span class="keyword">delete</span> root_;</div>
-<div class="line"><a id="l01117" name="l01117"></a><span class="lineno"> 1117</span>        root_ = pred_;</div>
-<div class="line"><a id="l01118" name="l01118"></a><span class="lineno"> 1118</span>    }</div>
-<div class="line"><a id="l01119" name="l01119"></a><span class="lineno"> 1119</span>}</div>
-</div>
-<div class="line"><a id="l01120" name="l01120"></a><span class="lineno"> 1120</span> </div>
-<div class="foldopen" id="foldopen01121" data-start="{" data-end="}">
-<div class="line"><a id="l01121" name="l01121"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a3d05943823a3a52d615c47463475510f"> 1121</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#a3d05943823a3a52d615c47463475510f">RPN_TID::AddID</a>(std::string id_name, <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value) {</div>
-<div class="line"><a id="l01122" name="l01122"></a><span class="lineno"> 1122</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>[id_name] = value;</div>
-<div class="line"><a id="l01123" name="l01123"></a><span class="lineno"> 1123</span>}</div>
-</div>
-<div class="line"><a id="l01124" name="l01124"></a><span class="lineno"> 1124</span> </div>
-<div class="foldopen" id="foldopen01125" data-start="{" data-end="}">
-<div class="line"><a id="l01125" name="l01125"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6"> 1125</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6">RPN_TID::FindID</a>(std::string id_name) {</div>
-<div class="line"><a id="l01126" name="l01126"></a><span class="lineno"> 1126</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
-<div class="line"><a id="l01127" name="l01127"></a><span class="lineno"> 1127</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l01128" name="l01128"></a><span class="lineno"> 1128</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
-<div class="line"><a id="l01129" name="l01129"></a><span class="lineno"> 1129</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
-<div class="line"><a id="l01130" name="l01130"></a><span class="lineno"> 1130</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l01131" name="l01131"></a><span class="lineno"> 1131</span>            }</div>
-<div class="line"><a id="l01132" name="l01132"></a><span class="lineno"> 1132</span>        }</div>
-<div class="line"><a id="l01133" name="l01133"></a><span class="lineno"> 1133</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
-<div class="line"><a id="l01134" name="l01134"></a><span class="lineno"> 1134</span>    } <span class="keywordflow">while</span>(temp);</div>
-<div class="line"><a id="l01135" name="l01135"></a><span class="lineno"> 1135</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01129" name="l01129"></a><span class="lineno"> 1129</span> </div>
+<div class="foldopen" id="foldopen01130" data-start="{" data-end="}">
+<div class="line"><a id="l01130" name="l01130"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a9cc9f235692099be69a1d27e58856905"> 1130</a></span><a class="code hl_function" href="classRPN__TID.html#a9cc9f235692099be69a1d27e58856905">RPN_TID::~RPN_TID</a>() {</div>
+<div class="line"><a id="l01131" name="l01131"></a><span class="lineno"> 1131</span>    <span class="keywordflow">while</span> (root_) {</div>
+<div class="line"><a id="l01132" name="l01132"></a><span class="lineno"> 1132</span>        <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* pred_ = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
+<div class="line"><a id="l01133" name="l01133"></a><span class="lineno"> 1133</span>        <span class="keyword">delete</span> root_;</div>
+<div class="line"><a id="l01134" name="l01134"></a><span class="lineno"> 1134</span>        root_ = pred_;</div>
+<div class="line"><a id="l01135" name="l01135"></a><span class="lineno"> 1135</span>    }</div>
 <div class="line"><a id="l01136" name="l01136"></a><span class="lineno"> 1136</span>}</div>
 </div>
 <div class="line"><a id="l01137" name="l01137"></a><span class="lineno"> 1137</span> </div>
 <div class="foldopen" id="foldopen01138" data-start="{" data-end="}">
-<div class="line"><a id="l01138" name="l01138"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111"> 1138</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111">RPN_TID::setValue</a>(std::string id_name, <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value) {</div>
-<div class="line"><a id="l01139" name="l01139"></a><span class="lineno"> 1139</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
-<div class="line"><a id="l01140" name="l01140"></a><span class="lineno"> 1140</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l01141" name="l01141"></a><span class="lineno"> 1141</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
-<div class="line"><a id="l01142" name="l01142"></a><span class="lineno"> 1142</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
-<div class="line"><a id="l01143" name="l01143"></a><span class="lineno"> 1143</span>                <span class="keywordtype">id</span>.second = value;</div>
-<div class="line"><a id="l01144" name="l01144"></a><span class="lineno"> 1144</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01145" name="l01145"></a><span class="lineno"> 1145</span>            }</div>
-<div class="line"><a id="l01146" name="l01146"></a><span class="lineno"> 1146</span>        }</div>
-<div class="line"><a id="l01147" name="l01147"></a><span class="lineno"> 1147</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
-<div class="line"><a id="l01148" name="l01148"></a><span class="lineno"> 1148</span>    } <span class="keywordflow">while</span>(temp);</div>
-<div class="line"><a id="l01149" name="l01149"></a><span class="lineno"> 1149</span>}</div>
+<div class="line"><a id="l01138" name="l01138"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a3d05943823a3a52d615c47463475510f"> 1138</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#a3d05943823a3a52d615c47463475510f">RPN_TID::AddID</a>(std::string id_name, <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value) {</div>
+<div class="line"><a id="l01139" name="l01139"></a><span class="lineno"> 1139</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>[id_name] = value;</div>
+<div class="line"><a id="l01140" name="l01140"></a><span class="lineno"> 1140</span>}</div>
 </div>
-<div class="line"><a id="l01150" name="l01150"></a><span class="lineno"> 1150</span> </div>
-<div class="foldopen" id="foldopen01151" data-start="{" data-end="}">
-<div class="line"><a id="l01151" name="l01151"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671"> 1151</a></span><a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* <a class="code hl_function" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">RPN_TID::getValue</a>(std::string id_name) {</div>
-<div class="line"><a id="l01152" name="l01152"></a><span class="lineno"> 1152</span>    <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>();</div>
-<div class="line"><a id="l01153" name="l01153"></a><span class="lineno"> 1153</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
-<div class="line"><a id="l01154" name="l01154"></a><span class="lineno"> 1154</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l01155" name="l01155"></a><span class="lineno"> 1155</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
-<div class="line"><a id="l01156" name="l01156"></a><span class="lineno"> 1156</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
-<div class="line"><a id="l01157" name="l01157"></a><span class="lineno"> 1157</span>                value = <span class="keywordtype">id</span>.second;</div>
-<div class="line"><a id="l01158" name="l01158"></a><span class="lineno"> 1158</span>            }</div>
-<div class="line"><a id="l01159" name="l01159"></a><span class="lineno"> 1159</span>        }</div>
-<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
-<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span>    } <span class="keywordflow">while</span>(temp);</div>
-<div class="line"><a id="l01162" name="l01162"></a><span class="lineno"> 1162</span>    <span class="keywordflow">return</span> value;</div>
-<div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span>}</div>
+<div class="line"><a id="l01141" name="l01141"></a><span class="lineno"> 1141</span> </div>
+<div class="foldopen" id="foldopen01142" data-start="{" data-end="}">
+<div class="line"><a id="l01142" name="l01142"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6"> 1142</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6">RPN_TID::FindID</a>(std::string id_name) {</div>
+<div class="line"><a id="l01143" name="l01143"></a><span class="lineno"> 1143</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
+<div class="line"><a id="l01144" name="l01144"></a><span class="lineno"> 1144</span>    <span class="keywordflow">do</span> {</div>
+<div class="line"><a id="l01145" name="l01145"></a><span class="lineno"> 1145</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
+<div class="line"><a id="l01146" name="l01146"></a><span class="lineno"> 1146</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
+<div class="line"><a id="l01147" name="l01147"></a><span class="lineno"> 1147</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l01148" name="l01148"></a><span class="lineno"> 1148</span>            }</div>
+<div class="line"><a id="l01149" name="l01149"></a><span class="lineno"> 1149</span>        }</div>
+<div class="line"><a id="l01150" name="l01150"></a><span class="lineno"> 1150</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
+<div class="line"><a id="l01151" name="l01151"></a><span class="lineno"> 1151</span>    } <span class="keywordflow">while</span>(temp);</div>
+<div class="line"><a id="l01152" name="l01152"></a><span class="lineno"> 1152</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01153" name="l01153"></a><span class="lineno"> 1153</span>}</div>
 </div>
-<div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span> </div>
-<div class="foldopen" id="foldopen01165" data-start="{" data-end="}">
-<div class="line"><a id="l01165" name="l01165"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3"> 1165</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3">RPN_TID::AddTable</a>() {</div>
-<div class="line"><a id="l01166" name="l01166"></a><span class="lineno"> 1166</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a> *add_table = <span class="keyword">new</span> <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>;</div>
-<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
-<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"> 1168</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">next</a> = add_table;</div>
-<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>    root_ = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">next</a>;</div>
-<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a> = temp;</div>
-<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span>}</div>
+<div class="line"><a id="l01154" name="l01154"></a><span class="lineno"> 1154</span> </div>
+<div class="foldopen" id="foldopen01155" data-start="{" data-end="}">
+<div class="line"><a id="l01155" name="l01155"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111"> 1155</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111">RPN_TID::setValue</a>(std::string id_name, <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value) {</div>
+<div class="line"><a id="l01156" name="l01156"></a><span class="lineno"> 1156</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
+<div class="line"><a id="l01157" name="l01157"></a><span class="lineno"> 1157</span>    <span class="keywordflow">do</span> {</div>
+<div class="line"><a id="l01158" name="l01158"></a><span class="lineno"> 1158</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
+<div class="line"><a id="l01159" name="l01159"></a><span class="lineno"> 1159</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
+<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>                <span class="keywordtype">id</span>.second = value;</div>
+<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01162" name="l01162"></a><span class="lineno"> 1162</span>            }</div>
+<div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span>        }</div>
+<div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
+<div class="line"><a id="l01165" name="l01165"></a><span class="lineno"> 1165</span>    } <span class="keywordflow">while</span>(temp);</div>
+<div class="line"><a id="l01166" name="l01166"></a><span class="lineno"> 1166</span>}</div>
 </div>
-<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span> </div>
-<div class="foldopen" id="foldopen01173" data-start="{" data-end="}">
-<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a"> 1173</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a">RPN_TID::RemoveTable</a>() {</div>
-<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
-<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"> 1175</span>    <span class="keyword">delete</span> root_;</div>
-<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span>    root_ = temp;</div>
-<div class="line"><a id="l01177" name="l01177"></a><span class="lineno"> 1177</span>}</div>
+<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span> </div>
+<div class="foldopen" id="foldopen01168" data-start="{" data-end="}">
+<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671"> 1168</a></span><a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* <a class="code hl_function" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">RPN_TID::getValue</a>(std::string id_name) {</div>
+<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>    <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>();</div>
+<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
+<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span>    <span class="keywordflow">do</span> {</div>
+<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
+<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"> 1173</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
+<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span>                value = <span class="keywordtype">id</span>.second;</div>
+<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"> 1175</span>            }</div>
+<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span>        }</div>
+<div class="line"><a id="l01177" name="l01177"></a><span class="lineno"> 1177</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
+<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"> 1178</span>    } <span class="keywordflow">while</span>(temp);</div>
+<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span>    <span class="keywordflow">return</span> value;</div>
+<div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span>}</div>
+</div>
+<div class="line"><a id="l01181" name="l01181"></a><span class="lineno"> 1181</span> </div>
+<div class="foldopen" id="foldopen01182" data-start="{" data-end="}">
+<div class="line"><a id="l01182" name="l01182"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3"> 1182</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3">RPN_TID::AddTable</a>() {</div>
+<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a> *add_table = <span class="keyword">new</span> <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>;</div>
+<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
+<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"> 1185</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">next</a> = add_table;</div>
+<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span>    root_ = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">next</a>;</div>
+<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a> = temp;</div>
+<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span>}</div>
+</div>
+<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span> </div>
+<div class="foldopen" id="foldopen01190" data-start="{" data-end="}">
+<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a"> 1190</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a">RPN_TID::RemoveTable</a>() {</div>
+<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
+<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>    <span class="keyword">delete</span> root_;</div>
+<div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>    root_ = temp;</div>
+<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span>}</div>
 </div>
 <div class="ttc" id="aclassLexem_html_a756fc28b51b15172a993faeaff89fe91"><div class="ttname"><a href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">Lexem::GetValue</a></div><div class="ttdeci">std::string GetValue()</div><div class="ttdef"><b>Definition</b> <a href="lexem_8cpp_source.html#l00076">lexem.cpp:76</a></div></div>
 <div class="ttc" id="aclassLexem_html_ae1d3e3e82881db03c3ee014198438dbb"><div class="ttname"><a href="classLexem.html#ae1d3e3e82881db03c3ee014198438dbb">Lexem::GetLine</a></div><div class="ttdeci">int GetLine()</div><div class="ttdef"><b>Definition</b> <a href="lexem_8cpp_source.html#l00080">lexem.cpp:80</a></div></div>
 <div class="ttc" id="aclassLexem_html_ae4561959b60f8e8737e0271a735d412f"><div class="ttname"><a href="classLexem.html#ae4561959b60f8e8737e0271a735d412f">Lexem::GetColumn</a></div><div class="ttdeci">int GetColumn()</div><div class="ttdef"><b>Definition</b> <a href="lexem_8cpp_source.html#l00084">lexem.cpp:84</a></div></div>
 <div class="ttc" id="aclassLexem_html_afa591326d8b243bfa5b66ffed792a1f3"><div class="ttname"><a href="classLexem.html#afa591326d8b243bfa5b66ffed792a1f3">Lexem::GetType</a></div><div class="ttdeci">LexemType GetType()</div><div class="ttdef"><b>Definition</b> <a href="lexem_8cpp_source.html#l00020">lexem.cpp:20</a></div></div>
-<div class="ttc" id="aclassRPN__TID__Node_html"><div class="ttname"><a href="classRPN__TID__Node.html">RPN_TID_Node</a></div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00136">rpn.h:136</a></div></div>
-<div class="ttc" id="aclassRPN__TID__Node_html_a8205851cb7963a5197041f0cf817894c"><div class="ttname"><a href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">RPN_TID_Node::next</a></div><div class="ttdeci">RPN_TID_Node * next</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00139">rpn.h:139</a></div></div>
-<div class="ttc" id="aclassRPN__TID__Node_html_a9bd800b5b4ee8db6f67c56538a5c3372"><div class="ttname"><a href="classRPN__TID__Node.html#a9bd800b5b4ee8db6f67c56538a5c3372">RPN_TID_Node::~RPN_TID_Node</a></div><div class="ttdeci">virtual ~RPN_TID_Node()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01103">rpn.cpp:1103</a></div></div>
-<div class="ttc" id="aclassRPN__TID__Node_html_ab5ed2dcca4609e4b7cdad01bf0b85c1c"><div class="ttname"><a href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">RPN_TID_Node::pred</a></div><div class="ttdeci">RPN_TID_Node * pred</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00139">rpn.h:139</a></div></div>
-<div class="ttc" id="aclassRPN__TID__Node_html_ac260908c2e3195809967aa1f32ae02ec"><div class="ttname"><a href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">RPN_TID_Node::ID</a></div><div class="ttdeci">std::map&lt; std::string, RPN_Node * &gt; ID</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00140">rpn.h:140</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_a3b424fe5f90b7eac07450d3ab9154111"><div class="ttname"><a href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111">RPN_TID::setValue</a></div><div class="ttdeci">void setValue(std::string id_name, RPN_Node *value)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01138">rpn.cpp:1138</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_a3d05943823a3a52d615c47463475510f"><div class="ttname"><a href="classRPN__TID.html#a3d05943823a3a52d615c47463475510f">RPN_TID::AddID</a></div><div class="ttdeci">void AddID(std::string id_name, RPN_Node *value)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01121">rpn.cpp:1121</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_a3ee6c795476f4a312c1fb0f04f0b24e6"><div class="ttname"><a href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6">RPN_TID::FindID</a></div><div class="ttdeci">bool FindID(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01125">rpn.cpp:1125</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_a559bbaa46c124a4c2c48a8bc117cc4ac"><div class="ttname"><a href="classRPN__TID.html#a559bbaa46c124a4c2c48a8bc117cc4ac">RPN_TID::RPN_TID</a></div><div class="ttdeci">RPN_TID()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01109">rpn.cpp:1109</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_a9cc9f235692099be69a1d27e58856905"><div class="ttname"><a href="classRPN__TID.html#a9cc9f235692099be69a1d27e58856905">RPN_TID::~RPN_TID</a></div><div class="ttdeci">virtual ~RPN_TID()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01113">rpn.cpp:1113</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_aa9f1f86400ccebd6c266b572290017f3"><div class="ttname"><a href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3">RPN_TID::AddTable</a></div><div class="ttdeci">void AddTable()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01165">rpn.cpp:1165</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_aae479183023b34d1374c3d9fb9da845a"><div class="ttname"><a href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a">RPN_TID::RemoveTable</a></div><div class="ttdeci">void RemoveTable()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01173">rpn.cpp:1173</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_aed792a2176e4f86bc3bb2397cc07e671"><div class="ttname"><a href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">RPN_TID::getValue</a></div><div class="ttdeci">RPN_Node * getValue(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01151">rpn.cpp:1151</a></div></div>
-<div class="ttc" id="aclassRPN_html_a6f84096ac507b43fbc6fdc4a5710e919"><div class="ttname"><a href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">RPN::AddCell</a></div><div class="ttdeci">void AddCell(Lexem *element, std::vector&lt; RPN_Node * &gt; &amp;container)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00164">rpn.h:164</a></div></div>
+<div class="ttc" id="aclassRPN__TID__Node_html"><div class="ttname"><a href="classRPN__TID__Node.html">RPN_TID_Node</a></div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00139">rpn.h:139</a></div></div>
+<div class="ttc" id="aclassRPN__TID__Node_html_a8205851cb7963a5197041f0cf817894c"><div class="ttname"><a href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">RPN_TID_Node::next</a></div><div class="ttdeci">RPN_TID_Node * next</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00142">rpn.h:142</a></div></div>
+<div class="ttc" id="aclassRPN__TID__Node_html_a9bd800b5b4ee8db6f67c56538a5c3372"><div class="ttname"><a href="classRPN__TID__Node.html#a9bd800b5b4ee8db6f67c56538a5c3372">RPN_TID_Node::~RPN_TID_Node</a></div><div class="ttdeci">virtual ~RPN_TID_Node()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01120">rpn.cpp:1120</a></div></div>
+<div class="ttc" id="aclassRPN__TID__Node_html_ab5ed2dcca4609e4b7cdad01bf0b85c1c"><div class="ttname"><a href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">RPN_TID_Node::pred</a></div><div class="ttdeci">RPN_TID_Node * pred</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00142">rpn.h:142</a></div></div>
+<div class="ttc" id="aclassRPN__TID__Node_html_ac260908c2e3195809967aa1f32ae02ec"><div class="ttname"><a href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">RPN_TID_Node::ID</a></div><div class="ttdeci">std::map&lt; std::string, RPN_Node * &gt; ID</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00143">rpn.h:143</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_a3b424fe5f90b7eac07450d3ab9154111"><div class="ttname"><a href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111">RPN_TID::setValue</a></div><div class="ttdeci">void setValue(std::string id_name, RPN_Node *value)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01155">rpn.cpp:1155</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_a3d05943823a3a52d615c47463475510f"><div class="ttname"><a href="classRPN__TID.html#a3d05943823a3a52d615c47463475510f">RPN_TID::AddID</a></div><div class="ttdeci">void AddID(std::string id_name, RPN_Node *value)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01138">rpn.cpp:1138</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_a3ee6c795476f4a312c1fb0f04f0b24e6"><div class="ttname"><a href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6">RPN_TID::FindID</a></div><div class="ttdeci">bool FindID(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01142">rpn.cpp:1142</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_a559bbaa46c124a4c2c48a8bc117cc4ac"><div class="ttname"><a href="classRPN__TID.html#a559bbaa46c124a4c2c48a8bc117cc4ac">RPN_TID::RPN_TID</a></div><div class="ttdeci">RPN_TID()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01126">rpn.cpp:1126</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_a9cc9f235692099be69a1d27e58856905"><div class="ttname"><a href="classRPN__TID.html#a9cc9f235692099be69a1d27e58856905">RPN_TID::~RPN_TID</a></div><div class="ttdeci">virtual ~RPN_TID()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01130">rpn.cpp:1130</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_aa9f1f86400ccebd6c266b572290017f3"><div class="ttname"><a href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3">RPN_TID::AddTable</a></div><div class="ttdeci">void AddTable()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01182">rpn.cpp:1182</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_aae479183023b34d1374c3d9fb9da845a"><div class="ttname"><a href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a">RPN_TID::RemoveTable</a></div><div class="ttdeci">void RemoveTable()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01190">rpn.cpp:1190</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_aed792a2176e4f86bc3bb2397cc07e671"><div class="ttname"><a href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">RPN_TID::getValue</a></div><div class="ttdeci">RPN_Node * getValue(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01168">rpn.cpp:1168</a></div></div>
+<div class="ttc" id="aclassRPN_html_a6f84096ac507b43fbc6fdc4a5710e919"><div class="ttname"><a href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">RPN::AddCell</a></div><div class="ttdeci">void AddCell(Lexem *element, std::vector&lt; RPN_Node * &gt; &amp;container)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00167">rpn.h:167</a></div></div>
 <div class="ttc" id="aclassRPN_html_aabd677eac80142d309e79bb0e3d6d563"><div class="ttname"><a href="classRPN.html#aabd677eac80142d309e79bb0e3d6d563">RPN::Analyze</a></div><div class="ttdeci">void Analyze(const std::vector&lt; Lexem * &gt; &amp;list_of_lexems)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l00056">rpn.cpp:56</a></div></div>
 <div class="ttc" id="aclassTID_html_a2a9f158a7d8c99438cbf70563c31a77e"><div class="ttname"><a href="classTID.html#a2a9f158a7d8c99438cbf70563c31a77e">TID::IsUsed</a></div><div class="ttdeci">bool IsUsed(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="tid_8cpp_source.html#l00099">tid.cpp:99</a></div></div>
 <div class="ttc" id="aclassTID_html_a3f4067681a0a793cefe086d4a827e287"><div class="ttname"><a href="classTID.html#a3f4067681a0a793cefe086d4a827e287">TID::AddID</a></div><div class="ttdeci">void AddID(std::pair&lt; std::vector&lt; std::string &gt;, std::pair&lt; std::vector&lt; std::string &gt;, std::vector&lt; std::string &gt; &gt; &gt; type, std::string id_name, int line, int column)</div><div class="ttdef"><b>Definition</b> <a href="tid_8cpp_source.html#l00083">tid.cpp:83</a></div></div>
@@ -1335,7 +1352,7 @@ $(document).ready(function(){initNavTree('rpn_8cpp_source.html',''); initResizab
 <div class="ttc" id="arpn_8cpp_html_ad2d6c9d285b34227ed246ae673c9e434"><div class="ttname"><a href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a></div><div class="ttdeci">int first_common_label_number</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l00009">rpn.cpp:9</a></div></div>
 <div class="ttc" id="arpn_8cpp_html_afe3b002393b2f55334c18bc6951fb184"><div class="ttname"><a href="rpn_8cpp.html#afe3b002393b2f55334c18bc6951fb184">first_array</a></div><div class="ttdeci">std::vector&lt; int &gt; first_array</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l00008">rpn.cpp:8</a></div></div>
 <div class="ttc" id="astructRPN__Node_html"><div class="ttname"><a href="structRPN__Node.html">RPN_Node</a></div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00009">rpn.h:9</a></div></div>
-<div class="ttc" id="astructRPN__Node_html_a8fca58c5305c3c9b3b3df8b3d126f8df"><div class="ttname"><a href="structRPN__Node.html#a8fca58c5305c3c9b3b3df8b3d126f8df">RPN_Node::RPN_Node</a></div><div class="ttdeci">RPN_Node()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00053">rpn.h:53</a></div></div>
+<div class="ttc" id="astructRPN__Node_html_a8fca58c5305c3c9b3b3df8b3d126f8df"><div class="ttname"><a href="structRPN__Node.html#a8fca58c5305c3c9b3b3df8b3d126f8df">RPN_Node::RPN_Node</a></div><div class="ttdeci">RPN_Node()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00056">rpn.h:56</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
