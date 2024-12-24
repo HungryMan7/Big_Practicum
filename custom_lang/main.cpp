@@ -6,18 +6,12 @@
 
 int main() {
     LexicalAnalyzer* la = new LexicalAnalyzer;
-    std::cout << "LEXICAL ANALYSIS\n" << "______________________________\n";
-    try {
-        la->SetLanguage("resources/lang.txt");
-        la->Analyze("resources/program.txt");
-    } catch (const std::string e) {
-        std::cout << e;
-    } catch (char const* e) {
-        std::cout << e;
-    }
     SyntaxAnalyzer* sa = new SyntaxAnalyzer;
     SemanticsAnalyzer* sm = new SemanticsAnalyzer;
     try {
+        std::cout << "LEXICAL ANALYSIS\n" << "______________________________\n";
+        la->SetLanguage("resources/lang.txt");
+        la->Analyze("resources/program.txt");
         std::cout << "SYNTAX ANALYSIS\n" << "______________________________\n";
         sa->Analyze(la->GetLexems());
         std::cout << "OK!\n";

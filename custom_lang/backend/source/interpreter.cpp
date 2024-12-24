@@ -45,8 +45,14 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
                    rpn_[ind]->GetType() == "function") {
             RPN_Node* copy = new RPN_Node(*rpn_[ind]);
             stack.push(copy);
+            if (rpn_[ind]->GetType() == "identifier") {
+                if (!tid->FindID(rpn_[ind]->GetName())) {
+                    tid->AddID(rpn_[ind]->GetName(), copy);
+                }
+            }
         }
     }
+    
 }
 
 RPN_Node*& Interpreter::Solve(RPN_Node*& first, RPN_Node*& second, std::string operation) {
