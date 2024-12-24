@@ -4,7 +4,7 @@ var searchData=
   ['semantics_5fanalyzer_2eh_1',['semantics_analyzer.h',['../semantics__analyzer_8h.html',1,'']]],
   ['semanticsanalyzer_2',['SemanticsAnalyzer',['../classSemanticsAnalyzer.html',1,'']]],
   ['separator_3',['Separator',['../lexem_8h.html#a36d3ea63d0a0e8d6b72ac94cf088d42ea04b2e4188d4ef8051e4699da8af01335',1,'lexem.h']]],
-  ['setcolumn_4',['setcolumn',['../classLexem.html#a040150125042b6118984b68e0403e9cb',1,'Lexem::SetColumn()'],['../classCell.html#a824329c7a92c8ea466c996460856fa2c',1,'Cell::setColumn()']]],
+  ['setcolumn_4',['setcolumn',['../classCell.html#a824329c7a92c8ea466c996460856fa2c',1,'Cell::setColumn()'],['../classLexem.html#a040150125042b6118984b68e0403e9cb',1,'Lexem::SetColumn()']]],
   ['setlanguage_5',['SetLanguage',['../classLexicalAnalyzer.html#ad817ae8993fe944388414a634156500f',1,'LexicalAnalyzer']]],
   ['setline_6',['setline',['../classLexem.html#a918602048188f382d48a1c544da27ae0',1,'Lexem::SetLine()'],['../classCell.html#aed0968422e93a975d8a48e5135c25a43',1,'Cell::setLine(int line)']]],
   ['setname_7',['setName',['../classCell.html#a1a7777aadf2846b617657f047654a958',1,'Cell']]],

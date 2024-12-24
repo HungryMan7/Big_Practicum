@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['setcolumn_0',['setcolumn',['../classLexem.html#a040150125042b6118984b68e0403e9cb',1,'Lexem::SetColumn()'],['../classCell.html#a824329c7a92c8ea466c996460856fa2c',1,'Cell::setColumn()']]],
+  ['setcolumn_0',['setcolumn',['../classCell.html#a824329c7a92c8ea466c996460856fa2c',1,'Cell::setColumn()'],['../classLexem.html#a040150125042b6118984b68e0403e9cb',1,'Lexem::SetColumn()']]],
   ['setlanguage_1',['SetLanguage',['../classLexicalAnalyzer.html#ad817ae8993fe944388414a634156500f',1,'LexicalAnalyzer']]],
   ['setline_2',['setline',['../classCell.html#aed0968422e93a975d8a48e5135c25a43',1,'Cell::setLine()'],['../classLexem.html#a918602048188f382d48a1c544da27ae0',1,'Lexem::SetLine()']]],
   ['setname_3',['setName',['../classCell.html#a1a7777aadf2846b617657f047654a958',1,'Cell']]],

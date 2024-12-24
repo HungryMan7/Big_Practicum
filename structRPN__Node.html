@@ -121,6 +121,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaaf5ecca4af83402083997d0948811fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5089f456b1507f445925a589c554c5c6" id="r_a5089f456b1507f445925a589c554c5c6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a5089f456b1507f445925a589c554c5c6">GetName</a> ()</td></tr>
 <tr class="separator:a5089f456b1507f445925a589c554c5c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48b0487d0444ff15949639f027f7b781" id="r_a48b0487d0444ff15949639f027f7b781"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a48b0487d0444ff15949639f027f7b781">GetLabelNumber</a> ()</td></tr>
+<tr class="separator:a48b0487d0444ff15949639f027f7b781"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace5b7336f72537456de1e580b20e858d" id="r_ace5b7336f72537456de1e580b20e858d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#ace5b7336f72537456de1e580b20e858d">GetKeyword</a> ()</td></tr>
+<tr class="separator:ace5b7336f72537456de1e580b20e858d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae75c4e595b36a15be04246d4ce0ba4af" id="r_ae75c4e595b36a15be04246d4ce0ba4af"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#ae75c4e595b36a15be04246d4ce0ba4af">IsCommonLabel</a> ()</td></tr>
+<tr class="separator:ae75c4e595b36a15be04246d4ce0ba4af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afccd72881732fdb2c2ab87e9a6105e22" id="r_afccd72881732fdb2c2ab87e9a6105e22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#afccd72881732fdb2c2ab87e9a6105e22">IsTrueLabel</a> ()</td></tr>
+<tr class="separator:afccd72881732fdb2c2ab87e9a6105e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cbf17dfc00d797b6c30270e7d692a8a" id="r_a8cbf17dfc00d797b6c30270e7d692a8a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a8cbf17dfc00d797b6c30270e7d692a8a">IsGoLabel</a> ()</td></tr>
+<tr class="separator:a8cbf17dfc00d797b6c30270e7d692a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a088ed84af6a64bbfa3a339aebf4ca055" id="r_a088ed84af6a64bbfa3a339aebf4ca055"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a088ed84af6a64bbfa3a339aebf4ca055">IsEmptyLabel</a> ()</td></tr>
 <tr class="separator:a088ed84af6a64bbfa3a339aebf4ca055"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a406f9c9886768f04caac839b52d4339f" id="r_a406f9c9886768f04caac839b52d4339f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a406f9c9886768f04caac839b52d4339f">Print</a> ()</td></tr>
@@ -471,6 +481,62 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ace5b7336f72537456de1e580b20e858d" name="ace5b7336f72537456de1e580b20e858d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace5b7336f72537456de1e580b20e858d">&#9670;&#160;</a></span>GetKeyword()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string RPN_Node::GetKeyword </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00073">73</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>{ <span class="keywordflow">return</span> keyword; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a48b0487d0444ff15949639f027f7b781" name="a48b0487d0444ff15949639f027f7b781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48b0487d0444ff15949639f027f7b781">&#9670;&#160;</a></span>GetLabelNumber()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RPN_Node::GetLabelNumber </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00072">72</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>{ <span class="keywordflow">return</span> label_number; }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a5089f456b1507f445925a589c554c5c6" name="a5089f456b1507f445925a589c554c5c6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5089f456b1507f445925a589c554c5c6">&#9670;&#160;</a></span>GetName()</h2>
 
@@ -527,6 +593,34 @@ Public Member Functions</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="ae75c4e595b36a15be04246d4ce0ba4af" name="ae75c4e595b36a15be04246d4ce0ba4af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae75c4e595b36a15be04246d4ce0ba4af">&#9670;&#160;</a></span>IsCommonLabel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RPN_Node::IsCommonLabel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00074">74</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>{ <span class="keywordflow">return</span> rpn_label; }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a088ed84af6a64bbfa3a339aebf4ca055" name="a088ed84af6a64bbfa3a339aebf4ca055"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a088ed84af6a64bbfa3a339aebf4ca055">&#9670;&#160;</a></span>IsEmptyLabel()</h2>
 
@@ -550,8 +644,64 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00072">72</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   72</span>{ <span class="keywordflow">return</span> rpn_empty_label; }</div>
+<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00077">77</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span>{ <span class="keywordflow">return</span> rpn_empty_label; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8cbf17dfc00d797b6c30270e7d692a8a" name="a8cbf17dfc00d797b6c30270e7d692a8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cbf17dfc00d797b6c30270e7d692a8a">&#9670;&#160;</a></span>IsGoLabel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RPN_Node::IsGoLabel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00076">76</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>{ <span class="keywordflow">return</span> rpn_go_label; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afccd72881732fdb2c2ab87e9a6105e22" name="afccd72881732fdb2c2ab87e9a6105e22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afccd72881732fdb2c2ab87e9a6105e22">&#9670;&#160;</a></span>IsTrueLabel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RPN_Node::IsTrueLabel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00075">75</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   75</span>{ <span class="keywordflow">return</span> rpn_true_label; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -578,30 +728,30 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00073">73</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   73</span>                 {</div>
-<div class="line"><span class="lineno">   74</span>        std::cout &lt;&lt; type_;</div>
-<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;identifier&quot;</span> || type_ == <span class="stringliteral">&quot;function&quot;</span>) {</div>
-<div class="line"><span class="lineno">   76</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; id_name;</div>
-<div class="line"><span class="lineno">   77</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;label&quot;</span>) {</div>
-<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">if</span> (rpn_label) std::cout &lt;&lt; label_number &lt;&lt; <span class="stringliteral">&quot; common &quot;</span>;</div>
-<div class="line"><span class="lineno">   79</span>            <span class="keywordflow">if</span> (rpn_true_label) std::cout &lt;&lt; <span class="stringliteral">&quot; true &quot;</span>;</div>
-<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">if</span> (rpn_go_label) std::cout &lt;&lt; label_number &lt;&lt; <span class="stringliteral">&quot; go &quot;</span>;</div>
-<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">if</span> (rpn_empty_label) std::cout &lt;&lt; <span class="stringliteral">&quot; empty &quot;</span>;</div>
-<div class="line"><span class="lineno">   82</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;integer&quot;</span>) {</div>
-<div class="line"><span class="lineno">   83</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_int;</div>
-<div class="line"><span class="lineno">   84</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;double&quot;</span>) {</div>
-<div class="line"><span class="lineno">   85</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_double;</div>
-<div class="line"><span class="lineno">   86</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;bool&quot;</span>) {</div>
-<div class="line"><span class="lineno">   87</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_bool;</div>
-<div class="line"><span class="lineno">   88</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;string&quot;</span>) {</div>
-<div class="line"><span class="lineno">   89</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_string;        </div>
-<div class="line"><span class="lineno">   90</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;utility&quot;</span>) {</div>
-<div class="line"><span class="lineno">   91</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; keyword;</div>
-<div class="line"><span class="lineno">   92</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;other&quot;</span>) {</div>
-<div class="line"><span class="lineno">   93</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; operation;</div>
-<div class="line"><span class="lineno">   94</span>        }</div>
-<div class="line"><span class="lineno">   95</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00078">78</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   78</span>                 {</div>
+<div class="line"><span class="lineno">   79</span>        std::cout &lt;&lt; type_;</div>
+<div class="line"><span class="lineno">   80</span>        <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;identifier&quot;</span> || type_ == <span class="stringliteral">&quot;function&quot;</span>) {</div>
+<div class="line"><span class="lineno">   81</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; id_name;</div>
+<div class="line"><span class="lineno">   82</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;label&quot;</span>) {</div>
+<div class="line"><span class="lineno">   83</span>            <span class="keywordflow">if</span> (rpn_label) std::cout &lt;&lt; label_number &lt;&lt; <span class="stringliteral">&quot; common &quot;</span>;</div>
+<div class="line"><span class="lineno">   84</span>            <span class="keywordflow">if</span> (rpn_true_label) std::cout &lt;&lt; <span class="stringliteral">&quot; true &quot;</span>;</div>
+<div class="line"><span class="lineno">   85</span>            <span class="keywordflow">if</span> (rpn_go_label) std::cout &lt;&lt; label_number &lt;&lt; <span class="stringliteral">&quot; go &quot;</span>;</div>
+<div class="line"><span class="lineno">   86</span>            <span class="keywordflow">if</span> (rpn_empty_label) std::cout &lt;&lt; <span class="stringliteral">&quot; empty &quot;</span>;</div>
+<div class="line"><span class="lineno">   87</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;integer&quot;</span>) {</div>
+<div class="line"><span class="lineno">   88</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_int;</div>
+<div class="line"><span class="lineno">   89</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;double&quot;</span>) {</div>
+<div class="line"><span class="lineno">   90</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_double;</div>
+<div class="line"><span class="lineno">   91</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;bool&quot;</span>) {</div>
+<div class="line"><span class="lineno">   92</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_bool;</div>
+<div class="line"><span class="lineno">   93</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;string&quot;</span>) {</div>
+<div class="line"><span class="lineno">   94</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_string;        </div>
+<div class="line"><span class="lineno">   95</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;utility&quot;</span>) {</div>
+<div class="line"><span class="lineno">   96</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; keyword;</div>
+<div class="line"><span class="lineno">   97</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;other&quot;</span>) {</div>
+<div class="line"><span class="lineno">   98</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; operation;</div>
+<div class="line"><span class="lineno">   99</span>        }</div>
+<div class="line"><span class="lineno">  100</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>

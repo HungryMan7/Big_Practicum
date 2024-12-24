@@ -101,15 +101,17 @@ $(document).ready(function(){initNavTree('classInterpreter.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a198b2587877fbdf9ce6ec6217da47926" id="r_a198b2587877fbdf9ce6ec6217da47926"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInterpreter.html#a198b2587877fbdf9ce6ec6217da47926">Run</a> (<a class="el" href="classRPN.html">RPN</a> *rpn_chain)</td></tr>
-<tr class="separator:a198b2587877fbdf9ce6ec6217da47926"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8b4dc5acd5db78739dab8eb9c5eb3c" id="r_ace8b4dc5acd5db78739dab8eb9c5eb3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInterpreter.html#ace8b4dc5acd5db78739dab8eb9c5eb3c">Run</a> (std::vector&lt; <a class="el" href="structRPN__Node.html">RPN_Node</a> * &gt; rpn)</td></tr>
+<tr class="separator:ace8b4dc5acd5db78739dab8eb9c5eb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f14ead7f5a3b0b7155566da5b2a294a" id="r_a5f14ead7f5a3b0b7155566da5b2a294a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInterpreter.html#a5f14ead7f5a3b0b7155566da5b2a294a">RunFunc</a> (std::string, int)</td></tr>
+<tr class="separator:a5f14ead7f5a3b0b7155566da5b2a294a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00004">4</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a198b2587877fbdf9ce6ec6217da47926" name="a198b2587877fbdf9ce6ec6217da47926"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a198b2587877fbdf9ce6ec6217da47926">&#9670;&#160;</a></span>Run()</h2>
+<a id="ace8b4dc5acd5db78739dab8eb9c5eb3c" name="ace8b4dc5acd5db78739dab8eb9c5eb3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace8b4dc5acd5db78739dab8eb9c5eb3c">&#9670;&#160;</a></span>Run()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -117,36 +119,74 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void Interpreter::Run </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classRPN.html">RPN</a> *&#160;</td>
-          <td class="paramname"><em>rpn_chain</em></td><td>)</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structRPN__Node.html">RPN_Node</a> * &gt;&#160;</td>
+          <td class="paramname"><em>rpn</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="interpreter_8cpp_source.html#l00003">3</a> of file <a class="el" href="interpreter_8cpp_source.html">interpreter.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">    3</span>                                    {</div>
-<div class="line"><span class="lineno">    4</span>    std::vector&lt;RPN_Node*&gt; rpn = rpn_chain-&gt;<a class="code hl_function" href="classRPN.html#adbc1b717fc9d13a31e75d6358149c434">GetChain</a>();</div>
-<div class="line"><span class="lineno">    5</span>    ind_ = 0;</div>
-<div class="line"><span class="lineno">    6</span>    std::string name = rpn[ind_]-&gt;GetName();</div>
-<div class="line"><span class="lineno">    7</span>    std::vector&lt;RPN_Node*&gt; new_func;</div>
-<div class="line"><span class="lineno">    8</span>    ++ind_;</div>
-<div class="line"><span class="lineno">    9</span>    <span class="keywordflow">while</span> (ind_ &lt; rpn.size()) {</div>
-<div class="line"><span class="lineno">   10</span>        <span class="keywordflow">while</span> (ind_ &lt; rpn.size() &amp;&amp; !rpn[ind_]-&gt;IsEmptyLabel()) {</div>
-<div class="line"><span class="lineno">   11</span>            new_func.push_back(rpn[ind_]);</div>
-<div class="line"><span class="lineno">   12</span>            ++ind_;</div>
-<div class="line"><span class="lineno">   13</span>        }</div>
-<div class="line"><span class="lineno">   14</span>        functions[name] = new_func;</div>
-<div class="line"><span class="lineno">   15</span>        new_func.clear();</div>
-<div class="line"><span class="lineno">   16</span>        ++ind_;</div>
-<div class="line"><span class="lineno">   17</span>        <span class="keywordflow">if</span> (ind_ &lt; rpn.size()) {</div>
-<div class="line"><span class="lineno">   18</span>            name = rpn[ind_]-&gt;GetName();</div>
-<div class="line"><span class="lineno">   19</span>            ++ind_;</div>
-<div class="line"><span class="lineno">   20</span>        }</div>
-<div class="line"><span class="lineno">   21</span>    }</div>
-<div class="line"><span class="lineno">   22</span>    <span class="comment">// now code is divided in functions</span></div>
-<div class="line"><span class="lineno">   23</span>}</div>
-<div class="ttc" id="aclassRPN_html_adbc1b717fc9d13a31e75d6358149c434"><div class="ttname"><a href="classRPN.html#adbc1b717fc9d13a31e75d6358149c434">RPN::GetChain</a></div><div class="ttdeci">std::vector&lt; RPN_Node * &gt; GetChain()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00139">rpn.h:139</a></div></div>
+<div class="fragment"><div class="line"><span class="lineno">    3</span>                                              {</div>
+<div class="line"><span class="lineno">    4</span>    rpn_ = rpn;</div>
+<div class="line"><span class="lineno">    5</span>    <a class="code hl_function" href="classInterpreter.html#a5f14ead7f5a3b0b7155566da5b2a294a">RunFunc</a>(<span class="stringliteral">&quot;main&quot;</span>, -1);</div>
+<div class="line"><span class="lineno">    6</span>}</div>
+<div class="ttc" id="aclassInterpreter_html_a5f14ead7f5a3b0b7155566da5b2a294a"><div class="ttname"><a href="classInterpreter.html#a5f14ead7f5a3b0b7155566da5b2a294a">Interpreter::RunFunc</a></div><div class="ttdeci">void RunFunc(std::string, int)</div><div class="ttdef"><b>Definition</b> <a href="interpreter_8cpp_source.html#l00008">interpreter.cpp:8</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5f14ead7f5a3b0b7155566da5b2a294a" name="a5f14ead7f5a3b0b7155566da5b2a294a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f14ead7f5a3b0b7155566da5b2a294a">&#9670;&#160;</a></span>RunFunc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Interpreter::RunFunc </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>func_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>label_num</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interpreter_8cpp_source.html#l00008">8</a> of file <a class="el" href="interpreter_8cpp_source.html">interpreter.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">    8</span>                                                            {</div>
+<div class="line"><span class="lineno">    9</span>    <span class="keywordtype">int</span> ind = 0;</div>
+<div class="line"><span class="lineno">   10</span>    <span class="keywordflow">while</span> (ind &lt; rpn_.size() &amp;&amp; rpn_[ind]-&gt;GetType() != <span class="stringliteral">&quot;function&quot;</span> ||</div>
+<div class="line"><span class="lineno">   11</span>           rpn_[ind]-&gt;GetName() != func_name) {</div>
+<div class="line"><span class="lineno">   12</span>        ++ind;</div>
+<div class="line"><span class="lineno">   13</span>    }</div>
+<div class="line"><span class="lineno">   14</span>    <span class="keywordflow">if</span> (ind == rpn_.size()) {</div>
+<div class="line"><span class="lineno">   15</span>        <span class="keywordflow">throw</span> <span class="stringliteral">&quot;function or label not found!&quot;</span>;</div>
+<div class="line"><span class="lineno">   16</span>    }</div>
+<div class="line"><span class="lineno">   17</span>    ++ind;</div>
+<div class="line"><span class="lineno">   18</span>    <span class="keywordflow">if</span> (label_num != -1) {</div>
+<div class="line"><span class="lineno">   19</span>        <span class="keywordflow">while</span> (ind &lt; rpn_.size() &amp;&amp; !rpn_[ind]-&gt;IsCommonLabel() ||</div>
+<div class="line"><span class="lineno">   20</span>               rpn_[ind]-&gt;GetLabelNumber() != label_num) {</div>
+<div class="line"><span class="lineno">   21</span>            ++ind;</div>
+<div class="line"><span class="lineno">   22</span>        }</div>
+<div class="line"><span class="lineno">   23</span>        <span class="keywordflow">if</span> (ind == rpn_.size()) {</div>
+<div class="line"><span class="lineno">   24</span>            <span class="keywordflow">throw</span> <span class="stringliteral">&quot;function or label not found!&quot;</span>;</div>
+<div class="line"><span class="lineno">   25</span>        }</div>
+<div class="line"><span class="lineno">   26</span>        ++ind;</div>
+<div class="line"><span class="lineno">   27</span>    }</div>
+<div class="line"><span class="lineno">   28</span>    <span class="keywordflow">for</span> (; rpn_[ind]-&gt;GetType() != <span class="stringliteral">&quot;utility&quot;</span> || rpn_[ind]-&gt;GetKeyword() != <span class="stringliteral">&quot;return&quot;</span>; ++ind) {</div>
+<div class="line"><span class="lineno">   29</span>        <span class="comment">// code</span></div>
+<div class="line"><span class="lineno">   30</span>    }</div>
+<div class="line"><span class="lineno">   31</span>    <span class="comment">// return</span></div>
+<div class="line"><span class="lineno">   32</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
