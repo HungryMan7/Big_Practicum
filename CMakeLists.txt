@@ -1,4 +1,4 @@
-project (custom-lang)
+project (custom_lang)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
@@ -11,4 +11,4 @@ file(GLOB ALL_FILES
 	 custom_lang/resources/*.txt
 )
 
-add_executable (custom-lang ${ALL_FILES})
+add_executable (main ${ALL_FILES})
