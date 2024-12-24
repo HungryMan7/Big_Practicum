@@ -2,6 +2,7 @@ var annotated_dup =
 [
     [ "Bor", "classBor.html", "classBor" ],
     [ "Cell", "classCell.html", "classCell" ],
+    [ "Interpreter", "classInterpreter.html", "classInterpreter" ],
     [ "Lexem", "classLexem.html", "classLexem" ],
     [ "LexicalAnalyzer", "classLexicalAnalyzer.html", "classLexicalAnalyzer" ],
     [ "Node", "structNode.html", "structNode" ],
