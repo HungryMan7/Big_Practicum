@@ -123,6 +123,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5089f456b1507f445925a589c554c5c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a088ed84af6a64bbfa3a339aebf4ca055" id="r_a088ed84af6a64bbfa3a339aebf4ca055"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a088ed84af6a64bbfa3a339aebf4ca055">IsEmptyLabel</a> ()</td></tr>
 <tr class="separator:a088ed84af6a64bbfa3a339aebf4ca055"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a406f9c9886768f04caac839b52d4339f" id="r_a406f9c9886768f04caac839b52d4339f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a406f9c9886768f04caac839b52d4339f">Print</a> ()</td></tr>
+<tr class="separator:a406f9c9886768f04caac839b52d4339f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -550,6 +552,56 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00072">72</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   72</span>{ <span class="keywordflow">return</span> rpn_empty_label; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a406f9c9886768f04caac839b52d4339f" name="a406f9c9886768f04caac839b52d4339f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a406f9c9886768f04caac839b52d4339f">&#9670;&#160;</a></span>Print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RPN_Node::Print </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00073">73</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>                 {</div>
+<div class="line"><span class="lineno">   74</span>        std::cout &lt;&lt; type_;</div>
+<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;identifier&quot;</span> || type_ == <span class="stringliteral">&quot;function&quot;</span>) {</div>
+<div class="line"><span class="lineno">   76</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; id_name;</div>
+<div class="line"><span class="lineno">   77</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;label&quot;</span>) {</div>
+<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">if</span> (rpn_label) std::cout &lt;&lt; label_number &lt;&lt; <span class="stringliteral">&quot; common &quot;</span>;</div>
+<div class="line"><span class="lineno">   79</span>            <span class="keywordflow">if</span> (rpn_true_label) std::cout &lt;&lt; <span class="stringliteral">&quot; true &quot;</span>;</div>
+<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">if</span> (rpn_go_label) std::cout &lt;&lt; label_number &lt;&lt; <span class="stringliteral">&quot; go &quot;</span>;</div>
+<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">if</span> (rpn_empty_label) std::cout &lt;&lt; <span class="stringliteral">&quot; empty &quot;</span>;</div>
+<div class="line"><span class="lineno">   82</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;integer&quot;</span>) {</div>
+<div class="line"><span class="lineno">   83</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_int;</div>
+<div class="line"><span class="lineno">   84</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;double&quot;</span>) {</div>
+<div class="line"><span class="lineno">   85</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_double;</div>
+<div class="line"><span class="lineno">   86</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;bool&quot;</span>) {</div>
+<div class="line"><span class="lineno">   87</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_bool;</div>
+<div class="line"><span class="lineno">   88</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;string&quot;</span>) {</div>
+<div class="line"><span class="lineno">   89</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; value_string;        </div>
+<div class="line"><span class="lineno">   90</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;utility&quot;</span>) {</div>
+<div class="line"><span class="lineno">   91</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; keyword;</div>
+<div class="line"><span class="lineno">   92</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type_ == <span class="stringliteral">&quot;other&quot;</span>) {</div>
+<div class="line"><span class="lineno">   93</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; operation;</div>
+<div class="line"><span class="lineno">   94</span>        }</div>
+<div class="line"><span class="lineno">   95</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>

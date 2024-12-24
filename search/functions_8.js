@@ -1,11 +1,9 @@
 var searchData=
 [
-  ['setcolumn_0',['setcolumn',['../classLexem.html#a040150125042b6118984b68e0403e9cb',1,'Lexem::SetColumn()'],['../classCell.html#a824329c7a92c8ea466c996460856fa2c',1,'Cell::setColumn()']]],
-  ['setlanguage_1',['SetLanguage',['../classLexicalAnalyzer.html#ad817ae8993fe944388414a634156500f',1,'LexicalAnalyzer']]],
-  ['setline_2',['setline',['../classCell.html#aed0968422e93a975d8a48e5135c25a43',1,'Cell::setLine()'],['../classLexem.html#a918602048188f382d48a1c544da27ae0',1,'Lexem::SetLine()']]],
-  ['setname_3',['setName',['../classCell.html#a1a7777aadf2846b617657f047654a958',1,'Cell']]],
-  ['settid_4',['setTID',['../classRPN.html#ace0e08ba178672f8696d80427dc949d5',1,'RPN']]],
-  ['settype_5',['settype',['../classCell.html#abaa5d8f26a1002f44c0396514b5de6f8',1,'Cell::setType()'],['../classTID.html#a4b187394a8e786ee6b2372d782debfaf',1,'TID::setType()'],['../classLexem.html#a9418e8d7ca4d1aed8fec336bc3b265bd',1,'Lexem::SetType(LexemType)']]],
-  ['setvalue_6',['setvalue',['../classLexem.html#a2edc792496af70aaa75a3314e9a7ece4',1,'Lexem::SetValue()'],['../classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111',1,'RPN_TID::setValue()'],['../classCell.html#a9cad0ab8b3562d36c1aae5fc6565e630',1,'Cell::setValue()'],['../classTID.html#a862f10f12ba9ad97222cd96a0591d464',1,'TID::setValue()']]],
-  ['setvariant_7',['setVariant',['../classCell.html#abc01353e7fdb048ac5f3a20f0c6c08c8',1,'Cell']]]
+  ['readfile_0',['ReadFile',['../classLexicalAnalyzer.html#acc21ec3fc3b849f1840c87f437479fcf',1,'LexicalAnalyzer']]],
+  ['removetable_1',['removetable',['../classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a',1,'RPN_TID::RemoveTable()'],['../classTID.html#a993ccfdd7df6aee318cca896784891ee',1,'TID::RemoveTable()']]],
+  ['returncurrenttable_2',['ReturnCurrentTable',['../classTID.html#a664b9cb91d39ed4dc6a623072f539e98',1,'TID']]],
+  ['rpn_3',['RPN',['../classRPN.html#a1437a69dbff8adefb26bcb7c0203fb5a',1,'RPN']]],
+  ['rpn_5fnode_4',['rpn_node',['../structRPN__Node.html#a44a61baf97eae7f3655630d62da41371',1,'RPN_Node::RPN_Node(Lexem *lex, TID &amp;table)'],['../structRPN__Node.html#acd1e296ea679b0513ae9bb03ca569a16',1,'RPN_Node::RPN_Node(std::vector&lt; std::vector&lt; int &gt; &gt; value, std::vector&lt; RPN_Node * &gt; arg)'],['../structRPN__Node.html#a827a7818731d414b300850ae323cb00c',1,'RPN_Node::RPN_Node(int number)'],['../structRPN__Node.html#aca769ae75ebc980da5a1d2a43e646782',1,'RPN_Node::RPN_Node(bool flag, int number)'],['../structRPN__Node.html#a707ffc0c094a99bf3fcc41ea21f130fc',1,'RPN_Node::RPN_Node(Lexem *lex, std::string utility)'],['../structRPN__Node.html#a8fca58c5305c3c9b3b3df8b3d126f8df',1,'RPN_Node::RPN_Node()'],['../structRPN__Node.html#a06d2753e81a2407913ee1f1ab59bd29b',1,'RPN_Node::RPN_Node(std::string name, std::string type)'],['../structRPN__Node.html#a32e4631c8100812c7d19ae43bc0b189e',1,'RPN_Node::RPN_Node(bool flag)']]],
+  ['rpn_5ftid_5',['RPN_TID',['../classRPN__TID.html#a559bbaa46c124a4c2c48a8bc117cc4ac',1,'RPN_TID']]]
 ];
