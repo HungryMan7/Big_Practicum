@@ -50,6 +50,9 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
                     tid->AddID(rpn_[ind]->GetName(), copy);
                 }
             }
+        } else if (rpn_[ind]->GetType() == "label") {
+            if (rpn_[ind]->IsGoLabel()) {
+            }
         }
     }
 
@@ -90,6 +93,44 @@ RPN_Node* Interpreter::Solve(RPN_Node*& first, RPN_Node*& second, std::string op
         } else {
             throw "ne nado...";
         }
+    } else if (operation == "!=") {
+        RPN_Node* result = new RPN_Node("", "bool");
+        RPN_Node* equal = Solve(first, second, "==");
+        result->SetBoolValue(!equal->GetBoolValue());
+        return result;
+    } else if (operation == ">") {
+        RPN_Node* result = new RPN_Node("", "bool");
+        if (second->GetType() == "integer") {
+            result->SetBoolValue(first->GetIntegerValue() > second->GetIntegerValue());
+            return result;
+        } else if (second->GetType() == "double") {
+            result->SetBoolValue(first->GetDoubleValue() > second->GetDoubleValue());
+            return result;
+        } else if (second->GetType() == "bool") {
+            result->SetBoolValue(first->GetBoolValue() > second->GetBoolValue());
+            return result;
+        } else if (second->GetType() == "string") {
+            result->SetBoolValue(first->GetStringValue() > second->GetStringValue());
+            return result;
+        } else {
+            throw "ne nado...";
+        }
+    } else if (operation == "<") {
+        RPN_Node* result = new RPN_Node("", "bool");
+        RPN_Node* bigger = Solve(first, second, ">");
+        RPN_Node* not_equal = Solve(first, second, "!=");
+        result->SetBoolValue(!bigger->GetBoolValue() && not_equal->GetBoolValue());
+        return result;
+    } else if (operation == ">=") {
+        RPN_Node* result = new RPN_Node("", "bool");
+        RPN_Node* smaller = Solve(first, second, "<"); 
+        result->SetBoolValue(!smaller->GetBoolValue());
+        return result;
+    } else if (operation == "<=") {
+        RPN_Node* result = new RPN_Node("", "bool");
+        RPN_Node* bigger = Solve(first, second, ">"); 
+        result->SetBoolValue(!bigger->GetBoolValue());
+        return result;
     } else if (operation == "+") {
         if (second->GetType() == "integer") {
             RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() + second->GetIntegerValue()), "integer");
