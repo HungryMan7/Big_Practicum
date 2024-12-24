@@ -23,10 +23,10 @@ RPN_Node::RPN_Node(const RPN_Node& other) {
     column = other.column;
     value_array = other.value_array;
     for (auto node : other.array_elements) {
-        array_elements.push_back(new RPN_Node(node));
+        array_elements.push_back(node);
     }
     rpn_label = other.rpn_label;
-    rpn_true_label = other.rpn_true_label;
+    rpn_false_label = other.rpn_false_label;
     rpn_go_label = other.rpn_go_label;
     rpn_empty_label = other.rpn_empty_label;
 }
@@ -586,12 +586,12 @@ void RPN::FUNC_STATEMENT(bool &check, std::string func_name) {
 
 void RPN::INPUT() {
     GetLex(); // >>
-    RPN_Node* id = new RPN_Node(lexem_);
+    RPN_Node* id = new RPN_Node(lexem_, table_id);
     AddCell(id, empty);
     GetLex(); // ID;
     while (lexem_->GetValue() == ">>") {
         GetLex(); // >>
-        id = new RPN_Node(lexem_);
+        id = new RPN_Node(lexem_, table_id);
         AddCell(id, empty);
         GetLex(); // ID
     }
@@ -639,33 +639,32 @@ void RPN::FUNC_CALL(std::string id_name) {
 }
 
 void RPN::IF(std::string func_name) {
-    std::vector<int> false_markers = {};
     GetLex(); // (
     EXP_ZERO(empty);
     GetLex(); // )
-    int false_label_number = label_number_;
-    AddCell(true, false_label_number, empty);
+    int final_label = label_number_;
     label_number_++;
-    AddCell(false, empty);
+    int false_label_number = false_number;
+    AddCell(new RPN_Node(false, true, false_label_number), empty);
+    false_number++;
     table_id.AddTable();
     BODY(func_name);
     table_id.RemoveTable();
-    AddCell(true, false_label_number, empty);
-    false_markers.push_back(false_label_number);
+    AddCell(new RPN_Node(false_label_number, false), empty);
+    AddCell(new RPN_Node(true, final_label), empty);
     while (lexem_->GetValue() == "elif") {
         GetLex(); // elif
         GetLex(); // (
         EXP_ZERO(empty);
         GetLex(); // )
-        false_label_number = label_number_;
-        AddCell(true, false_label_number, empty);
-        label_number_++;
-        AddCell(false, empty);
+        false_label_number = false_number;
+        AddCell(new RPN_Node(false, true, false_label_number), empty);
+        false_number++;
         table_id.AddTable();
         BODY(func_name);
         table_id.RemoveTable();
-        AddCell(true, false_label_number, empty);
-        false_markers.push_back(false_label_number);
+        AddCell(new RPN_Node(false_label_number, false), empty);
+        AddCell(new RPN_Node(true, final_label), empty);
     }
     if (lexem_->GetValue() == "else") {
         GetLex(); // else
@@ -673,9 +672,7 @@ void RPN::IF(std::string func_name) {
         BODY(func_name);
         table_id.RemoveTable();
     }
-    for (int i = 0; i < false_markers.size(); ++i) {
-        AddCell(false_markers[i], empty);
-    }
+    AddCell(new RPN_Node(final_label), empty);
 }
 
 void RPN::SWITCH(std::string func_name) {
@@ -919,20 +916,24 @@ void RPN::EXP_TWELVE(std::vector<RPN_Node*> &container) {
         GetLex();
     }
     std::vector<std::string> new_oper;
+    std::vector<std::string> signs;
     for (int i = 0; i < oper.size(); ++i) {
         if (oper[i] == "0") {
             RPN_Node* elem = new RPN_Node(oper[i], "integer");
             AddCell(elem, container);
         } else {
             if (oper[i] == "+" || oper[i] == "-") {
-                RPN_Node* operation = new RPN_Node(oper[i], "other");
-                AddCell(operation, container);
+                signs.push_back(oper[i]);
             } else {
                 new_oper.push_back(oper[i]);
             }
         }
     }
     EXP_THIRTEEN(container);
+    for (int i = 0; i < signs.size(); ++i) {
+        RPN_Node* operation = new RPN_Node(signs[i], "other");
+        AddCell(operation, container);
+    }
     for (int i = 0; i < new_oper.size(); ++i) {
         RPN_Node* operation = new RPN_Node(new_oper[i], "other");
         AddCell(operation, container);

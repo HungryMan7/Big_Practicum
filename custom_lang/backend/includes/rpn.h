@@ -49,6 +49,11 @@ public:
         label_number = number;
         rpn_go_label = true;
     }
+    RPN_Node(bool flag, bool flag_go, int number) {
+        type_ = "label";
+        false_label_number = number;
+        rpn_go_false_label = true;
+    }
     RPN_Node(Lexem* lex, std::string utility) {
         type_ = "utility";
         keyword = lex->GetValue();
@@ -75,9 +80,10 @@ public:
             value_bool = (name == "true");
         }
     }
-    RPN_Node(bool flag) {
+    RPN_Node(int number, bool flag) {
         type_ = "label";
-        rpn_true_label = true;
+        rpn_false_label = true;
+        false_label_number = number;
     }
     void SetIntegerValue(int val) { value_int = val; }
     void SetDoubleValue(double val) { value_double = val; }
@@ -93,7 +99,7 @@ public:
     bool GetBoolValue() { return value_bool; }
     std::string GetStringValue() { return value_string; }
     bool IsCommonLabel() { return rpn_label; }
-    bool IsTrueLabel() { return rpn_true_label; }
+    bool IsTrueLabel() { return rpn_false_label; }
     bool IsGoLabel() { return rpn_go_label; }
     bool IsEmptyLabel() { return rpn_empty_label; }
     void Print() {
@@ -102,9 +108,10 @@ public:
             std::cout << " " << id_name;
         } else if (type_ == "label") {
             if (rpn_label) std::cout << label_number << " common ";
-            if (rpn_true_label) std::cout << " true ";
-            if (rpn_go_label) std::cout << label_number << " go ";
-            if (rpn_empty_label) std::cout << " empty ";
+            else if (rpn_false_label) std::cout << false_label_number << " false ";
+            else if (rpn_go_false_label) std::cout << false_label_number << " false go";
+            else if (rpn_go_label) std::cout << label_number << " go ";
+            else if (rpn_empty_label) std::cout << " empty ";
         } else if (type_ == "integer") {
             std::cout << " " << value_int;
         } else if (type_ == "double") {
@@ -133,7 +140,9 @@ private:
     int line, column;
     std::vector<std::vector<int>> value_array;
     std::vector<RPN_Node*> array_elements;
-    bool rpn_label, rpn_true_label, rpn_go_label, rpn_empty_label = false;
+    bool rpn_label, rpn_false_label, rpn_go_label, rpn_empty_label = false;
+    bool rpn_go_false_label;
+    int false_label_number;
 };
 
 class RPN_TID_Node {
@@ -262,6 +271,7 @@ private:
     RPN_TID value_table;
     int lex_index_ = 0;
     int label_number_ = 0;
+    int false_number = 0;
     std::vector<Lexem*> list_of_lexems_;
     std::vector<RPN_Node*> chain_;
 };

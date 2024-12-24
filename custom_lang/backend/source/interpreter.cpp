@@ -123,9 +123,29 @@ RPN_Node*& Interpreter::Solve(RPN_Node*& first, RPN_Node*& second, std::string o
             RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() >> second->GetIntegerValue()), "integer");
             return answer;
         }
-    } else if (operation == ">>") {
+    } else if (operation == "&") {
         if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() >> second->GetIntegerValue()), "integer");
+            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() & second->GetIntegerValue()), "integer");
+            return answer;
+        }
+    } else if (operation == "|") {
+        if (second->GetType() == "integer") {
+            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() | second->GetIntegerValue()), "integer");
+            return answer;
+        }
+    } else if (operation == "^") {
+        if (second->GetType() == "integer") {
+            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() ^ second->GetIntegerValue()), "integer");
+            return answer;
+        }
+    } else if (operation == "||") {
+        if (second->GetType() == "bool") {
+            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() || second->GetIntegerValue()), "bool");
+            return answer;
+        }
+    } else if (operation == "&&") {
+        if (second->GetType() == "bool") {
+            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() && second->GetIntegerValue()), "bool");
             return answer;
         }
     } else if (operation == ",") {

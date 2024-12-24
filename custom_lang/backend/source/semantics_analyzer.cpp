@@ -766,7 +766,7 @@ std::vector<std::string> SemanticsAnalyzer::TERM() {
             GetLex();
             return { "double" };
         }
-        else if (lexem_->GetValue() == "true" && lexem_->GetValue() == "false") {
+        else if (lexem_->GetValue() == "true" || lexem_->GetValue() == "false") {
             GetLex();
             return { "bool" };
         }
