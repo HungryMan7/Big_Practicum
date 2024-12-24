@@ -21,6 +21,7 @@ void LexicalAnalyzer::ReadFile(const std::string& filename) {
     int text_size;
     file.seekg(0, file.end);
     text_size = (int)file.tellg();
+    std::cout << text_size << "\n";
     file.seekg(0, file.beg);
     program_ = new char[text_size];
     file.read(program_, text_size);
