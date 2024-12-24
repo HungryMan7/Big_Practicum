@@ -2,6 +2,7 @@
 #include "backend/includes/syntax_analyzer.h"
 #include "backend/includes/semantics_analyzer.h"
 #include "backend/includes/rpn.h"
+#include "backend/includes/interpreter.h"
 
 int main() {
     LexicalAnalyzer* la = new LexicalAnalyzer;
@@ -30,6 +31,12 @@ int main() {
     }
     RPN* rpn_chain = new RPN;
     rpn_chain->Analyze(la->GetLexems());
-    std::vector<RPN_Node*> answer = rpn_chain->GetChain();
+    for (auto elem : rpn_chain->GetChain()) {
+        elem->Print();
+        std::cout << "\n";
+    }
+    std::cout << "tvoya mat' shluxa\n";
+    Interpreter* interpreter = new Interpreter;
+    interpreter->Run(rpn_chain);
     return 0;
 }

@@ -70,6 +70,30 @@ public:
     std::string GetType() { return type_; }
     std::string GetName() { return id_name; }
     bool IsEmptyLabel() { return rpn_empty_label; }
+    void Print() {
+        std::cout << type_;
+        if (type_ == "identifier" || type_ == "function") {
+            std::cout << " " << id_name;
+        } else if (type_ == "label") {
+            if (rpn_label) std::cout << label_number << " common ";
+            if (rpn_true_label) std::cout << " true ";
+            if (rpn_go_label) std::cout << label_number << " go ";
+            if (rpn_empty_label) std::cout << " empty ";
+        } else if (type_ == "integer") {
+            std::cout << " " << value_int;
+        } else if (type_ == "double") {
+            std::cout << " " << value_double;
+        } else if (type_ == "bool") {
+            std::cout << " " << value_bool;
+        } else if (type_ == "string") {
+            std::cout << " " << value_string;        
+        } else if (type_ == "utility") {
+            std::cout << " " << keyword;
+        } else if (type_ == "other") {
+            std::cout << " " << operation;
+        }
+    }
+
 private:
     std::string type_;
     int label_number;
@@ -169,6 +193,7 @@ public:
         }
     }
     void setTID(TID table) { table_id = table; }
+
 private:
     void GetLex();
     void PROGRAM();

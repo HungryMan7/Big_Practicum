@@ -11,7 +11,7 @@ struct Node {
         }
     }
 };
-  
+
 /*! \brief A trie class */
 class Bor {
 public:
