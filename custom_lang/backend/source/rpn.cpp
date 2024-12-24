@@ -22,7 +22,9 @@ RPN_Node::RPN_Node(const RPN_Node& other) {
     line = other.line; 
     column = other.column;
     value_array = other.value_array;
-    array_elements = other.array_elements;
+    for (auto node : other.array_elements) {
+        array_elements.push_back(new RPN_Node(node));
+    }
     rpn_label = other.rpn_label;
     rpn_true_label = other.rpn_true_label;
     rpn_go_label = other.rpn_go_label;

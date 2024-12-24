@@ -31,12 +31,16 @@ void Interpreter::RunFunc(std::string func_name, int label_num) {
     for (; rpn_[ind]->GetType() != "utility" || rpn_[ind]->GetKeyword() != "return"; ++ind) {
         if (rpn_[ind]->GetType() == "function") {
             RunFunc(rpn_[ind]->GetName(), -1);
+            
         } else if (rpn_[ind]->GetType() == "other") {
             RPN_Node* second = stack.top();
             stack.pop();
             RPN_Node* first = stack.top();
             stack.pop();
             stack.push(Solve(first, second, rpn_[ind]->GetOperation()));
+        } else if (rpn_[ind]->GetType() == "identifier") {
+            RPN_Node* copy = new RPN_Node(rpn_[ind]);
+            stack.push(copy);
         }
     }
 }
