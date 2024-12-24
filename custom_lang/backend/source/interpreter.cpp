@@ -52,6 +52,7 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
             }
         }
     }
+    
 }
 
 RPN_Node*& Interpreter::Solve(RPN_Node*& first, RPN_Node*& second, std::string operation) {
