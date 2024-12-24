@@ -1,23 +1,32 @@
 #include "../includes/interpreter.h"
 
-void Interpreter::Run(RPN* rpn_chain) {
-    std::vector<RPN_Node*> rpn = rpn_chain->GetChain();
-    ind_ = 0;
-    std::string name = rpn[ind_]->GetName();
-    std::vector<RPN_Node*> new_func;
-    ++ind_;
-    while (ind_ < rpn.size()) {
-        while (ind_ < rpn.size() && !rpn[ind_]->IsEmptyLabel()) {
-            new_func.push_back(rpn[ind_]);
-            ++ind_;
-        }
-        functions[name] = new_func;
-        new_func.clear();
-        ++ind_;
-        if (ind_ < rpn.size()) {
-            name = rpn[ind_]->GetName();
-            ++ind_;
-        }
+void Interpreter::Run(std::vector<RPN_Node*> rpn) {
+    rpn_ = rpn;
+    RunFunc("main", -1);
+}
+
+void Interpreter::RunFunc(std::string func_name, int label_num) {
+    int ind = 0;
+    while (ind < rpn_.size() && rpn_[ind]->GetType() != "function" ||
+           rpn_[ind]->GetName() != func_name) {
+        ++ind;
     }
-    // now code is divided in functions
+    if (ind == rpn_.size()) {
+        throw "function or label not found!";
+    }
+    ++ind;
+    if (label_num != -1) {
+        while (ind < rpn_.size() && !rpn_[ind]->IsCommonLabel() ||
+               rpn_[ind]->GetLabelNumber() != label_num) {
+            ++ind;
+        }
+        if (ind == rpn_.size()) {
+            throw "function or label not found!";
+        }
+        ++ind;
+    }
+    for (; rpn_[ind]->GetType() != "utility" || rpn_[ind]->GetKeyword() != "return"; ++ind) {
+        // code
+    }
+    // return
 }

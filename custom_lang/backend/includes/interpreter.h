@@ -3,9 +3,10 @@
 
 class Interpreter {
 public:
-    void Run(RPN* rpn_chain);
+    void Run(std::vector<RPN_Node*> rpn);
+    void RunFunc(std::string, int);
 
 private:
-    std::map<std::string, std::vector<RPN_Node*>> functions;
-    int ind_;
+    std::vector<RPN_Node*> rpn_;
+    std::string curr_func, prev_func;
 };

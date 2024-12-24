@@ -69,6 +69,11 @@ public:
     }
     std::string GetType() { return type_; }
     std::string GetName() { return id_name; }
+    int GetLabelNumber() { return label_number; }
+    std::string GetKeyword() { return keyword; }
+    bool IsCommonLabel() { return rpn_label; }
+    bool IsTrueLabel() { return rpn_true_label; }
+    bool IsGoLabel() { return rpn_go_label; }
     bool IsEmptyLabel() { return rpn_empty_label; }
     void Print() {
         std::cout << type_;

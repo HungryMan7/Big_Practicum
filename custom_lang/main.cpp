@@ -31,12 +31,12 @@ int main() {
     }
     RPN* rpn_chain = new RPN;
     rpn_chain->Analyze(la->GetLexems());
-    for (auto elem : rpn_chain->GetChain()) {
-        elem->Print();
+    Interpreter* interpreter = new Interpreter;
+    for (auto x : rpn_chain->GetChain()) {
+        x->Print();
         std::cout << "\n";
     }
-    std::cout << "tvoya mat' shluxa\n";
-    Interpreter* interpreter = new Interpreter;
-    interpreter->Run(rpn_chain);
+    interpreter->Run(rpn_chain->GetChain());
+    std::cout << "Compiled successfully!\n";
     return 0;
 }
