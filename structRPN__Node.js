@@ -1,5 +1,6 @@
 var structRPN__Node =
 [
+    [ "RPN_Node", "structRPN__Node.html#a428fc662a44b8746b0ee8b21b03f7dce", null ],
     [ "RPN_Node", "structRPN__Node.html#a44a61baf97eae7f3655630d62da41371", null ],
     [ "RPN_Node", "structRPN__Node.html#acd1e296ea679b0513ae9bb03ca569a16", null ],
     [ "RPN_Node", "structRPN__Node.html#a827a7818731d414b300850ae323cb00c", null ],
@@ -8,13 +9,22 @@ var structRPN__Node =
     [ "RPN_Node", "structRPN__Node.html#a8fca58c5305c3c9b3b3df8b3d126f8df", null ],
     [ "RPN_Node", "structRPN__Node.html#a06d2753e81a2407913ee1f1ab59bd29b", null ],
     [ "RPN_Node", "structRPN__Node.html#a32e4631c8100812c7d19ae43bc0b189e", null ],
+    [ "GetBoolValue", "structRPN__Node.html#a79ccc6d6b1c882b4321711cb838b647c", null ],
+    [ "GetDoubleValue", "structRPN__Node.html#a8c06e1a7c6932817056e67363887d292", null ],
+    [ "GetIntegerValue", "structRPN__Node.html#a02eedd856703a32e46eed673411fb8e9", null ],
     [ "GetKeyword", "structRPN__Node.html#ace5b7336f72537456de1e580b20e858d", null ],
     [ "GetLabelNumber", "structRPN__Node.html#a48b0487d0444ff15949639f027f7b781", null ],
     [ "GetName", "structRPN__Node.html#a5089f456b1507f445925a589c554c5c6", null ],
+    [ "GetOperation", "structRPN__Node.html#a2af128757cfa54d64e49018ea08066d4", null ],
+    [ "GetStringValue", "structRPN__Node.html#ad7d4e5e2a81eb7f7c060652afc7f2fe2", null ],
     [ "GetType", "structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe", null ],
     [ "IsCommonLabel", "structRPN__Node.html#ae75c4e595b36a15be04246d4ce0ba4af", null ],
     [ "IsEmptyLabel", "structRPN__Node.html#a088ed84af6a64bbfa3a339aebf4ca055", null ],
     [ "IsGoLabel", "structRPN__Node.html#a8cbf17dfc00d797b6c30270e7d692a8a", null ],
     [ "IsTrueLabel", "structRPN__Node.html#afccd72881732fdb2c2ab87e9a6105e22", null ],
-    [ "Print", "structRPN__Node.html#a406f9c9886768f04caac839b52d4339f", null ]
+    [ "Print", "structRPN__Node.html#a406f9c9886768f04caac839b52d4339f", null ],
+    [ "SetBoolValue", "structRPN__Node.html#a4dd8827af4bf92fcd7dbaa5522f4546f", null ],
+    [ "SetDoubleValue", "structRPN__Node.html#af0624af7639573e89fb61e4a5be2a6ef", null ],
+    [ "SetIntegerValue", "structRPN__Node.html#a9b156959a6bd22cb60155e0c1c05a350", null ],
+    [ "SetStringValue", "structRPN__Node.html#a300c7e3039840c9103fa0dbe35d07edb", null ]
 ];
