@@ -203,11 +203,18 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   45</span>                   rpn_[ind]-&gt;GetType() == <span class="stringliteral">&quot;function&quot;</span>) {</div>
 <div class="line"><span class="lineno">   46</span>            <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* copy = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(*rpn_[ind]);</div>
 <div class="line"><span class="lineno">   47</span>            stack.push(copy);</div>
-<div class="line"><span class="lineno">   48</span>        }</div>
-<div class="line"><span class="lineno">   49</span>    }</div>
-<div class="line"><span class="lineno">   50</span>}</div>
-<div class="ttc" id="aclassInterpreter_html_a220b5ff8af23487b94a415e2d61a1baf"><div class="ttname"><a href="classInterpreter.html#a220b5ff8af23487b94a415e2d61a1baf">Interpreter::Solve</a></div><div class="ttdeci">RPN_Node *&amp; Solve(RPN_Node *&amp;, RPN_Node *&amp;, std::string)</div><div class="ttdef"><b>Definition</b> <a href="interpreter_8cpp_source.html#l00052">interpreter.cpp:52</a></div></div>
+<div class="line"><span class="lineno">   48</span>            <span class="keywordflow">if</span> (rpn_[ind]-&gt;GetType() == <span class="stringliteral">&quot;identifier&quot;</span>) {</div>
+<div class="line"><span class="lineno">   49</span>                <span class="keywordflow">if</span> (!tid-&gt;<a class="code hl_function" href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6">FindID</a>(rpn_[ind]-&gt;GetName())) {</div>
+<div class="line"><span class="lineno">   50</span>                    tid-&gt;<a class="code hl_function" href="classRPN__TID.html#a3d05943823a3a52d615c47463475510f">AddID</a>(rpn_[ind]-&gt;GetName(), copy);</div>
+<div class="line"><span class="lineno">   51</span>                }</div>
+<div class="line"><span class="lineno">   52</span>            }</div>
+<div class="line"><span class="lineno">   53</span>        }</div>
+<div class="line"><span class="lineno">   54</span>    }</div>
+<div class="line"><span class="lineno">   55</span>}</div>
+<div class="ttc" id="aclassInterpreter_html_a220b5ff8af23487b94a415e2d61a1baf"><div class="ttname"><a href="classInterpreter.html#a220b5ff8af23487b94a415e2d61a1baf">Interpreter::Solve</a></div><div class="ttdeci">RPN_Node *&amp; Solve(RPN_Node *&amp;, RPN_Node *&amp;, std::string)</div><div class="ttdef"><b>Definition</b> <a href="interpreter_8cpp_source.html#l00057">interpreter.cpp:57</a></div></div>
 <div class="ttc" id="aclassRPN__TID_html"><div class="ttname"><a href="classRPN__TID.html">RPN_TID</a></div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00143">rpn.h:143</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_a3d05943823a3a52d615c47463475510f"><div class="ttname"><a href="classRPN__TID.html#a3d05943823a3a52d615c47463475510f">RPN_TID::AddID</a></div><div class="ttdeci">void AddID(std::string id_name, RPN_Node *value)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01121">rpn.cpp:1121</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_a3ee6c795476f4a312c1fb0f04f0b24e6"><div class="ttname"><a href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6">RPN_TID::FindID</a></div><div class="ttdeci">bool FindID(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01125">rpn.cpp:1125</a></div></div>
 <div class="ttc" id="astructRPN__Node_html"><div class="ttname"><a href="structRPN__Node.html">RPN_Node</a></div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00009">rpn.h:9</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -244,27 +251,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8cpp_source.html#l00052">52</a> of file <a class="el" href="interpreter_8cpp_source.html">interpreter.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   52</span>                                                                                      {</div>
-<div class="line"><span class="lineno">   53</span>    <span class="keywordflow">if</span> (operation == <span class="stringliteral">&quot;=&quot;</span>) {</div>
-<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">if</span> (second-&gt;<a class="code hl_function" href="structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe">GetType</a>() == <span class="stringliteral">&quot;integer&quot;</span>) {</div>
-<div class="line"><span class="lineno">   55</span>            first-&gt;<a class="code hl_function" href="structRPN__Node.html#a9b156959a6bd22cb60155e0c1c05a350">SetIntegerValue</a>(second-&gt;<a class="code hl_function" href="structRPN__Node.html#a02eedd856703a32e46eed673411fb8e9">GetIntegerValue</a>());</div>
-<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">return</span> first;</div>
-<div class="line"><span class="lineno">   57</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (second-&gt;<a class="code hl_function" href="structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe">GetType</a>() == <span class="stringliteral">&quot;double&quot;</span>) {</div>
-<div class="line"><span class="lineno">   58</span>            first-&gt;<a class="code hl_function" href="structRPN__Node.html#af0624af7639573e89fb61e4a5be2a6ef">SetDoubleValue</a>(second-&gt;<a class="code hl_function" href="structRPN__Node.html#a8c06e1a7c6932817056e67363887d292">GetDoubleValue</a>());</div>
-<div class="line"><span class="lineno">   59</span>            <span class="keywordflow">return</span> first;</div>
-<div class="line"><span class="lineno">   60</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (second-&gt;<a class="code hl_function" href="structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe">GetType</a>() == <span class="stringliteral">&quot;bool&quot;</span>) {</div>
-<div class="line"><span class="lineno">   61</span>            first-&gt;<a class="code hl_function" href="structRPN__Node.html#a4dd8827af4bf92fcd7dbaa5522f4546f">SetBoolValue</a>(second-&gt;<a class="code hl_function" href="structRPN__Node.html#a79ccc6d6b1c882b4321711cb838b647c">GetBoolValue</a>());</div>
-<div class="line"><span class="lineno">   62</span>            <span class="keywordflow">return</span> first;</div>
-<div class="line"><span class="lineno">   63</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (second-&gt;<a class="code hl_function" href="structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe">GetType</a>() == <span class="stringliteral">&quot;string&quot;</span>) {</div>
-<div class="line"><span class="lineno">   64</span>            first-&gt;<a class="code hl_function" href="structRPN__Node.html#a300c7e3039840c9103fa0dbe35d07edb">SetStringValue</a>(second-&gt;<a class="code hl_function" href="structRPN__Node.html#ad7d4e5e2a81eb7f7c060652afc7f2fe2">GetStringValue</a>());</div>
-<div class="line"><span class="lineno">   65</span>            <span class="keywordflow">return</span> first;</div>
-<div class="line"><span class="lineno">   66</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   67</span>            <span class="keywordflow">throw</span> <span class="stringliteral">&quot;ne nado...&quot;</span>;</div>
-<div class="line"><span class="lineno">   68</span>        }</div>
-<div class="line"><span class="lineno">   69</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;it workssss!!!!\n&quot;</span>;</div>
-<div class="line"><span class="lineno">   70</span>    }</div>
-<div class="line"><span class="lineno">   71</span>}</div>
+<p class="definition">Definition at line <a class="el" href="interpreter_8cpp_source.html#l00057">57</a> of file <a class="el" href="interpreter_8cpp_source.html">interpreter.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>                                                                                      {</div>
+<div class="line"><span class="lineno">   58</span>    <span class="keywordflow">if</span> (operation == <span class="stringliteral">&quot;=&quot;</span>) {</div>
+<div class="line"><span class="lineno">   59</span>        <span class="keywordflow">if</span> (second-&gt;<a class="code hl_function" href="structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe">GetType</a>() == <span class="stringliteral">&quot;integer&quot;</span>) {</div>
+<div class="line"><span class="lineno">   60</span>            first-&gt;<a class="code hl_function" href="structRPN__Node.html#a9b156959a6bd22cb60155e0c1c05a350">SetIntegerValue</a>(second-&gt;<a class="code hl_function" href="structRPN__Node.html#a02eedd856703a32e46eed673411fb8e9">GetIntegerValue</a>());</div>
+<div class="line"><span class="lineno">   61</span>            <span class="keywordflow">return</span> first;</div>
+<div class="line"><span class="lineno">   62</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (second-&gt;<a class="code hl_function" href="structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe">GetType</a>() == <span class="stringliteral">&quot;double&quot;</span>) {</div>
+<div class="line"><span class="lineno">   63</span>            first-&gt;<a class="code hl_function" href="structRPN__Node.html#af0624af7639573e89fb61e4a5be2a6ef">SetDoubleValue</a>(second-&gt;<a class="code hl_function" href="structRPN__Node.html#a8c06e1a7c6932817056e67363887d292">GetDoubleValue</a>());</div>
+<div class="line"><span class="lineno">   64</span>            <span class="keywordflow">return</span> first;</div>
+<div class="line"><span class="lineno">   65</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (second-&gt;<a class="code hl_function" href="structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe">GetType</a>() == <span class="stringliteral">&quot;bool&quot;</span>) {</div>
+<div class="line"><span class="lineno">   66</span>            first-&gt;<a class="code hl_function" href="structRPN__Node.html#a4dd8827af4bf92fcd7dbaa5522f4546f">SetBoolValue</a>(second-&gt;<a class="code hl_function" href="structRPN__Node.html#a79ccc6d6b1c882b4321711cb838b647c">GetBoolValue</a>());</div>
+<div class="line"><span class="lineno">   67</span>            <span class="keywordflow">return</span> first;</div>
+<div class="line"><span class="lineno">   68</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (second-&gt;<a class="code hl_function" href="structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe">GetType</a>() == <span class="stringliteral">&quot;string&quot;</span>) {</div>
+<div class="line"><span class="lineno">   69</span>            first-&gt;<a class="code hl_function" href="structRPN__Node.html#a300c7e3039840c9103fa0dbe35d07edb">SetStringValue</a>(second-&gt;<a class="code hl_function" href="structRPN__Node.html#ad7d4e5e2a81eb7f7c060652afc7f2fe2">GetStringValue</a>());</div>
+<div class="line"><span class="lineno">   70</span>            <span class="keywordflow">return</span> first;</div>
+<div class="line"><span class="lineno">   71</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">throw</span> <span class="stringliteral">&quot;ne nado...&quot;</span>;</div>
+<div class="line"><span class="lineno">   73</span>        }</div>
+<div class="line"><span class="lineno">   74</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;it workssss!!!!\n&quot;</span>;</div>
+<div class="line"><span class="lineno">   75</span>    }</div>
+<div class="line"><span class="lineno">   76</span>}</div>
 <div class="ttc" id="astructRPN__Node_html_a02eedd856703a32e46eed673411fb8e9"><div class="ttname"><a href="structRPN__Node.html#a02eedd856703a32e46eed673411fb8e9">RPN_Node::GetIntegerValue</a></div><div class="ttdeci">int GetIntegerValue()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00088">rpn.h:88</a></div></div>
 <div class="ttc" id="astructRPN__Node_html_a300c7e3039840c9103fa0dbe35d07edb"><div class="ttname"><a href="structRPN__Node.html#a300c7e3039840c9103fa0dbe35d07edb">RPN_Node::SetStringValue</a></div><div class="ttdeci">void SetStringValue(std::string val)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00082">rpn.h:82</a></div></div>
 <div class="ttc" id="astructRPN__Node_html_a4dd8827af4bf92fcd7dbaa5522f4546f"><div class="ttname"><a href="structRPN__Node.html#a4dd8827af4bf92fcd7dbaa5522f4546f">RPN_Node::SetBoolValue</a></div><div class="ttdeci">void SetBoolValue(bool val)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00081">rpn.h:81</a></div></div>
