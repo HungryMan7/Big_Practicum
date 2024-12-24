@@ -46,7 +46,7 @@ std::vector<Lexem*> LexicalAnalyzer::GetLexems() {
 }
 
 void LexicalAnalyzer::GetChar() {
-    if (current_size_ == file_size_ + 1) {
+    if (current_size_ > file_size_) {
         for (auto x : list_of_lexems_) {
             if (x->GetType() == LexemType::Error) {
                 throw "line: " + std::to_string(x->GetLine()) +
@@ -54,7 +54,7 @@ void LexicalAnalyzer::GetChar() {
                     " wrong lexem";
             }
         }
-        throw "OK!\n";
+        return;
     }
     symbol_ = *iter_;
     ++iter_;
