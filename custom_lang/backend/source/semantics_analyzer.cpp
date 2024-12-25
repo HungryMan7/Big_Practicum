@@ -11,7 +11,6 @@ void SemanticsAnalyzer::GetLex() {
     if (lex_index_ < (int)list_of_lexems_.size()) {
         lexem_ = list_of_lexems_[lex_index_];
         ++lex_index_;
-        std::cout << lexem_->GetValue() << "\n";
     }
     else {
         ++lex_index_;
@@ -790,11 +789,12 @@ std::vector<std::string> SemanticsAnalyzer::EXP_ZERO() {
 
 std::vector<std::string> SemanticsAnalyzer::EXP_ONE() {
     std::vector<std::string> integer = { "int" };
+    std::vector<std::string> bool_num = { "bool" };
     std::vector<std::string> float_num = { "double" };
     std::vector<std::string> string_num = { "string" };
     std::vector<std::string> type_first = EXP_TWO();
     bool checker = false;
-    while (lexem_->GetValue() == "+=" || lexem_->GetValue() == "-=" || lexem_->GetValue() == "*=" || lexem_->GetValue() == "/=" || lexem_->GetValue() == "%=" ||
+    while (lexem_->GetValue() == "=" || lexem_->GetValue() == "+=" || lexem_->GetValue() == "-=" || lexem_->GetValue() == "*=" || lexem_->GetValue() == "/=" || lexem_->GetValue() == "%=" ||
         lexem_->GetValue() == ">>=" || lexem_->GetValue() == "<<=" || lexem_->GetValue() == "^=" || lexem_->GetValue() == "|=" || lexem_->GetValue() == "&=") {
         checker = true;
         if (lexem_->GetValue() == "%=" || lexem_->GetValue() == ">>=" || lexem_->GetValue() == "<<=" || lexem_->GetValue() == "^=" ||
@@ -816,10 +816,18 @@ std::vector<std::string> SemanticsAnalyzer::EXP_ONE() {
                     " found type mismatch";
             }
         }
-        else {
+        else if (lexem_->GetValue() == "+=") {
             GetLex();
             std::vector<std::string> type_second = EXP_TWO();
             if (!(type_first == type_second && (type_first == integer || type_first == float_num || type_first == string_num))) {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " found type mismatch";
+            }
+        } else {
+            GetLex();
+            std::vector<std::string> type_second = EXP_TWO();
+            if (!(type_first == type_second && (type_first == integer || type_first == float_num || type_first == string_num || type_first == bool_num))) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " found type mismatch";
