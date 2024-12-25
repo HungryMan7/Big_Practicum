@@ -56,12 +56,10 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
                 stack.pop();
                 if (!condition->GetBoolValue()) {
                     int target = rpn_[ind]->GetFalseLabelNumber();
-                    std::cout << "target: " << target << "\n";
                     ++ind;
                     while (!rpn_[ind]->IsFalseLabel() || rpn_[ind]->GetFalseLabelNumber() != target) {
                         ++ind;
                     }
-                    std::cout << "found: " << ind << "\n";
                 }
                 delete condition;
             } else if (rpn_[ind]->IsGoLabel()) {

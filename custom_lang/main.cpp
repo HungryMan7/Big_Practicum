@@ -21,12 +21,13 @@ int main() {
         std::cout << "OK!\n";
         RPN* rpn_chain = new RPN;
         rpn_chain->Analyze(la->GetLexems());
-        //Interpreter* interpreter = new Interpreter;
+        Interpreter* interpreter = new Interpreter;
+        std::cout << "RPN CHAIN\n______________________________\n";
         for (auto x : rpn_chain->GetChain()) {
             x->Print();
             std::cout << "\n";
         }
-        //interpreter->Run(rpn_chain->GetChain());
+        interpreter->Run(rpn_chain->GetChain());
         std::cout << "Compiled successfully!\n";
     } catch (const std::string e) {
         std::cout << e;
