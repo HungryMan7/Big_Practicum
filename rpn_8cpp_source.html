@@ -705,10 +705,10 @@ $(document).ready(function(){initNavTree('rpn_8cpp_source.html',''); initResizab
 <div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span> </div>
 <div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span><span class="keywordtype">void</span> RPN::OUTPUT() {</div>
 <div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>    GetLex(); <span class="comment">// &lt;&lt;</span></div>
-<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>    EXP_ZERO(<a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>    EXP_FOURTEEN(<a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
 <div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>    <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;&lt;&lt;&quot;</span>) {</div>
 <div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>        GetLex(); <span class="comment">// &lt;&lt;</span></div>
-<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>        EXP_ZERO(<a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>        EXP_FOURTEEN(<a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
 <div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>    }</div>
 <div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>    <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* output = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>(<span class="stringliteral">&quot;cout&quot;</span>, <span class="stringliteral">&quot;utility&quot;</span>);</div>
 <div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>    <a class="code hl_function" href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">AddCell</a>(output, <a class="code hl_variable" href="rpn_8cpp.html#ac7656fd02e5c1e957b75ac5570b862c4">empty</a>);</div>
