@@ -650,8 +650,8 @@ void RPN::IF(std::string func_name) {
     table_id.AddTable();
     BODY(func_name);
     table_id.RemoveTable();
-    AddCell(new RPN_Node(false_label_number, false), empty);
     AddCell(new RPN_Node(true, final_label), empty);
+    AddCell(new RPN_Node(false_label_number, false), empty);
     while (lexem_->GetValue() == "elif") {
         GetLex(); // elif
         GetLex(); // (
@@ -663,8 +663,8 @@ void RPN::IF(std::string func_name) {
         table_id.AddTable();
         BODY(func_name);
         table_id.RemoveTable();
-        AddCell(new RPN_Node(false_label_number, false), empty);
         AddCell(new RPN_Node(true, final_label), empty);
+        AddCell(new RPN_Node(false_label_number, false), empty);
     }
     if (lexem_->GetValue() == "else") {
         GetLex(); // else
