@@ -20,6 +20,5 @@ default
 void
 return
 loop
-foreach
 true
 false

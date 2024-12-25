@@ -23,7 +23,6 @@ private:
     void LOOP();
     void LOOP_WHILE();
     void LOOP_FOR();
-    void LOOP_FOREACH();
     void SWITCH();
     void ID();
     void TERM();

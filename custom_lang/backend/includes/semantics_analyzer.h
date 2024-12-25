@@ -25,7 +25,6 @@ private:
     void LOOP(std::string func_name);
     void LOOP_WHILE(std::string func_name);
     void LOOP_FOR(std::string func_name);
-    void LOOP_FOREACH(std::string func_name);
     void SWITCH(std::string func_name);
     std::vector<std::string> ID();
     std::vector<std::string> TERM();

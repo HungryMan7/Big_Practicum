@@ -1175,10 +1175,6 @@ void SemanticsAnalyzer::LOOP(std::string func_name) {
         GetLex();
         LOOP_FOR(func_name);
     }
-    else if (lexem_->GetValue() == "foreach") {
-        GetLex();
-        LOOP_FOREACH(func_name);
-    }
     else if (lexem_->GetValue() == "while") {
         GetLex();
         LOOP_WHILE(func_name);
@@ -1203,43 +1199,6 @@ void SemanticsAnalyzer::LOOP_WHILE(std::string func_name) {
         throw "line: " + std::to_string(lexem_->GetLine()) +
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " expected bool, but found " + error;
-    }
-    GetLex(); // )
-    table_id_.AddTable();
-    BODY(func_name);
-    table_id_.RemoveTable();
-}
-
-void SemanticsAnalyzer::LOOP_FOREACH(std::string func_name) {
-    GetLex(); // (
-    current_id_name_ = lexem_->GetValue();
-    if (!table_id_.IsUsed(current_id_name_)) {
-        throw "line: " + std::to_string(lexem_->GetLine()) +
-            " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " ID was not declared";
-    }
-    GetLex(); // id
-    std::vector<std::string> id_type = table_id_.getType(current_id_name_).first;
-    std::vector<std::string> exp_type;
-    GetLex(); // ;
-    do {
-        if (lexem_->GetValue() == ",") {
-            GetLex();
-        }
-        exp_type = EXP_ONE();
-    } while (lexem_->GetValue() == ",");
-    if ((int)exp_type.size() <= (int)id_type.size() || (int)exp_type.size() - (int)id_type.size() > 1) {
-        throw "line: " + std::to_string(lexem_->GetLine()) +
-            " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " found type mismatch";
-    }
-    while ((int)exp_type.size() > (int)id_type.size()) {
-        exp_type.erase(exp_type.begin());
-    }
-    if (exp_type != id_type) {
-        throw "line: " + std::to_string(lexem_->GetLine()) +
-            " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " found type mismatch";
     }
     GetLex(); // )
     table_id_.AddTable();

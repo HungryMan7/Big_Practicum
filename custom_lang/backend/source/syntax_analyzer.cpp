@@ -993,10 +993,6 @@ void SyntaxAnalyzer::LOOP() {
         GetLex();
         LOOP_FOR();
     }
-    else if (lexem_->GetValue() == "foreach") {
-        GetLex();
-        LOOP_FOREACH();
-    }
     else if (lexem_->GetValue() == "while") {
         GetLex();
         LOOP_WHILE();
@@ -1013,35 +1009,6 @@ void SyntaxAnalyzer::LOOP_WHILE() {
         throw "line: " + std::to_string(lexem_->GetLine()) +
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " expected (, but found " + lexem_->GetValue();
-    }
-    GetLex();
-    EXP_ZERO();
-    if (lexem_->GetValue() != ")") {
-        throw "line: " + std::to_string(lexem_->GetLine()) +
-            " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " expected ), but found " + lexem_->GetValue();
-    }
-    GetLex();
-    BODY();
-}
-
-void SyntaxAnalyzer::LOOP_FOREACH() {
-    if (lexem_->GetValue() != "(") {
-        throw "line: " + std::to_string(lexem_->GetLine()) +
-            " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " expected (, but found " + lexem_->GetValue();
-    }
-    GetLex();
-    if (lexem_->GetType() != LexemType::Identifier) {
-        throw "line: " + std::to_string(lexem_->GetLine()) +
-            " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " expected ID, but found " + lexem_->GetValue();
-    }
-    GetLex();
-    if (lexem_->GetValue() != ";") {
-        throw "line: " + std::to_string(lexem_->GetLine()) +
-            " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " expected ;, but found " + lexem_->GetValue();
     }
     GetLex();
     EXP_ZERO();

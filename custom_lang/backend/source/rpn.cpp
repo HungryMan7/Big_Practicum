@@ -677,13 +677,17 @@ void RPN::IF(std::string func_name) {
 
 void RPN::SWITCH(std::string func_name) {
     std::vector<int> false_markers = {};
+    std::vector<RPN_Node*> equalation = {};
     int counter = 0;
     GetLex(); // (
-    EXP_ZERO(empty);
+    EXP_ZERO(equalation);
     GetLex(); // )
     GetLex(); // {
     while (lexem_->GetValue() == "case") {
         GetLex();
+        for (int i = 0; i < equalation.size(); ++i) {
+            chain_.push_back(equalation[i]);
+        }
         EXP_ZERO(empty);
         GetLex(); // :
         RPN_Node* equality = new RPN_Node("==", "other");
@@ -984,10 +988,6 @@ void RPN::LOOP(std::string func_name) {
         GetLex();
         LOOP_FOR(func_name);
     }
-    else if (lexem_->GetValue() == "foreach") {
-        GetLex();
-        LOOP_FOREACH(func_name);
-    }
     else if (lexem_->GetValue() == "while") {
         GetLex();
         LOOP_WHILE(func_name);
@@ -1003,18 +1003,6 @@ void RPN::LOOP_WHILE(std::string func_name) {
     AddCell(true, while_loop);
     AddCell(true, label_number_, while_loop);
     AddCell(label_number_ + 1, while_loop);
-    table_id.AddTable();
-    BODY(func_name);
-    table_id.RemoveTable();
-}
-
-void RPN::LOOP_FOREACH(std::string func_name) {
-    GetLex(); // (
-    AddCell(lexem_, empty);
-    GetLex(); // id
-    GetLex(); // ;
-    EXP_ZERO(empty); //Комментарий: здесь уже должна быть проверка с массивом и значениями, что делается, кажется, в реализации кода
-    GetLex(); // )
     table_id.AddTable();
     BODY(func_name);
     table_id.RemoveTable();
