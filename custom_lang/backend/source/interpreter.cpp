@@ -28,7 +28,6 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
         }
         ++ind;
     }
-    std::cout << "whole size!!!! " << rpn_.size() << "\n";
     for (; rpn_[ind]->GetType() != "utility" || rpn_[ind]->GetKeyword() != "return"; ++ind) {
         if (rpn_[ind]->GetType() == "function") {
             RunFunc(rpn_[ind]->GetName(), -1);    
