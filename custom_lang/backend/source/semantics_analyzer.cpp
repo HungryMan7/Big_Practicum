@@ -669,8 +669,8 @@ void SemanticsAnalyzer::SWITCH(std::string func_name) {
         GetLex();
         GetLex(); // :
         table_id_.AddTable();
-        while (lexem_->GetValue() != "}") {            
-            STATEMENT(func_name);            
+        while (lexem_->GetValue() != "}") {
+            STATEMENT(func_name);
         }
         table_id_.RemoveTable();
     }
