@@ -601,10 +601,10 @@ void RPN::INPUT() {
 
 void RPN::OUTPUT() {
     GetLex(); // <<
-    EXP_ZERO(empty);
+    EXP_FOURTEEN(empty);
     while (lexem_->GetValue() == "<<") {
         GetLex(); // <<
-        EXP_ZERO(empty);
+        EXP_FOURTEEN(empty);
     }
     RPN_Node* output = new RPN_Node("cout", "utility");
     AddCell(output, empty);

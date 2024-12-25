@@ -661,7 +661,7 @@ void SyntaxAnalyzer::OUTPUT() {
             " expected <<, but found " + lexem_->GetValue();
     }
     GetLex();
-    EXP_ZERO();
+    EXP_FOURTEEN();
     while (lexem_->GetValue() == "<<") {
         if (lexem_->GetValue() != "<<") {
             throw "line: " + std::to_string(lexem_->GetLine()) +
@@ -669,7 +669,7 @@ void SyntaxAnalyzer::OUTPUT() {
                 " expected <<, but found " + lexem_->GetValue();
         }
         GetLex();
-        EXP_ZERO();
+        EXP_FOURTEEN();
     }
     if (lexem_->GetValue() != ";") {
         throw "line: " + std::to_string(lexem_->GetLine()) +
