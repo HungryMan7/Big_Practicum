@@ -30,7 +30,7 @@ RPN_Node* Interpreter::RunFunc(std::string func_name, int label_num) { // label_
     }
     for (; rpn_[ind]->GetType() != "utility" || rpn_[ind]->GetKeyword() != "return"; ++ind) {
         if (rpn_[ind]->GetType() == "function") {
-            RunFunc(rpn_[ind]->GetName(), -1);   
+            stack.push(RunFunc(rpn_[ind]->GetName(), -1));
         }
         if (rpn_[ind]->GetType() == "other") {
             RPN_Node* second = stack.top();
@@ -76,7 +76,11 @@ RPN_Node* Interpreter::RunFunc(std::string func_name, int label_num) { // label_
             }
         }
     }
-    return new RPN_Node("0", "integer");
+    RPN_Node* result = stack.top();
+    if (result->GetType() == "identifier") {
+        result = tid_->getValue(result->GetName());
+    }
+    return result;
 }
 
 RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string operation) {
