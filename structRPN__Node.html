@@ -113,10 +113,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aca769ae75ebc980da5a1d2a43e646782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24f45bde8fdced607df8130af4d1d628" id="r_a24f45bde8fdced607df8130af4d1d628"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a24f45bde8fdced607df8130af4d1d628">RPN_Node</a> (bool flag, bool flag_go, int number)</td></tr>
 <tr class="separator:a24f45bde8fdced607df8130af4d1d628"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9c88591f5ea2fbac04d7e04a39c5917" id="r_ae9c88591f5ea2fbac04d7e04a39c5917"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#ae9c88591f5ea2fbac04d7e04a39c5917">RPN_Node</a> (bool flag_start)</td></tr>
-<tr class="separator:ae9c88591f5ea2fbac04d7e04a39c5917"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2677ccdced75599aaa6aa596dfe9efb" id="r_af2677ccdced75599aaa6aa596dfe9efb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#af2677ccdced75599aaa6aa596dfe9efb">RPN_Node</a> (bool flag_start, bool flag_end)</td></tr>
-<tr class="separator:af2677ccdced75599aaa6aa596dfe9efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c1660935f952818acd94e93ab365603" id="r_a3c1660935f952818acd94e93ab365603"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a3c1660935f952818acd94e93ab365603">RPN_Node</a> (bool flag, bool flag1, bool flag2)</td></tr>
+<tr class="separator:a3c1660935f952818acd94e93ab365603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4359dde97690e5df640e03fbd080e30e" id="r_a4359dde97690e5df640e03fbd080e30e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a4359dde97690e5df640e03fbd080e30e">RPN_Node</a> (bool flag, bool flag1, bool flag2, bool flag3)</td></tr>
+<tr class="separator:a4359dde97690e5df640e03fbd080e30e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a707ffc0c094a99bf3fcc41ea21f130fc" id="r_a707ffc0c094a99bf3fcc41ea21f130fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a707ffc0c094a99bf3fcc41ea21f130fc">RPN_Node</a> (<a class="el" href="classLexem.html">Lexem</a> *lex, std::string utility)</td></tr>
 <tr class="separator:a707ffc0c094a99bf3fcc41ea21f130fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fca58c5305c3c9b3b3df8b3d126f8df" id="r_a8fca58c5305c3c9b3b3df8b3d126f8df"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRPN__Node.html#a8fca58c5305c3c9b3b3df8b3d126f8df">RPN_Node</a> ()</td></tr>
@@ -211,9 +211,12 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   24</span>    }</div>
 <div class="line"><span class="lineno">   25</span>    rpn_label = other.rpn_label;</div>
 <div class="line"><span class="lineno">   26</span>    rpn_false_label = other.rpn_false_label;</div>
-<div class="line"><span class="lineno">   27</span>    rpn_go_label = other.rpn_go_label;</div>
-<div class="line"><span class="lineno">   28</span>    rpn_empty_label = other.rpn_empty_label;</div>
-<div class="line"><span class="lineno">   29</span>}</div>
+<div class="line"><span class="lineno">   27</span>    rpn_go_false_label = other.rpn_go_false_label;</div>
+<div class="line"><span class="lineno">   28</span>    rpn_go_label = other.rpn_go_label;</div>
+<div class="line"><span class="lineno">   29</span>    rpn_empty_label = other.rpn_empty_label;</div>
+<div class="line"><span class="lineno">   30</span>    rpn_start_label = other.rpn_start_label;</div>
+<div class="line"><span class="lineno">   31</span>    rpn_end_label = other.rpn_end_label;</div>
+<div class="line"><span class="lineno">   32</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -457,8 +460,8 @@ Public Member Functions</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ae9c88591f5ea2fbac04d7e04a39c5917" name="ae9c88591f5ea2fbac04d7e04a39c5917"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9c88591f5ea2fbac04d7e04a39c5917">&#9670;&#160;</a></span>RPN_Node() <span class="overload">[7/12]</span></h2>
+<a id="a3c1660935f952818acd94e93ab365603" name="a3c1660935f952818acd94e93ab365603"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c1660935f952818acd94e93ab365603">&#9670;&#160;</a></span>RPN_Node() <span class="overload">[7/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -470,8 +473,24 @@ Public Member Functions</h2></td></tr>
           <td class="memname">RPN_Node::RPN_Node </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>flag_start</em></td><td>)</td>
+          <td class="paramname"><em>flag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flag1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flag2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -482,15 +501,15 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00057">57</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   57</span>                              {</div>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>                                                {</div>
 <div class="line"><span class="lineno">   58</span>        type_ = <span class="stringliteral">&quot;label&quot;</span>;</div>
 <div class="line"><span class="lineno">   59</span>        rpn_start_label = <span class="keyword">true</span>;</div>
 <div class="line"><span class="lineno">   60</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="af2677ccdced75599aaa6aa596dfe9efb" name="af2677ccdced75599aaa6aa596dfe9efb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2677ccdced75599aaa6aa596dfe9efb">&#9670;&#160;</a></span>RPN_Node() <span class="overload">[8/12]</span></h2>
+<a id="a4359dde97690e5df640e03fbd080e30e" name="a4359dde97690e5df640e03fbd080e30e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4359dde97690e5df640e03fbd080e30e">&#9670;&#160;</a></span>RPN_Node() <span class="overload">[8/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -502,13 +521,25 @@ Public Member Functions</h2></td></tr>
           <td class="memname">RPN_Node::RPN_Node </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>flag_start</em>, </td>
+          <td class="paramname"><em>flag</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>flag_end</em>&#160;</td>
+          <td class="paramname"><em>flag1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flag2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flag3</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -524,7 +555,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="rpn_8h_source.html#l00061">61</a> of file <a class="el" href="rpn_8h_source.html">rpn.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   61</span>                                             {</div>
+<div class="fragment"><div class="line"><span class="lineno">   61</span>                                                            {</div>
 <div class="line"><span class="lineno">   62</span>        type_ = <span class="stringliteral">&quot;label&quot;</span>;</div>
 <div class="line"><span class="lineno">   63</span>        rpn_end_label = <span class="keyword">true</span>;</div>
 <div class="line"><span class="lineno">   64</span>    }</div>
