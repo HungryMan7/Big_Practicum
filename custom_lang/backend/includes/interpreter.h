@@ -9,5 +9,5 @@ public:
 
 private:
     std::vector<RPN_Node*> rpn_;
-    std::string curr_func, prev_func;
+    RPN_TID* tid_;
 };

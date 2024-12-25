@@ -3,11 +3,11 @@
 
 void Interpreter::Run(std::vector<RPN_Node*> rpn) {
     rpn_ = rpn;
+    tid_ = new RPN_TID;
     RunFunc("main", -1);
 }
 
 void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num == -1 means starting from the title of the function (without seeking concrete label)
-    RPN_TID* tid = new RPN_TID;
     std::stack<RPN_Node*> stack;
     int ind = 0;
     while (ind < rpn_.size() && rpn_[ind]->GetType() != "function" ||
@@ -28,6 +28,7 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
         }
         ++ind;
     }
+    std::cout << "whole size!!!! " << rpn_.size() << "\n";
     for (; rpn_[ind]->GetType() != "utility" || rpn_[ind]->GetKeyword() != "return"; ++ind) {
         if (rpn_[ind]->GetType() == "function") {
             RunFunc(rpn_[ind]->GetName(), -1);    
@@ -46,8 +47,8 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
             RPN_Node* copy = new RPN_Node(*rpn_[ind]);
             stack.push(copy);
             if (rpn_[ind]->GetType() == "identifier") {
-                if (!tid->FindID(rpn_[ind]->GetName())) {
-                    tid->AddID(rpn_[ind]->GetName(), copy);
+                if (!tid_->FindID(rpn_[ind]->GetName())) {
+                    tid_->AddID(rpn_[ind]->GetName(), copy);
                 }
             }
         } else if (rpn_[ind]->GetType() == "label") {
@@ -60,13 +61,20 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
                     while (!rpn_[ind]->IsFalseLabel() || rpn_[ind]->GetFalseLabelNumber() != target) {
                         ++ind;
                     }
+                    --ind;
                 }
-                delete condition;
             } else if (rpn_[ind]->IsGoLabel()) {
                 int target = rpn_[ind]->GetLabelNumber();
                 ++ind;
                 while (!rpn_[ind]->IsCommonLabel() || rpn_[ind]->GetLabelNumber() != target) {
                     ++ind;
+                }
+                --ind;
+            } else if (rpn_[ind]->IsCommonLabel()) {
+                if (rpn_[ind]->GetLabelNumber() % 2 == 0) {
+                    tid_->AddTable();
+                } else {
+                    tid_->RemoveTable();
                 }
             }
         }

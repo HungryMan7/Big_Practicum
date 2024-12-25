@@ -23,7 +23,9 @@ int main() {
         rpn_chain->Analyze(la->GetLexems());
         Interpreter* interpreter = new Interpreter;
         std::cout << "RPN CHAIN\n______________________________\n";
+        int i = 0;
         for (auto x : rpn_chain->GetChain()) {
+            std::cout << i++ << " ";
             x->Print();
             std::cout << "\n";
         }
