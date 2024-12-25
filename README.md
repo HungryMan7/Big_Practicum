@@ -9,7 +9,7 @@
 | <digit>  ::= '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
 
 # type & id
-| <type> ::= "int" | "double" | "bool" | "char" | "array" '<' <type> '>' | "string"
+| <type> ::= "int" | "double" | "bool" | "string" | "array" '<' <type> '>'
 | <id>   ::= <letter> { [ <letter> | <digit> ] }
 
 # expressions & statements
@@ -35,8 +35,8 @@
 | <ex9> ::= <ex10> { [ "<<" | ">>" ] <ex10> }
 | <ex10> ::= <ex5> { [ '+' | '-' ] <ex11> }
 | <ex11> ::= <ex12> { [ '*' | '/' | '%' ] <ex12> }
-| <ex12> ::= { [ '+' | '-' | '!' | "++" | "--" ] } <ex13>
-| <ex13> ::= <ex14> { [ "++" | "--" | '[' <ex0> ']'] }
+| <ex12> ::= { [ '+' | '-' | '!' ] } <ex13>
+| <ex13> ::= <ex14> { '[' <ex0> ']' }
 | <ex14> ::= <id> { "::" <id> } | <term>
   
 # vars
@@ -58,8 +58,7 @@
 | <switch> ::= "switch" '(' <ex0> ')' '{' { "case" <ex0> ':' { <statement> } } [ "default" ':' {<statement>} | eps ] '}'
 
 # loops
-| <loop>         ::= "loop" [ <loop-while> | <loop-foreach> | <loop-for> ]
+| <loop>         ::= "loop" [ <loop-while> | <loop-for> ]
 | <loop-while>   ::= "loop" "while" '(' <ex0> ')' <body>
-| <loop-foreach> ::= "loop" "foreach" '(' <id> ';' <ex0> ')' <body>
 | <loop-for>     ::= "loop" "for" '(' [ <ex0> | <vars-mdef> | eps ] ';' [ <ex0> | eps ] ';' [ <ex0> | eps ] ')' <body>
 ```
