@@ -38,7 +38,7 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
             RPN_Node* first = stack.top();
             stack.pop();
             stack.push(Solve(first, second, rpn_[ind]->GetOperation()));
-            std::cout << (stack.top())->GetBoolValue() << "\n";
+            std::cout << (stack.top())->GetBoolValue() << " " << (stack.top())->GetIntegerValue() << "\n";
         } else if (rpn_[ind]->GetType() == "identifier" || rpn_[ind]->GetType() == "integer" ||
                    rpn_[ind]->GetType() == "double" || rpn_[ind]->GetType() == "bool" ||
                    rpn_[ind]->GetType() == "string" || rpn_[ind]->GetType() == "array" ||
@@ -51,7 +51,25 @@ void Interpreter::RunFunc(std::string func_name, int label_num) { // label_num =
                 }
             }
         } else if (rpn_[ind]->GetType() == "label") {
-            if (rpn_[ind]->IsGoLabel()) {
+            if (rpn_[ind]->IsGoFalseLabel()) {
+                RPN_Node* condition = stack.top();
+                stack.pop();
+                if (!condition->GetBoolValue()) {
+                    int target = rpn_[ind]->GetFalseLabelNumber();
+                    std::cout << "target: " << target << "\n";
+                    ++ind;
+                    while (!rpn_[ind]->IsFalseLabel() || rpn_[ind]->GetFalseLabelNumber() != target) {
+                        ++ind;
+                    }
+                    std::cout << "found: " << ind << "\n";
+                }
+                delete condition;
+            } else if (rpn_[ind]->IsGoLabel()) {
+                int target = rpn_[ind]->GetLabelNumber();
+                ++ind;
+                while (!rpn_[ind]->IsCommonLabel() || rpn_[ind]->GetLabelNumber() != target) {
+                    ++ind;
+                }
             }
         }
     }

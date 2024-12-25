@@ -92,6 +92,7 @@ public:
     std::string GetType() { return type_; }
     std::string GetName() { return id_name; }
     int GetLabelNumber() { return label_number; }
+    int GetFalseLabelNumber() { return false_label_number; }
     std::string GetKeyword() { return keyword; }
     std::string GetOperation() { return operation; }
     int GetIntegerValue() { return value_int; }
@@ -99,8 +100,9 @@ public:
     bool GetBoolValue() { return value_bool; }
     std::string GetStringValue() { return value_string; }
     bool IsCommonLabel() { return rpn_label; }
-    bool IsTrueLabel() { return rpn_false_label; }
+    bool IsFalseLabel() { return rpn_false_label; }
     bool IsGoLabel() { return rpn_go_label; }
+    bool IsGoFalseLabel() { return rpn_go_false_label; }
     bool IsEmptyLabel() { return rpn_empty_label; }
     void Print() {
         std::cout << type_;
