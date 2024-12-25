@@ -110,10 +110,10 @@ public:
             std::cout << " " << id_name;
         } else if (type_ == "label") {
             if (rpn_label) std::cout << label_number << " common ";
-            else if (rpn_false_label) std::cout << false_label_number << " false ";
-            else if (rpn_go_false_label) std::cout << false_label_number << " false go";
-            else if (rpn_go_label) std::cout << label_number << " go ";
-            else if (rpn_empty_label) std::cout << " empty ";
+            if (rpn_false_label) std::cout << false_label_number << " false ";
+            if (rpn_go_false_label) std::cout << false_label_number << " false go";
+            if (rpn_go_label) std::cout << label_number << " go ";
+            if (rpn_empty_label) std::cout << " empty ";
         } else if (type_ == "integer") {
             std::cout << " " << value_int;
         } else if (type_ == "double") {
@@ -130,21 +130,22 @@ public:
     }
 
 private:
-    std::string type_;
-    int label_number;
-    int value_int;
-    double value_double;
-    bool value_bool;
-    std::string value_string;
-    std::string id_name;
-    std::string operation;
-    std::string keyword;
-    int line, column;
+    std::string type_ = "";
+    int label_number = 0;
+    int value_int = 0;
+    double value_double = 0.0;
+    bool value_bool = false;
+    std::string value_string = "";
+    std::string id_name = "";
+    std::string operation = "";
+    std::string keyword = "";
+    int line = 0, column = 0;
     std::vector<std::vector<int>> value_array;
     std::vector<RPN_Node*> array_elements;
-    bool rpn_label, rpn_false_label, rpn_go_label, rpn_empty_label = false;
-    bool rpn_go_false_label;
-    int false_label_number;
+    bool rpn_label = false, rpn_false_label = false, 
+    rpn_go_label = false, rpn_empty_label = false;
+    bool rpn_go_false_label = false;
+    int false_label_number = 0;
 };
 
 class RPN_TID_Node {

@@ -693,13 +693,14 @@ void RPN::SWITCH(std::string func_name) {
         AddCell(equality, empty);
         int false_label_number = false_number;
         false_number++;
-        AddCell(new RPN_Node(false, true, false_label_number), empty);
+        AddCell(new RPN_Node(false, true, false_label_number), empty); // false go
         while (lexem_->GetValue() != "case" && lexem_->GetValue() != "default" && lexem_->GetValue() != "}") {
             table_id.AddTable();
             STATEMENT(func_name);
             table_id.RemoveTable();
         }
-        AddCell(new RPN_Node(false_label_number, true), empty);
+        AddCell(new RPN_Node(true, label_number_), empty); // go
+        AddCell(new RPN_Node(false_label_number, true), empty); // false
     }
     if (lexem_->GetValue() == "default") {
         GetLex();
