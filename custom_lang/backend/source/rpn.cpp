@@ -24,8 +24,11 @@ RPN_Node::RPN_Node(const RPN_Node& other) {
     }
     rpn_label = other.rpn_label;
     rpn_false_label = other.rpn_false_label;
+    rpn_go_false_label = other.rpn_go_false_label;
     rpn_go_label = other.rpn_go_label;
     rpn_empty_label = other.rpn_empty_label;
+    rpn_start_label = other.rpn_start_label;
+    rpn_end_label = other.rpn_end_label;
 }
 
 void RPN::FindFunction(std::string id_name) {
@@ -609,8 +612,10 @@ void RPN::IF(std::string func_name) {
     AddCell(new RPN_Node(false, true, false_label_number), empty);
     false_number++;
     table_id.AddTable();
+    AddCell(new RPN_Node(true, true, true), empty);
     BODY(func_name);
     table_id.RemoveTable();
+    AddCell(new RPN_Node(true, true, true, true), empty);
     AddCell(new RPN_Node(true, final_label), empty);
     AddCell(new RPN_Node(false_label_number, false), empty);
     while (lexem_->GetValue() == "elif") {
@@ -622,8 +627,10 @@ void RPN::IF(std::string func_name) {
         AddCell(new RPN_Node(false, true, false_label_number), empty);
         false_number++;
         table_id.AddTable();
+        AddCell(new RPN_Node(true, true, true), empty);
         BODY(func_name);
         table_id.RemoveTable();
+        AddCell(new RPN_Node(true, true, true, true), empty);
         AddCell(new RPN_Node(true, final_label), empty);
         AddCell(new RPN_Node(false_label_number, false), empty);
     }
@@ -1085,7 +1092,6 @@ RPN_TID::~RPN_TID() {
 }
 
 void RPN_TID::AddID(std::string id_name, RPN_Node* value) {
-    std::cout << "adding |" << id_name << "|\n";
     root_->ID[id_name] = value;
 }
 
@@ -1099,7 +1105,6 @@ bool RPN_TID::FindID(std::string id_name) {
         }
         temp = temp->pred;
     } while(temp);
-    std::cout << "|" << id_name << "| not found!!!\n";
     return false;
 }
 

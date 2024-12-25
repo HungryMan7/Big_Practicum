@@ -54,11 +54,11 @@ public:
         false_label_number = number;
         rpn_go_false_label = true;
     }
-    RPN_Node(bool flag_start) {
+    RPN_Node(bool flag, bool flag1, bool flag2) {
         type_ = "label";
         rpn_start_label = true;
     }
-    RPN_Node(bool flag_start, bool flag_end) {
+    RPN_Node(bool flag, bool flag1, bool flag2, bool flag3) {
         type_ = "label";
         rpn_end_label = true;
     }
