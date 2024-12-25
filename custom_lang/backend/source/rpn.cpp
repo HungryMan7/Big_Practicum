@@ -676,8 +676,7 @@ void RPN::IF(std::string func_name) {
 }
 
 void RPN::SWITCH(std::string func_name) {
-    std::vector<int> false_markers = {};
-    std::vector<RPN_Node*> equalation = {};
+    std::vector<RPN_Node*> equalation = {new RPN_Node("id", "identifier")};
     int counter = 0;
     GetLex(); // (
     EXP_ZERO(equalation);
@@ -685,24 +684,22 @@ void RPN::SWITCH(std::string func_name) {
     GetLex(); // {
     while (lexem_->GetValue() == "case") {
         GetLex();
-        for (int i = 0; i < equalation.size(); ++i) {
+        for (int i = 1; i < equalation.size(); ++i) {
             chain_.push_back(equalation[i]);
         }
         EXP_ZERO(empty);
         GetLex(); // :
         RPN_Node* equality = new RPN_Node("==", "other");
         AddCell(equality, empty);
-        int false_label_number = label_number_;
-        AddCell(true, false_label_number, empty);
-        label_number_++;
-        AddCell(false, empty);
+        int false_label_number = false_number;
+        false_number++;
+        AddCell(new RPN_Node(false, true, false_label_number), empty);
         while (lexem_->GetValue() != "case" && lexem_->GetValue() != "default" && lexem_->GetValue() != "}") {
             table_id.AddTable();
             STATEMENT(func_name);
             table_id.RemoveTable();
         }
-        AddCell(false_label_number, empty);
-        false_markers.push_back(false_label_number);
+        AddCell(new RPN_Node(false_label_number, true), empty);
     }
     if (lexem_->GetValue() == "default") {
         GetLex();
