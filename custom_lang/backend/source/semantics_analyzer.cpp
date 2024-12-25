@@ -11,6 +11,7 @@ void SemanticsAnalyzer::GetLex() {
     if (lex_index_ < (int)list_of_lexems_.size()) {
         lexem_ = list_of_lexems_[lex_index_];
         ++lex_index_;
+        std::cout << lexem_->GetValue() << "\n";
     }
     else {
         ++lex_index_;

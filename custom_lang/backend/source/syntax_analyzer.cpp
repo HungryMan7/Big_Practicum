@@ -658,34 +658,18 @@ void SyntaxAnalyzer::OUTPUT() {
     if (lexem_->GetValue() != "<<") {
         throw "line: " + std::to_string(lexem_->GetLine()) +
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " expected >>, but found " + lexem_->GetValue();
+            " expected <<, but found " + lexem_->GetValue();
     }
     GetLex();
-    if (lexem_->GetType() != LexemType::Identifier && lexem_->GetType() != LexemType::String &&
-        lexem_->GetType() != LexemType::Integer && lexem_->GetType() != LexemType::Float) {
-        throw "line: " + std::to_string(lexem_->GetLine()) +
-            " column: " + std::to_string(lexem_->GetColumn() - 1) +
-            " expected literal or ID, but found " + lexem_->GetValue();
-    }
-    else {
-        EXP_ZERO();
-    }
+    EXP_ZERO();
     while (lexem_->GetValue() == "<<") {
         if (lexem_->GetValue() != "<<") {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
-                " expected >>, but found " + lexem_->GetValue();
+                " expected <<, but found " + lexem_->GetValue();
         }
         GetLex();
-        if (lexem_->GetType() != LexemType::Identifier && lexem_->GetType() != LexemType::String &&
-            lexem_->GetType() != LexemType::Integer && lexem_->GetType() != LexemType::Float) {
-            throw "line: " + std::to_string(lexem_->GetLine()) +
-                " column: " + std::to_string(lexem_->GetColumn() - 1) +
-                " expected literal or ID, but found " + lexem_->GetValue();
-        }
-        else {
-            EXP_ZERO();
-        }
+        EXP_ZERO();
     }
     if (lexem_->GetValue() != ";") {
         throw "line: " + std::to_string(lexem_->GetLine()) +
