@@ -6,6 +6,8 @@ var structRPN__Node =
     [ "RPN_Node", "structRPN__Node.html#a827a7818731d414b300850ae323cb00c", null ],
     [ "RPN_Node", "structRPN__Node.html#aca769ae75ebc980da5a1d2a43e646782", null ],
     [ "RPN_Node", "structRPN__Node.html#a24f45bde8fdced607df8130af4d1d628", null ],
+    [ "RPN_Node", "structRPN__Node.html#ae9c88591f5ea2fbac04d7e04a39c5917", null ],
+    [ "RPN_Node", "structRPN__Node.html#af2677ccdced75599aaa6aa596dfe9efb", null ],
     [ "RPN_Node", "structRPN__Node.html#a707ffc0c094a99bf3fcc41ea21f130fc", null ],
     [ "RPN_Node", "structRPN__Node.html#a8fca58c5305c3c9b3b3df8b3d126f8df", null ],
     [ "RPN_Node", "structRPN__Node.html#a06d2753e81a2407913ee1f1ab59bd29b", null ],
@@ -22,12 +24,15 @@ var structRPN__Node =
     [ "GetType", "structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe", null ],
     [ "IsCommonLabel", "structRPN__Node.html#ae75c4e595b36a15be04246d4ce0ba4af", null ],
     [ "IsEmptyLabel", "structRPN__Node.html#a088ed84af6a64bbfa3a339aebf4ca055", null ],
+    [ "IsEndLabel", "structRPN__Node.html#abf25b6823f56a5c956828515c6856a02", null ],
     [ "IsFalseLabel", "structRPN__Node.html#a4abe00c30fc4f4dc6dfad2bb85e845de", null ],
     [ "IsGoFalseLabel", "structRPN__Node.html#a566c27e96f8b92ee21efd7491af0133d", null ],
     [ "IsGoLabel", "structRPN__Node.html#a8cbf17dfc00d797b6c30270e7d692a8a", null ],
+    [ "IsStartLabel", "structRPN__Node.html#a95590a734d59c3c45a1aefda9d95e169", null ],
     [ "Print", "structRPN__Node.html#a406f9c9886768f04caac839b52d4339f", null ],
     [ "SetBoolValue", "structRPN__Node.html#a4dd8827af4bf92fcd7dbaa5522f4546f", null ],
     [ "SetDoubleValue", "structRPN__Node.html#af0624af7639573e89fb61e4a5be2a6ef", null ],
     [ "SetIntegerValue", "structRPN__Node.html#a9b156959a6bd22cb60155e0c1c05a350", null ],
-    [ "SetStringValue", "structRPN__Node.html#a300c7e3039840c9103fa0dbe35d07edb", null ]
+    [ "SetStringValue", "structRPN__Node.html#a300c7e3039840c9103fa0dbe35d07edb", null ],
+    [ "SetType", "structRPN__Node.html#a971fc28d5e88ca2bcd24a556f84dc642", null ]
 ];
