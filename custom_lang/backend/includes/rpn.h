@@ -142,16 +142,10 @@ private:
     int line = 0, column = 0;
     std::vector<std::vector<int>> value_array;
     std::vector<RPN_Node*> array_elements;
-<<<<<<< HEAD
-    bool rpn_label = false, rpn_false_label = false, rpn_go_label = false, rpn_empty_label = false;
-    bool rpn_go_false_label = false;
-    int false_label_number;
-=======
     bool rpn_label = false, rpn_false_label = false, 
     rpn_go_label = false, rpn_empty_label = false;
     bool rpn_go_false_label = false;
     int false_label_number = 0;
->>>>>>> 40371e66583903eb73599f047909de60ef79854c
 };
 
 class RPN_TID_Node {
