@@ -1,11 +1,11 @@
 var searchData=
 [
   ['setboolvalue_0',['SetBoolValue',['../structRPN__Node.html#a4dd8827af4bf92fcd7dbaa5522f4546f',1,'RPN_Node']]],
-  ['setcolumn_1',['setcolumn',['../classLexem.html#a040150125042b6118984b68e0403e9cb',1,'Lexem::SetColumn()'],['../classCell.html#a824329c7a92c8ea466c996460856fa2c',1,'Cell::setColumn()']]],
+  ['setcolumn_1',['setcolumn',['../classCell.html#a824329c7a92c8ea466c996460856fa2c',1,'Cell::setColumn()'],['../classLexem.html#a040150125042b6118984b68e0403e9cb',1,'Lexem::SetColumn()']]],
   ['setdoublevalue_2',['SetDoubleValue',['../structRPN__Node.html#af0624af7639573e89fb61e4a5be2a6ef',1,'RPN_Node']]],
   ['setintegervalue_3',['SetIntegerValue',['../structRPN__Node.html#a9b156959a6bd22cb60155e0c1c05a350',1,'RPN_Node']]],
   ['setlanguage_4',['SetLanguage',['../classLexicalAnalyzer.html#ad817ae8993fe944388414a634156500f',1,'LexicalAnalyzer']]],
-  ['setline_5',['setline',['../classLexem.html#a918602048188f382d48a1c544da27ae0',1,'Lexem::SetLine()'],['../classCell.html#aed0968422e93a975d8a48e5135c25a43',1,'Cell::setLine(int line)']]],
+  ['setline_5',['setline',['../classCell.html#aed0968422e93a975d8a48e5135c25a43',1,'Cell::setLine()'],['../classLexem.html#a918602048188f382d48a1c544da27ae0',1,'Lexem::SetLine()']]],
   ['setname_6',['setName',['../classCell.html#a1a7777aadf2846b617657f047654a958',1,'Cell']]],
   ['setstringvalue_7',['SetStringValue',['../structRPN__Node.html#a300c7e3039840c9103fa0dbe35d07edb',1,'RPN_Node']]],
   ['settid_8',['setTID',['../classRPN.html#ace0e08ba178672f8696d80427dc949d5',1,'RPN']]],

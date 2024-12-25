@@ -761,20 +761,20 @@ $(document).ready(function(){initNavTree('semantics__analyzer_8cpp_source.html',
 <div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>                <span class="stringliteral">&quot; found type mismatch&quot;</span>;</div>
 <div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>        }</div>
 <div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>        GetLex(); <span class="comment">// :</span></div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>        <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() != <span class="stringliteral">&quot;case&quot;</span> &amp;&amp; lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() != <span class="stringliteral">&quot;default&quot;</span> &amp;&amp; lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() != <span class="stringliteral">&quot;}&quot;</span>) {</div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>            table_id_.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>        table_id_.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>        <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() != <span class="stringliteral">&quot;case&quot;</span> &amp;&amp; lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() != <span class="stringliteral">&quot;default&quot;</span> &amp;&amp; lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() != <span class="stringliteral">&quot;}&quot;</span>) {</div>
 <div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>            STATEMENT(func_name);</div>
-<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>            table_id_.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
-<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>        }</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>        }</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>        table_id_.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
 <div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>    }</div>
 <div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>    <span class="keywordflow">if</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() == <span class="stringliteral">&quot;default&quot;</span>) {</div>
 <div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>        GetLex();</div>
 <div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>        GetLex(); <span class="comment">// :</span></div>
-<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>        <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() != <span class="stringliteral">&quot;}&quot;</span>) {</div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>            table_id_.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>        table_id_.<a class="code hl_function" href="classTID.html#a6d7fb39905f1b2370c52b547cfba6807">AddTable</a>();</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>        <span class="keywordflow">while</span> (lexem_-&gt;<a class="code hl_function" href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">GetValue</a>() != <span class="stringliteral">&quot;}&quot;</span>) {</div>
 <div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>            STATEMENT(func_name);</div>
-<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>            table_id_.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
-<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>        }</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>        }</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>        table_id_.<a class="code hl_function" href="classTID.html#a993ccfdd7df6aee318cca896784891ee">RemoveTable</a>();</div>
 <div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>    }</div>
 <div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>    GetLex(); <span class="comment">// }</span></div>
 <div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>}</div>
