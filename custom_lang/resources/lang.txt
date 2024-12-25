@@ -4,6 +4,7 @@ vector
 cin
 cout
 if
+loop
 elif
 for
 while
@@ -19,7 +20,5 @@ case
 default
 void
 return
-loop
-foreach
 true
 false
