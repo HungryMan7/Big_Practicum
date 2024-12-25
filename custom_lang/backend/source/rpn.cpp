@@ -1085,6 +1085,7 @@ RPN_TID::~RPN_TID() {
 }
 
 void RPN_TID::AddID(std::string id_name, RPN_Node* value) {
+    std::cout << "adding |" << id_name << "|\n";
     root_->ID[id_name] = value;
 }
 
@@ -1098,6 +1099,7 @@ bool RPN_TID::FindID(std::string id_name) {
         }
         temp = temp->pred;
     } while(temp);
+    std::cout << "|" << id_name << "| not found!!!\n";
     return false;
 }
 

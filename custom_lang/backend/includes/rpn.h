@@ -54,6 +54,14 @@ public:
         false_label_number = number;
         rpn_go_false_label = true;
     }
+    RPN_Node(bool flag_start) {
+        type_ = "label";
+        rpn_start_label = true;
+    }
+    RPN_Node(bool flag_start, bool flag_end) {
+        type_ = "label";
+        rpn_end_label = true;
+    }
     RPN_Node(Lexem* lex, std::string utility) {
         type_ = "utility";
         keyword = lex->GetValue();
@@ -89,6 +97,7 @@ public:
     void SetDoubleValue(double val) { value_double = val; }
     void SetBoolValue(bool val) { value_bool = val; }
     void SetStringValue(std::string val) { value_string = val; }
+    void SetType(std::string type) { type_ = type; }
     std::string GetType() { return type_; }
     std::string GetName() { return id_name; }
     int GetLabelNumber() { return label_number; }
@@ -104,6 +113,8 @@ public:
     bool IsGoLabel() { return rpn_go_label; }
     bool IsGoFalseLabel() { return rpn_go_false_label; }
     bool IsEmptyLabel() { return rpn_empty_label; }
+    bool IsStartLabel() { return rpn_start_label; }
+    bool IsEndLabel() { return rpn_end_label; }
     void Print() {
         std::cout << type_;
         if (type_ == "identifier" || type_ == "function") {
@@ -114,6 +125,8 @@ public:
             if (rpn_go_false_label) std::cout << false_label_number << " false go";
             if (rpn_go_label) std::cout << label_number << " go ";
             if (rpn_empty_label) std::cout << " empty ";
+            if (rpn_start_label) std::cout << " start ";
+            if (rpn_end_label) std::cout << " end ";
         } else if (type_ == "integer") {
             std::cout << " " << value_int;
         } else if (type_ == "double") {
@@ -143,7 +156,8 @@ private:
     std::vector<std::vector<int>> value_array;
     std::vector<RPN_Node*> array_elements;
     bool rpn_label = false, rpn_false_label = false, 
-    rpn_go_label = false, rpn_empty_label = false;
+    rpn_go_label = false, rpn_empty_label = false,
+    rpn_start_label = false, rpn_end_label = false;
     bool rpn_go_false_label = false;
     int false_label_number = 0;
 };
