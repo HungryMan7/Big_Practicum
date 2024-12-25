@@ -541,10 +541,10 @@ void SemanticsAnalyzer::INPUT() {
 
 void SemanticsAnalyzer::OUTPUT() {
     GetLex(); // <<
-    EXP_ZERO();
+    EXP_FOURTEEN();
     while (lexem_->GetValue() == "<<") {
         GetLex(); // <<
-        EXP_ZERO();
+        EXP_FOURTEEN();
     }
 }
 
