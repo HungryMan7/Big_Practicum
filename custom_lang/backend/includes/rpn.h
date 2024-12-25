@@ -142,8 +142,8 @@ private:
     int line, column;
     std::vector<std::vector<int>> value_array;
     std::vector<RPN_Node*> array_elements;
-    bool rpn_label, rpn_false_label, rpn_go_label, rpn_empty_label = false;
-    bool rpn_go_false_label;
+    bool rpn_label = false, rpn_false_label = false, rpn_go_label = false, rpn_empty_label = false;
+    bool rpn_go_false_label = false;
     int false_label_number;
 };
 

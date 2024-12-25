@@ -659,20 +659,20 @@ void SemanticsAnalyzer::SWITCH(std::string func_name) {
                 " found type mismatch";
         }
         GetLex(); // :
+        table_id_.AddTable();
         while (lexem_->GetValue() != "case" && lexem_->GetValue() != "default" && lexem_->GetValue() != "}") {
-            table_id_.AddTable();
             STATEMENT(func_name);
-            table_id_.RemoveTable();
         }
+        table_id_.RemoveTable();
     }
     if (lexem_->GetValue() == "default") {
         GetLex();
         GetLex(); // :
+        table_id_.AddTable();
         while (lexem_->GetValue() != "}") {
-            table_id_.AddTable();
             STATEMENT(func_name);
-            table_id_.RemoveTable();
         }
+        table_id_.RemoveTable();
     }
     GetLex(); // }
 }
