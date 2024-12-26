@@ -71,7 +71,7 @@ void RPN::FindFunction(std::string id_name) {
                         continue;
                     } else flag = true;
                     if (label_elem->IsEmptyLabel()) {
-                        chain_.insert(chain_.begin() + counter, new RPN_Node(true, label_number_));
+                        chain_.insert(chain_.begin() + counter + 2, new RPN_Node(true, label_number_));
                         label_number_++;
                         break;
                     } else counter++;
