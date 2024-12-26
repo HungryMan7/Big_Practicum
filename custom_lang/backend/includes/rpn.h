@@ -106,12 +106,12 @@ public:
     int GetFalseLabelNumber() { return false_label_number; }
     std::string GetKeyword() { return keyword; }
     std::string GetOperation() { return operation; }
-    int GetIntegerValue() { return value_int; }
-    double GetDoubleValue() { return value_double; }
-    bool GetBoolValue() { return value_bool; }
-    std::string GetStringValue() { return value_string; }
+    int& GetIntegerValue() { return value_int; }
+    double& GetDoubleValue() { return value_double; }
+    bool& GetBoolValue() { return value_bool; }
+    std::string& GetStringValue() { return value_string; }
     std::vector<std::vector<int>> GetSizesValue() { return value_array; }
-    std::vector<RPN_Node*> GetElements() { return array_elements; }
+    std::vector<RPN_Node*>& GetElements() { return array_elements; }
     bool IsCommonLabel() { return rpn_label; }
     bool IsFalseLabel() { return rpn_false_label; }
     bool IsGoLabel() { return rpn_go_label; }

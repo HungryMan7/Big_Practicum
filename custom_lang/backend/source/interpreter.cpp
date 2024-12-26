@@ -23,6 +23,48 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
                     res = tid_->getValue(nnnnnnn);
                 }
                 stack.push(res);
+            } else if (rpn_[ind]->GetKeyword() == "cout") {
+                while (rpn_[ind]->GetType() != "label") {
+                    --ind;
+                }
+                ++ind;
+                while (rpn_[ind]->GetKeyword() != "cout") {
+                    RPN_Node* cout_id = rpn_[ind];
+                    if (rpn_[ind]->GetType() == "identifier") {
+                        cout_id = tid_->getValue(rpn_[ind]->GetName());
+                    }
+                    if (cout_id->GetType() == "integer") {
+                        std::cout << cout_id->GetIntegerValue();
+                    } else if (cout_id->GetType() == "double") {
+                        std::cout << cout_id->GetDoubleValue();
+                    } else if (cout_id->GetType() == "bool") {
+                        std::cout << cout_id->GetBoolValue();
+                    } else if (cout_id->GetType() == "string") {
+                        std::cout << cout_id->GetStringValue();
+                    }
+                    ++ind;
+                }
+            } else if (rpn_[ind]->GetKeyword() == "cin") {
+                while (rpn_[ind]->GetType() != "label") {
+                    --ind;
+                }
+                ++ind;
+                while (rpn_[ind]->GetKeyword() != "cin") {
+                    RPN_Node* cin_id = rpn_[ind];
+                    if (rpn_[ind]->GetType() == "identifier") {
+                        cin_id = tid_->getValue(rpn_[ind]->GetName());
+                    }
+                    if (cin_id->GetType() == "integer") {
+                        std::cin >> cin_id->GetIntegerValue();
+                    } else if (cin_id->GetType() == "double") {
+                        std::cin >> cin_id->GetDoubleValue();
+                    } else if (cin_id->GetType() == "bool") {
+                        std::cin >> cin_id->GetBoolValue();
+                    } else if (cin_id->GetType() == "string") {
+                        std::cin >> cin_id->GetStringValue();
+                    }
+                    ++ind;
+                }
             }
         } else if (rpn_[ind]->GetType() == "function") {
             std::string zzz = rpn_[ind]->GetName();
