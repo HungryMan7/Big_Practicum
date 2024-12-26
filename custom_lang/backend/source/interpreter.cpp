@@ -99,6 +99,10 @@ RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string oper
         } else if (second->GetType() == "string") {
             first->SetStringValue(second->GetStringValue());
             return new RPN_Node(*first);
+        } else if (second->GetType() == "array") {
+            first->SetElements(second->GetElements());
+            first->SetSizes(second->GetSizesValue());
+            return new RPN_Node(*first);
         } else {
             throw "ne nado..."; // юмор - это хорошо :)
                                 // угу)))
@@ -124,6 +128,25 @@ RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string oper
             return result;
         } else if (second->GetType() == "string") {
             result->SetBoolValue(first->GetStringValue() == second->GetStringValue());
+            return result;
+        } else if (second->GetType() == "array") {
+            if (first->GetSizesValue() == second->GetSizesValue()) {
+                if (first->GetElements().size() == second->GetElements().size()) {
+                    for (int i = 0; i < first->GetElements().size(); ++i) {
+                        if (result->GetBoolValue() != false) {
+                            if (second->GetElements()[i]->GetType() == "integer") {
+                                result->SetBoolValue(first->GetElements()[i]->GetIntegerValue() == second->GetElements()[i]->GetIntegerValue());
+                            } else if (second->GetType() == "double") {
+                                result->SetBoolValue(first->GetElements()[i]->GetDoubleValue() == second->GetElements()[i]->GetDoubleValue());
+                            } else if (second->GetType() == "bool") {
+                                result->SetBoolValue(first->GetElements()[i]->GetBoolValue() == second->GetElements()[i]->GetBoolValue());
+                            } else if (second->GetType() == "string") {
+                                result->SetBoolValue(first->GetElements()[i]->GetStringValue() == second->GetElements()[i]->GetStringValue());
+                            }
+                        }
+                    }
+                } else result = new RPN_Node("false", "bool");
+            } else result = new RPN_Node("false", "bool");
             return result;
         } else {
             throw "ne nado...";

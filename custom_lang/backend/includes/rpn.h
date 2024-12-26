@@ -98,6 +98,8 @@ public:
     void SetBoolValue(bool val) { value_bool = val; }
     void SetStringValue(std::string val) { value_string = val; }
     void SetType(std::string type) { type_ = type; }
+    void SetElements(std::vector<RPN_Node*> elem) { array_elements = elem; }
+    void SetSizes(std::vector<std::vector<int>> sizes) { value_array = sizes; }
     std::string GetType() { return type_; }
     std::string GetName() { return id_name; }
     int GetLabelNumber() { return label_number; }
@@ -108,6 +110,8 @@ public:
     double GetDoubleValue() { return value_double; }
     bool GetBoolValue() { return value_bool; }
     std::string GetStringValue() { return value_string; }
+    std::vector<std::vector<int>> GetSizesValue() { return value_array; }
+    std::vector<RPN_Node*> GetElements() { return array_elements; }
     bool IsCommonLabel() { return rpn_label; }
     bool IsFalseLabel() { return rpn_false_label; }
     bool IsGoLabel() { return rpn_go_label; }
