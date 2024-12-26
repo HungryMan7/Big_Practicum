@@ -77,47 +77,54 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
 }
 
 RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string operation) {
+    if (first->GetType() == "identifier") {
+        std::string name = first->GetName();
+        delete first;
+        first = tid_->getValue(name);
+    }
     if (second->GetType() == "identifier") {
         std::string name = second->GetName();
         delete second;
         second = tid_->getValue(name);
     }
     if (operation == "=") {
-        std::string name = first->GetName();
         if (second->GetType() == "integer") {
-            (tid_->getValue(first->GetName()))->SetIntegerValue(second->GetIntegerValue());
-            (tid_->getValue(first->GetName()))->SetType(second->GetType());
-            std::cout << first->GetName() << " = " << second->GetIntegerValue() << "\n";
-            return new RPN_Node(*first);
+            first->SetIntegerValue(second->GetIntegerValue());
         } else if (second->GetType() == "double") {
             first->SetDoubleValue(second->GetDoubleValue());
-            return new RPN_Node(*first);
         } else if (second->GetType() == "bool") {
             first->SetBoolValue(second->GetBoolValue());
-            return new RPN_Node(*first);
         } else if (second->GetType() == "string") {
             first->SetStringValue(second->GetStringValue());
-            return new RPN_Node(*first);
         } else if (second->GetType() == "array") {
-            (tid_->getValue(first->GetName()))->SetElements(second->GetElements());
-            (tid_->getValue(first->GetName()))->SetSizes(second->GetSizesValue());
-            (tid_->getValue(first->GetName()))->SetType(second->GetType());
-            return new RPN_Node(*first);
-        } else {
-            std::cout << "pizdec " << second->GetType() << "\n";
-            throw "ne nado..."; // юмор - это хорошо :)
-                                // угу)))
+            first->SetElements(second->GetElements());
+            first->SetSizes(second->GetSizesValue());
         }
-    }
-    if (first->GetType() == "identifier") {
-        std::string name = first->GetName();
-        delete first;
-        first = tid_->getValue(name);
-    }
-    if (operation == "==") {
+        first->SetType(second->GetType());
+        return new RPN_Node(*first);
+    } else if (operation == "+=") {
+        return Solve(first, Solve(first, second, "+"), "=");
+    } else if (operation == "-=") {
+        return Solve(first, Solve(first, second, "-"), "=");
+    } else if (operation == "*=") {
+        return Solve(first, Solve(first, second, "*"), "=");
+    } else if (operation == "/=") {
+        return Solve(first, Solve(first, second, "/"), "=");
+    } else if (operation == "%=") {
+        return Solve(first, Solve(first, second, "%"), "=");
+    } else if (operation == "<<=") {
+        return Solve(first, Solve(first, second, "<<"), "=");
+    } else if (operation == ">>=") {
+        return Solve(first, Solve(first, second, ">>"), "=");
+    } else if (operation == "&=") {
+        return Solve(first, Solve(first, second, "&"), "=");
+    } else if (operation == "|=") {
+        return Solve(first, Solve(first, second, "|"), "=");
+    } else if (operation == "^=") {
+        return Solve(first, Solve(first, second, "^"), "=");
+    } else if (operation == "==") {
         RPN_Node* result = new RPN_Node("", "bool");
         if (second->GetType() == "integer") {
-            std::cout << first->GetIntegerValue() << " == " << second->GetIntegerValue() << "\n";
             result->SetBoolValue(first->GetIntegerValue() == second->GetIntegerValue());
             return result;
         } else if (second->GetType() == "double") {
@@ -148,8 +155,6 @@ RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string oper
                 } else result = new RPN_Node("false", "bool");
             } else result = new RPN_Node("false", "bool");
             return result;
-        } else {
-            throw "ne nado...";
         }
     } else if (operation == "!=") {
         RPN_Node* result = new RPN_Node("", "bool");
@@ -171,8 +176,6 @@ RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string oper
         } else if (second->GetType() == "string") {
             result->SetBoolValue(first->GetStringValue() > second->GetStringValue());
             return result;
-        } else {
-            throw "ne nado...";
         }
     } else if (operation == "<") {
         RPN_Node* result = new RPN_Node("", "bool");
@@ -192,80 +195,46 @@ RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string oper
         return result;
     } else if (operation == "+") {
         if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() + second->GetIntegerValue()), "integer");
-            return answer;
+            return new RPN_Node(std::to_string(first->GetIntegerValue() + second->GetIntegerValue()), "integer");
         } else if (second->GetType() == "double") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetDoubleValue() + second->GetDoubleValue()), "double");
-            return answer;
+            return new RPN_Node(std::to_string(first->GetDoubleValue() + second->GetDoubleValue()), "double");
         } else if (second->GetType() == "string") {
-            RPN_Node* answer = new RPN_Node(first->GetStringValue() + second->GetStringValue(), "string");
-            return answer;
+            return new RPN_Node(first->GetStringValue() + second->GetStringValue(), "string");
         }
     } else if (operation == "-") {
         if (second->GetType() == "integer") {
-            std::cout << first->GetIntegerValue() << " - " << second->GetIntegerValue() << "\n";
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() - second->GetIntegerValue()), "integer");
-            return answer;
+            return new RPN_Node(std::to_string(first->GetIntegerValue() - second->GetIntegerValue()), "integer");
         } else if (second->GetType() == "double") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetDoubleValue() - second->GetDoubleValue()), "double");
-            return answer;
+            return new RPN_Node(std::to_string(first->GetDoubleValue() - second->GetDoubleValue()), "double");
         }
     } else if (operation == "*") {
         if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() * second->GetIntegerValue()), "integer");
-            return answer;
+            return new RPN_Node(std::to_string(first->GetIntegerValue() * second->GetIntegerValue()), "integer");
         } else if (second->GetType() == "double") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetDoubleValue() * second->GetDoubleValue()), "double");
-            return answer;
+            return new RPN_Node(std::to_string(first->GetDoubleValue() * second->GetDoubleValue()), "double");
         }
     } else if (operation == "/") {
         if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() / second->GetIntegerValue()), "integer");
-            return answer;
+            return new RPN_Node(std::to_string(first->GetIntegerValue() / second->GetIntegerValue()), "integer");
         } else if (second->GetType() == "double") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetDoubleValue() / second->GetDoubleValue()), "double");
-            return answer;
+            return new RPN_Node(std::to_string(first->GetDoubleValue() / second->GetDoubleValue()), "double");
         }
     } else if (operation == "%") {
-        if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() % second->GetIntegerValue()), "integer");
-            return answer;
-        }
+        return new RPN_Node(std::to_string(first->GetIntegerValue() % second->GetIntegerValue()), "integer");
     } else if (operation == "<<") {
-        if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() << second->GetIntegerValue()), "integer");
-            return answer;
-        }
+        return new RPN_Node(std::to_string(first->GetIntegerValue() << second->GetIntegerValue()), "integer");
     } else if (operation == ">>") {
-        if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() >> second->GetIntegerValue()), "integer");
-            return answer;
-        }
+        return new RPN_Node(std::to_string(first->GetIntegerValue() >> second->GetIntegerValue()), "integer");
     } else if (operation == "&") {
-        if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() & second->GetIntegerValue()), "integer");
-            return answer;
-        }
+        return new RPN_Node(std::to_string(first->GetIntegerValue() & second->GetIntegerValue()), "integer");
     } else if (operation == "|") {
-        if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() | second->GetIntegerValue()), "integer");
-            return answer;
-        }
+        return new RPN_Node(std::to_string(first->GetIntegerValue() | second->GetIntegerValue()), "integer");
     } else if (operation == "^") {
-        if (second->GetType() == "integer") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() ^ second->GetIntegerValue()), "integer");
-            return answer;
-        }
+        return new RPN_Node(std::to_string(first->GetIntegerValue() ^ second->GetIntegerValue()), "integer");
     } else if (operation == "||") {
-        if (second->GetType() == "bool") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() || second->GetIntegerValue()), "bool");
-            return answer;
-        }
+        return new RPN_Node(std::to_string(first->GetBoolValue() || second->GetBoolValue()), "bool");
     } else if (operation == "&&") {
-        if (second->GetType() == "bool") {
-            RPN_Node* answer = new RPN_Node(std::to_string(first->GetIntegerValue() && second->GetIntegerValue()), "bool");
-            return answer;
-        }
+        return new RPN_Node(std::to_string(first->GetBoolValue() && second->GetBoolValue()), "bool");
     } else if (operation == ",") {
         return second;
     }
