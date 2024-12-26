@@ -13,7 +13,6 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
     }
     ++ind;
     for (; ind < rpn_.size(); ++ind) {
-        std::cout << "ind: " << ind << "\n";
         if (rpn_[ind]->GetType() == "utility") {
             if (rpn_[ind]->GetKeyword() == "return") {
                 RPN_Node* res = stack.top();
@@ -79,12 +78,10 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
 
 RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string operation) {
     if (second->GetType() == "identifier") {
-        second = tid_->getValue(second->GetName());
+        std::string name = second->GetName();
+        delete second;
+        second = tid_->getValue(name);
     }
-    first->Print();
-    std::cout << "\n";
-    second->Print();
-    std::cout << "\n";
     if (operation == "=") {
         std::string name = first->GetName();
         if (second->GetType() == "integer") {
@@ -113,7 +110,9 @@ RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string oper
         }
     }
     if (first->GetType() == "identifier") {
-        first = tid_->getValue(first->GetName());
+        std::string name = first->GetName();
+        delete first;
+        first = tid_->getValue(name);
     }
     if (operation == "==") {
         RPN_Node* result = new RPN_Node("", "bool");
