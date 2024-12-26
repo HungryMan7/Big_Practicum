@@ -590,9 +590,9 @@ void RPN::FUNC_STATEMENT(bool &check, std::string func_name) {
             GetLex(); // ;
         }
         AddCell(new RPN_Node("return", "utility"), empty);
+        AddCell(new RPN_Node(true, FindReturnLabel(func_name)), empty);
     }
     AddCell(new RPN_Node(last_label_number), empty);
-    AddCell(new RPN_Node(true, FindReturnLabel(func_name)), empty);
 }
 
 void RPN::INPUT() {

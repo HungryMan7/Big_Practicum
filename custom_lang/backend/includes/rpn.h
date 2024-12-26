@@ -294,4 +294,5 @@ private:
     int false_number = 0;
     std::vector<Lexem*> list_of_lexems_;
     std::vector<RPN_Node*> chain_;
+    std::vector<std::pair<std::string, int>> func_info;
 };
