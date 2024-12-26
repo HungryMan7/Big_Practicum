@@ -136,6 +136,8 @@ Functions</h2></td></tr>
 <tr class="separator:abd2fd11c2d8c953ccd7114387dd256e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a552f22792fc7307bfe14b12eaa7c0da4" id="r_a552f22792fc7307bfe14b12eaa7c0da4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rpn_8cpp.html#a552f22792fc7307bfe14b12eaa7c0da4">FindContinueLabel</a> ()</td></tr>
 <tr class="separator:a552f22792fc7307bfe14b12eaa7c0da4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4bdea94f739006300aad529fd24db81" id="r_ad4bdea94f739006300aad529fd24db81"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rpn_8cpp.html#ad4bdea94f739006300aad529fd24db81">FindReturnLabel</a> (std::string func_name)</td></tr>
+<tr class="separator:ad4bdea94f739006300aad529fd24db81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -143,6 +145,8 @@ Variables</h2></td></tr>
 <tr class="separator:ac7656fd02e5c1e957b75ac5570b862c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84b287b10cc7d9d30673b4b520d14535" id="r_a84b287b10cc7d9d30673b4b520d14535"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; std::string, std::pair&lt; int, int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a></td></tr>
 <tr class="separator:a84b287b10cc7d9d30673b4b520d14535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab582d59c37d773b90f0ec9138ed37182" id="r_ab582d59c37d773b90f0ec9138ed37182"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; std::string, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rpn_8cpp.html#ab582d59c37d773b90f0ec9138ed37182">functions</a></td></tr>
+<tr class="separator:ab582d59c37d773b90f0ec9138ed37182"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2d6c9d285b34227ed246ae673c9e434" id="r_ad2d6c9d285b34227ed246ae673c9e434"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rpn_8cpp.html#ad2d6c9d285b34227ed246ae673c9e434">first_common_label_number</a></td></tr>
 <tr class="separator:ad2d6c9d285b34227ed246ae673c9e434"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabbe20959c6a629df957a9e688ddcb6e" id="r_aabbe20959c6a629df957a9e688ddcb6e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rpn_8cpp.html#aabbe20959c6a629df957a9e688ddcb6e">last_common_label_number</a></td></tr>
@@ -164,15 +168,15 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00010">10</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   10</span>                     {</div>
-<div class="line"><span class="lineno">   11</span>    <span class="keywordtype">int</span> counter = 0;</div>
-<div class="line"><span class="lineno">   12</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>.size() != 0) {</div>
-<div class="line"><span class="lineno">   13</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>[<a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>.size() - 1].second.second;</div>
-<div class="line"><span class="lineno">   14</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   15</span>        <span class="keywordflow">throw</span> <span class="stringliteral">&quot;you can&#39;t use operator break, because it&#39;s not in cycle or switch&quot;</span>;</div>
-<div class="line"><span class="lineno">   16</span>    }</div>
-<div class="line"><span class="lineno">   17</span>}</div>
+<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00011">11</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   11</span>                     {</div>
+<div class="line"><span class="lineno">   12</span>    <span class="keywordtype">int</span> counter = 0;</div>
+<div class="line"><span class="lineno">   13</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>.size() != 0) {</div>
+<div class="line"><span class="lineno">   14</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>[<a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>.size() - 1].second.second;</div>
+<div class="line"><span class="lineno">   15</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   16</span>        <span class="keywordflow">throw</span> <span class="stringliteral">&quot;you can&#39;t use operator break, because it&#39;s not in cycle or switch&quot;</span>;</div>
+<div class="line"><span class="lineno">   17</span>    }</div>
+<div class="line"><span class="lineno">   18</span>}</div>
 <div class="ttc" id="arpn_8cpp_html_a84b287b10cc7d9d30673b4b520d14535"><div class="ttname"><a href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a></div><div class="ttdeci">std::vector&lt; std::pair&lt; std::string, std::pair&lt; int, int &gt; &gt; &gt; operators</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l00005">rpn.cpp:5</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -192,16 +196,44 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00019">19</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   19</span>                        {</div>
-<div class="line"><span class="lineno">   20</span>    <span class="keywordtype">int</span> counter = 0;</div>
-<div class="line"><span class="lineno">   21</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = <a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>.size() - 1; i &gt;= 0; --i) {</div>
-<div class="line"><span class="lineno">   22</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>[i].first == <span class="stringliteral">&quot;loop&quot;</span>) {</div>
-<div class="line"><span class="lineno">   23</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>[<a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>.size() - 1].second.first;</div>
-<div class="line"><span class="lineno">   24</span>        }</div>
-<div class="line"><span class="lineno">   25</span>    }</div>
-<div class="line"><span class="lineno">   26</span>    <span class="keywordflow">throw</span> <span class="stringliteral">&quot;you can&#39;t use operator continue, because it&#39;s not in cycle&quot;</span>;</div>
-<div class="line"><span class="lineno">   27</span>}</div>
+<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00020">20</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   20</span>                        {</div>
+<div class="line"><span class="lineno">   21</span>    <span class="keywordtype">int</span> counter = 0;</div>
+<div class="line"><span class="lineno">   22</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = <a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>.size() - 1; i &gt;= 0; --i) {</div>
+<div class="line"><span class="lineno">   23</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>[i].first == <span class="stringliteral">&quot;loop&quot;</span>) {</div>
+<div class="line"><span class="lineno">   24</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>[<a class="code hl_variable" href="rpn_8cpp.html#a84b287b10cc7d9d30673b4b520d14535">operators</a>.size() - 1].second.first;</div>
+<div class="line"><span class="lineno">   25</span>        }</div>
+<div class="line"><span class="lineno">   26</span>    }</div>
+<div class="line"><span class="lineno">   27</span>    <span class="keywordflow">throw</span> <span class="stringliteral">&quot;you can&#39;t use operator continue, because it&#39;s not in cycle&quot;</span>;</div>
+<div class="line"><span class="lineno">   28</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad4bdea94f739006300aad529fd24db81" name="ad4bdea94f739006300aad529fd24db81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4bdea94f739006300aad529fd24db81">&#9670;&#160;</a></span>FindReturnLabel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FindReturnLabel </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>func_name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00030">30</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   30</span>                                         {</div>
+<div class="line"><span class="lineno">   31</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code hl_variable" href="rpn_8cpp.html#ab582d59c37d773b90f0ec9138ed37182">functions</a>.size(); ++i) {</div>
+<div class="line"><span class="lineno">   32</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="rpn_8cpp.html#ab582d59c37d773b90f0ec9138ed37182">functions</a>[i].first == func_name) {</div>
+<div class="line"><span class="lineno">   33</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="rpn_8cpp.html#ab582d59c37d773b90f0ec9138ed37182">functions</a>[i].second;</div>
+<div class="line"><span class="lineno">   34</span>        }</div>
+<div class="line"><span class="lineno">   35</span>    }</div>
+<div class="line"><span class="lineno">   36</span>}</div>
+<div class="ttc" id="arpn_8cpp_html_ab582d59c37d773b90f0ec9138ed37182"><div class="ttname"><a href="rpn_8cpp.html#ab582d59c37d773b90f0ec9138ed37182">functions</a></div><div class="ttdeci">std::vector&lt; std::pair&lt; std::string, int &gt; &gt; functions</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l00006">rpn.cpp:6</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -235,7 +267,23 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00007">7</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00008">8</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab582d59c37d773b90f0ec9138ed37182" name="ab582d59c37d773b90f0ec9138ed37182"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab582d59c37d773b90f0ec9138ed37182">&#9670;&#160;</a></span>functions</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::pair&lt;std::string, int&gt; &gt; functions</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00006">6</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
 
 </div>
 </div>
@@ -251,7 +299,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00008">8</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="rpn_8cpp_source.html#l00009">9</a> of file <a class="el" href="rpn_8cpp_source.html">rpn.cpp</a>.</p>
 
 </div>
 </div>
