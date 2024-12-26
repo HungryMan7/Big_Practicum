@@ -102,8 +102,9 @@ RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string oper
             first->SetStringValue(second->GetStringValue());
             return new RPN_Node(*first);
         } else if (second->GetType() == "array") {
-            first->SetElements(second->GetElements());
-            first->SetSizes(second->GetSizesValue());
+            (tid_->getValue(first->GetName()))->SetElements(second->GetElements());
+            (tid_->getValue(first->GetName()))->SetSizes(second->GetSizesValue());
+            (tid_->getValue(first->GetName()))->SetType(second->GetType());
             return new RPN_Node(*first);
         } else {
             std::cout << "pizdec " << second->GetType() << "\n";
