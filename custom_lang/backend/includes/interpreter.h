@@ -3,8 +3,8 @@
 
 class Interpreter {
 public:
-    void Run(std::vector<RPN_Node*> rpn);
-    RPN_Node* RunFunc(std::string, int);
+    RPN_Node* Run(std::vector<RPN_Node*> rpn);
+    RPN_Node* RunFunction(std::string);
     RPN_Node* Solve(RPN_Node*, RPN_Node*, std::string);
 
 private:

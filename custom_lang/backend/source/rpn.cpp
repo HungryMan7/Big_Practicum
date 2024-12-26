@@ -606,6 +606,7 @@ void RPN::FUNC_CALL(std::string id_name) {
     int index = 0;
     GetLex(); // (
     bool checker = false;
+    AddCell(new RPN_Node(true, true, true), empty);
     while (lexem_->GetType() == LexemType::Identifier || lexem_->GetType() == LexemType::String ||
         lexem_->GetType() == LexemType::Integer || lexem_->GetType() == LexemType::Float || lexem_->GetValue() == "{" || lexem_->GetValue() == "(") {
         checker = true;
@@ -628,6 +629,7 @@ void RPN::FUNC_CALL(std::string id_name) {
     RPN_Node* label = new RPN_Node(label_number_);
     AddCell(label, empty);
     FindFunction(id_name);
+    AddCell(new RPN_Node(true, true, true, true), empty);
 }
 
 void RPN::IF(std::string func_name) {
@@ -995,6 +997,7 @@ void RPN::LOOP_WHILE(std::string func_name) {
     int false_while_number = false_number;
     false_number++;
     label_number_++;
+    AddCell(new RPN_Node(true, true, true), empty);
     AddCell(new RPN_Node(return_number), empty);
     EXP_ZERO(empty);
     AddCell(new RPN_Node(false, true, false_while_number), empty);
@@ -1004,6 +1007,7 @@ void RPN::LOOP_WHILE(std::string func_name) {
     table_id.RemoveTable();
     AddCell(new RPN_Node(true, return_number), empty);
     AddCell(new RPN_Node(false_while_number, false), empty);
+    AddCell(new RPN_Node(true, true, true, true), empty);
 }
 
 void RPN::LOOP_FOR(std::string func_name) {
