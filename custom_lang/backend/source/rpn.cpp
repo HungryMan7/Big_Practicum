@@ -3,6 +3,7 @@
 
 std::vector<RPN_Node*> empty = {};
 std::vector<std::pair<std::string, std::pair<int, int>>> operators;
+std::vector<std::pair<std::string, int>> functions;
 
 int first_common_label_number;
 int last_common_label_number;
@@ -24,6 +25,14 @@ int FindContinueLabel() {
         }
     }
     throw "you can't use operator continue, because it's not in cycle";
+}
+
+int FindReturnLabel(std::string func_name) {
+    for (int i = 0; i < functions.size(); ++i) {
+        if (functions[i].first == func_name) {
+            return functions[i].second;
+        }
+    }
 }
 
 RPN_Node::RPN_Node(const RPN_Node& other) {
@@ -90,6 +99,7 @@ void RPN::GetLex() {
 }
 
 void RPN::PROGRAM() {
+    int func_label_number;
     int id_line_, id_column_;
     std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> current_type_;
     std::string current_id_name_;
@@ -134,9 +144,13 @@ void RPN::PROGRAM() {
             }
             AddCell(new RPN_Node(current_id_name_, "function"), empty);
             table_id.AddTable();
+            func_label_number = label_number_;
+            label_number_++;
+            functions.push_back({current_id_name_, func_label_number});
             FUNC(current_id_name_);
             table_id.RemoveTable();
             AddCell(empty);
+            AddCell(new RPN_Node(func_label_number), empty);
         }
         else {
             if (!table_id.IsUsed(current_id_name_)) {
@@ -159,9 +173,13 @@ void RPN::PROGRAM() {
     GetLex(); // )
     AddCell(new RPN_Node(current_id_name_, "function"), empty);
     table_id.AddTable();
+    func_label_number = label_number_;
+    label_number_++;
+    functions.push_back({"main", func_label_number});
     FUNC_BODY("main");
     table_id.RemoveTable();
     AddCell(empty);
+    AddCell(new RPN_Node(func_label_number), empty);
 }
 
 void RPN::VARS_MDEF() {
@@ -449,6 +467,7 @@ void RPN::STATEMENT(std::string func_name) {
             GetLex(); // ;
         }
         AddCell(new RPN_Node("return", "utility"), empty);
+        AddCell(new RPN_Node(true, FindReturnLabel(func_name)), empty);
     }
     AddCell(new RPN_Node(last_label_number), empty);
 }
@@ -574,6 +593,7 @@ void RPN::FUNC_STATEMENT(bool &check, std::string func_name) {
         AddCell(new RPN_Node("return", "utility"), empty);
     }
     AddCell(new RPN_Node(last_label_number), empty);
+    AddCell(new RPN_Node(true, FindReturnLabel(func_name)), empty);
 }
 
 void RPN::INPUT() {
