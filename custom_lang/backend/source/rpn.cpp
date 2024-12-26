@@ -157,7 +157,7 @@ void RPN::PROGRAM() {
                 table_id.AddID( current_type_ , current_id_name_, id_line_, id_column_);
             }
             AddCell(new RPN_Node(current_id_name_, "identifier"), empty);
-            VARS_MDEF();
+            VARS_MDEF(current_type_);
             GetLex();
         }
     }
@@ -182,9 +182,8 @@ void RPN::PROGRAM() {
     AddCell(new RPN_Node(func_label_number), empty);
 }
 
-void RPN::VARS_MDEF() {
+void RPN::VARS_MDEF(std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> current_type_) {
     int id_line_, id_column_;
-    std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> current_type_;
     std::string current_id_name_;
     if (lexem_->GetValue() == ";") {
         current_id_name_ = list_of_lexems_[lex_index_ - 2]->GetValue();
@@ -214,7 +213,7 @@ void RPN::VARS_MDEF() {
         id_line_ = lexem_->GetLine();
         id_column_ = lexem_->GetColumn();
         if (!table_id.IsUsed(current_id_name_)) {
-            table_id.AddID({ current_type_ }, current_id_name_, id_line_, id_column_);
+            table_id.AddID(current_type_ , current_id_name_, id_line_, id_column_);
         }
         AddCell(lexem_, empty);
         GetLex(); // id
@@ -393,7 +392,7 @@ void RPN::STATEMENT(std::string func_name) {
         }
         AddCell(new RPN_Node(current_id_name_, "identifier"), empty);
         GetLex(); // id
-        VARS_MDEF();
+        VARS_MDEF(current_type_);
         GetLex();
     }
     else if (lexem_->GetType() == LexemType::Identifier) {
@@ -404,7 +403,7 @@ void RPN::STATEMENT(std::string func_name) {
         if (lex_index_ < (int)list_of_lexems_.size() && (list_of_lexems_[lex_index_]->GetValue() == "=")) {
             AddCell(new RPN_Node(current_id_name_, "identifier"), empty);
             GetLex();
-            VARS_MDEF();
+            VARS_MDEF(current_type_);
         }
         else {
             do {
@@ -516,7 +515,7 @@ void RPN::FUNC_STATEMENT(bool &check, std::string func_name) {
         }
         AddCell(new RPN_Node(current_id_name_, "identifier"), empty);
         GetLex(); // id
-        VARS_MDEF();
+        VARS_MDEF(current_type_);
         GetLex();
     }
     else if (lexem_->GetType() == LexemType::Identifier) {
@@ -527,7 +526,7 @@ void RPN::FUNC_STATEMENT(bool &check, std::string func_name) {
         if (lex_index_ < (int)list_of_lexems_.size() && (list_of_lexems_[lex_index_]->GetValue() == "=")) {
             AddCell(new RPN_Node(current_id_name_, "identifier"), empty);
             GetLex();
-            VARS_MDEF();
+            VARS_MDEF(current_type_);
         }
         else {
             do {
@@ -1076,7 +1075,7 @@ void RPN::LOOP_FOR(std::string func_name) {
         }
         AddCell(new RPN_Node(lexem_->GetValue(), "identifier"), empty);
         GetLex();
-        VARS_MDEF();
+        VARS_MDEF(current_type_);
         GetLex(); // ;
     }
     int return_number = label_number_;
