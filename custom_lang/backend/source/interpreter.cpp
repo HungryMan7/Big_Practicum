@@ -18,9 +18,9 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
                 RPN_Node* res = stack.top();
                 stack.pop();
                 if (res->GetType() == "identifier") {
-                    std::string nnnnnnn = res->GetName(); 
+                    std::string name = res->GetName(); 
                     delete res;
-                    res = tid_->getValue(nnnnnnn);
+                    res = tid_->getValue(name);
                 }
                 stack.push(res);
             } else if (rpn_[ind]->GetKeyword() == "cout") {
@@ -67,9 +67,9 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
                 }
             }
         } else if (rpn_[ind]->GetType() == "function") {
-            std::string zzz = rpn_[ind]->GetName();
+            std::string name = rpn_[ind]->GetName();
             ind = 0;
-            while (rpn_[ind]->GetType() != "function" || rpn_[ind]->GetName() != zzz) {
+            while (rpn_[ind]->GetType() != "function" || rpn_[ind]->GetName() != name) {
                 ++ind;
             }
         } else if (rpn_[ind]->GetType() == "other") {
