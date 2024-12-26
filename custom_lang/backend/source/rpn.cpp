@@ -71,7 +71,7 @@ void RPN::FindFunction(std::string id_name) {
                         continue;
                     } else flag = true;
                     if (label_elem->IsEmptyLabel()) {
-                        chain_.insert(chain_.begin() + counter, new RPN_Node(true, label_number_));
+                        chain_.insert(chain_.begin() + counter + 2, new RPN_Node(true, label_number_));
                         label_number_++;
                         break;
                     } else counter++;
@@ -208,7 +208,6 @@ void RPN::VARS_MDEF(std::pair<std::vector<std::string>, std::pair<std::vector<st
         AddCell(equality, empty);
     }
     while (lexem_->GetValue() == ",") {
-        AddCell(new RPN_Node(true, true, true, true, true), empty);
         GetLex();
         current_id_name_ = lexem_->GetValue();
         id_line_ = lexem_->GetLine();
@@ -226,7 +225,6 @@ void RPN::VARS_MDEF(std::pair<std::vector<std::string>, std::pair<std::vector<st
             AddCell(equality, empty);
         }
     }
-    AddCell(new RPN_Node(true, true, true, true, true), empty);
 }
 
 void RPN::FUNC(std::string id_name) {
