@@ -44,8 +44,11 @@ RPN_Node::RPN_Node(const RPN_Node& other) {
     }
     rpn_label = other.rpn_label;
     rpn_false_label = other.rpn_false_label;
+    rpn_go_false_label = other.rpn_go_false_label;
     rpn_go_label = other.rpn_go_label;
     rpn_empty_label = other.rpn_empty_label;
+    rpn_start_label = other.rpn_start_label;
+    rpn_end_label = other.rpn_end_label;
 }
 
 void RPN::FindFunction(std::string id_name) {
@@ -637,8 +640,10 @@ void RPN::IF(std::string func_name) {
     AddCell(new RPN_Node(false, true, false_label_number), empty);
     false_number++;
     table_id.AddTable();
+    AddCell(new RPN_Node(true, true, true), empty);
     BODY(func_name);
     table_id.RemoveTable();
+    AddCell(new RPN_Node(true, true, true, true), empty);
     AddCell(new RPN_Node(true, final_label), empty);
     AddCell(new RPN_Node(false_label_number, false), empty);
     while (lexem_->GetValue() == "elif") {
@@ -650,8 +655,10 @@ void RPN::IF(std::string func_name) {
         AddCell(new RPN_Node(false, true, false_label_number), empty);
         false_number++;
         table_id.AddTable();
+        AddCell(new RPN_Node(true, true, true), empty);
         BODY(func_name);
         table_id.RemoveTable();
+        AddCell(new RPN_Node(true, true, true, true), empty);
         AddCell(new RPN_Node(true, final_label), empty);
         AddCell(new RPN_Node(false_label_number, false), empty);
     }
@@ -683,9 +690,11 @@ void RPN::SWITCH(std::string func_name) {
         int false_label_number = false_number;
         false_number++;
         AddCell(new RPN_Node(false, true, false_label_number), empty); // false go
+        table_id.AddTable();
         while (lexem_->GetValue() != "case" && lexem_->GetValue() != "default" && lexem_->GetValue() != "}") {
             STATEMENT(func_name);
         }
+        table_id.RemoveTable();
         AddCell(new RPN_Node(true, label_number_), empty); // go
         AddCell(new RPN_Node(false_label_number, true), empty); // false
     }
