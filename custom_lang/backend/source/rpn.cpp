@@ -2,9 +2,29 @@
 #include <fstream>
 
 std::vector<RPN_Node*> empty = {};
+std::vector<std::pair<std::string, std::pair<int, int>>> operators;
 
 int first_common_label_number;
 int last_common_label_number;
+
+int FindBreakLabel() {
+    int counter = 0;
+    if (operators.size() != 0) {
+        return operators[operators.size() - 1].second.second;
+    } else {
+        throw "you can't use operator break, because it's not in cycle or switch";
+    }
+}
+
+int FindContinueLabel() {
+    int counter = 0;
+    for (int i = operators.size() - 1; i >= 0; --i) {
+        if (operators[i].first == "loop") {
+            return operators[operators.size() - 1].second.first;
+        }
+    }
+    throw "you can't use operator continue, because it's not in cycle";
+}
 
 RPN_Node::RPN_Node(const RPN_Node& other) {
     type_ = other.type_;
@@ -383,20 +403,24 @@ void RPN::STATEMENT(std::string func_name) {
         IF(func_name);
     }
     else if (lexem_->GetValue() == "switch") {
+        operators.push_back({"switch", {first_label_number, last_label_number}});
         GetLex();
         SWITCH(func_name);
+        operators.pop_back();
     }
     else if (lexem_->GetValue() == "loop") {
+        operators.push_back({"loop", {first_label_number, last_label_number}});
         GetLex();
         LOOP(func_name);
+        operators.pop_back();
     }
     else if (lexem_->GetValue() == "break") {
-        AddCell(new RPN_Node(true, 0), empty);
+        AddCell(new RPN_Node(true, FindBreakLabel()), empty);
         GetLex(); // break
         GetLex(); // ;
     }
     else if (lexem_->GetValue() == "continue") {
-        AddCell(new RPN_Node(true, 0), empty);
+        AddCell(new RPN_Node(true, FindContinueLabel()), empty);
         GetLex(); // continue
         GetLex(); // ;
     }
@@ -501,20 +525,24 @@ void RPN::FUNC_STATEMENT(bool &check, std::string func_name) {
         IF(func_name);
     }
     else if (lexem_->GetValue() == "switch") {
+        operators.push_back({"switch", {first_label_number, last_label_number}});
         GetLex();
         SWITCH(func_name);
+        operators.pop_back();
     }
     else if (lexem_->GetValue() == "loop") {
+        operators.push_back({"loop", {first_label_number, last_label_number}});
         GetLex();
         LOOP(func_name);
+        operators.pop_back();
     }
     else if (lexem_->GetValue() == "break") {
-        AddCell(new RPN_Node(true, 0), empty);
+        AddCell(new RPN_Node(true, FindBreakLabel()), empty);
         GetLex(); // break
         GetLex(); // ;
     }
     else if (lexem_->GetValue() == "continue") {
-        AddCell(new RPN_Node(true, 0), empty);
+        AddCell(new RPN_Node(true, FindContinueLabel()), empty);
         GetLex(); // continue
         GetLex(); // ;
     }
