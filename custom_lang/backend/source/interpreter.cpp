@@ -29,6 +29,7 @@ RPN_Node* Interpreter::RunFunc(std::string func_name, int label_num) { // label_
         ++ind;
     }
     for (; rpn_[ind]->GetType() != "utility" || rpn_[ind]->GetKeyword() != "return"; ++ind) {
+        std::cout << ind << "\n";
         if (rpn_[ind]->GetType() == "function") {
             stack.push(RunFunc(rpn_[ind]->GetName(), -1));
         }

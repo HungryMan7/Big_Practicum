@@ -578,6 +578,7 @@ void RPN::FUNC_CALL(std::string id_name) {
     int index = 0;
     GetLex(); // (
     bool checker = false;
+    AddCell(new RPN_Node(true, true, true), empty);
     while (lexem_->GetType() == LexemType::Identifier || lexem_->GetType() == LexemType::String ||
         lexem_->GetType() == LexemType::Integer || lexem_->GetType() == LexemType::Float || lexem_->GetValue() == "{" || lexem_->GetValue() == "(") {
         checker = true;
@@ -600,6 +601,7 @@ void RPN::FUNC_CALL(std::string id_name) {
     RPN_Node* label = new RPN_Node(label_number_);
     AddCell(label, empty);
     FindFunction(id_name);
+    AddCell(new RPN_Node(true, true, true, true), empty);
 }
 
 void RPN::IF(std::string func_name) {
