@@ -1,5 +1,6 @@
 #pragma once
 #include "rpn.h"
+#include <stack>
 
 class Interpreter {
 public:
@@ -10,4 +11,5 @@ public:
 private:
     std::vector<RPN_Node*> rpn_;
     RPN_TID* tid_;
+    std::stack<RPN_Node*> stack;
 };
