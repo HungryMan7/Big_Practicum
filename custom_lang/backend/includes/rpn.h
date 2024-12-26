@@ -261,7 +261,7 @@ public:
 private:
     void GetLex();
     void PROGRAM();
-    void VARS_MDEF();
+    void VARS_MDEF(std::pair<std::vector<std::string>, std::pair<std::vector<std::string>, std::vector<std::string>>> current_type_);
     void FUNC(std::string id_name);
     void BODY(std::string func_name);
     void FUNC_BODY(std::string func_name);
