@@ -792,6 +792,7 @@ std::vector<std::string> SemanticsAnalyzer::EXP_ONE() {
     std::vector<std::string> bool_num = { "bool" };
     std::vector<std::string> float_num = { "double" };
     std::vector<std::string> string_num = { "string" };
+    std::vector<std::string> array_num = { "array" };
     std::vector<std::string> type_first = EXP_TWO();
     bool checker = false;
     while (lexem_->GetValue() == "=" || lexem_->GetValue() == "+=" || lexem_->GetValue() == "-=" || lexem_->GetValue() == "*=" || lexem_->GetValue() == "/=" || lexem_->GetValue() == "%=" ||
@@ -827,7 +828,7 @@ std::vector<std::string> SemanticsAnalyzer::EXP_ONE() {
         } else {
             GetLex();
             std::vector<std::string> type_second = EXP_TWO();
-            if (!(type_first == type_second && (type_first == integer || type_first == float_num || type_first == string_num || type_first == bool_num))) {
+            if (!(type_first[0] == type_second[0] && type_first[type_first.size() - 1] == type_second[type_second.size() - 1] && (type_first == integer || type_first == float_num || type_first == string_num || type_first == bool_num || type_first[0] == array_num[0]))) {
                 throw "line: " + std::to_string(lexem_->GetLine()) +
                     " column: " + std::to_string(lexem_->GetColumn() - 1) +
                     " found type mismatch";
@@ -929,13 +930,14 @@ std::vector<std::string> SemanticsAnalyzer::EXP_SEVEN() {
     std::vector<std::string> float_num = { "double" };
     std::vector<std::string> string_num = { "string" };
     std::vector<std::string> bool_num = { "bool" };
+    std::vector<std::string> array_num = {"array"};
     std::vector<std::string> type_first = EXP_EIGHT();
     bool checker = false;
     while (lexem_->GetValue() == "==" || lexem_->GetValue() == "!=") {
         checker = true;
         GetLex();
         std::vector<std::string> type_second = EXP_EIGHT();
-        if (!(type_first == type_second && (type_first == integer || type_first == float_num || type_first == string_num || type_first == bool_num))) {
+        if (!(type_first[0] == type_second[0] && type_first[type_first.size() - 1] == type_second[type_second.size() - 1] && (type_first == integer || type_first == float_num || type_first == string_num || type_first == bool_num || type_first[0] == array_num[0]))) {
             throw "line: " + std::to_string(lexem_->GetLine()) +
                 " column: " + std::to_string(lexem_->GetColumn() - 1) +
                 " found type mismatch";
