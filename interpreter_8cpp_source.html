@@ -119,9 +119,9 @@ $(document).ready(function(){initNavTree('interpreter_8cpp_source.html',''); ini
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>                <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* res = stack.top();</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>                stack.pop();</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                <span class="keywordflow">if</span> (res-&gt;<a class="code hl_function" href="structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe">GetType</a>() == <span class="stringliteral">&quot;identifier&quot;</span>) {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>                    std::string nnnnnnn = res-&gt;<a class="code hl_function" href="structRPN__Node.html#a5089f456b1507f445925a589c554c5c6">GetName</a>(); </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>                    std::string name = res-&gt;<a class="code hl_function" href="structRPN__Node.html#a5089f456b1507f445925a589c554c5c6">GetName</a>(); </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>                    <span class="keyword">delete</span> res;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                    res = tid_-&gt;<a class="code hl_function" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">getValue</a>(nnnnnnn);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                    res = tid_-&gt;<a class="code hl_function" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">getValue</a>(name);</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                }</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                stack.push(res);</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (rpn_[ind]-&gt;GetKeyword() == <span class="stringliteral">&quot;cout&quot;</span>) {</div>
@@ -168,9 +168,9 @@ $(document).ready(function(){initNavTree('interpreter_8cpp_source.html',''); ini
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                }</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            }</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (rpn_[ind]-&gt;GetType() == <span class="stringliteral">&quot;function&quot;</span>) {</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            std::string zzz = rpn_[ind]-&gt;GetName();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            std::string name = rpn_[ind]-&gt;GetName();</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            ind = 0;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">while</span> (rpn_[ind]-&gt;GetType() != <span class="stringliteral">&quot;function&quot;</span> || rpn_[ind]-&gt;GetName() != zzz) {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">while</span> (rpn_[ind]-&gt;GetType() != <span class="stringliteral">&quot;function&quot;</span> || rpn_[ind]-&gt;GetName() != name) {</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                ++ind;</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            }</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (rpn_[ind]-&gt;GetType() == <span class="stringliteral">&quot;other&quot;</span>) {</div>
