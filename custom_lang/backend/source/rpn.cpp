@@ -191,6 +191,7 @@ void RPN::VARS_MDEF() {
         AddCell(equality, empty);
     }
     while (lexem_->GetValue() == ",") {
+        AddCell(new RPN_Node(true, true, true, true, true), empty);
         GetLex();
         current_id_name_ = lexem_->GetValue();
         id_line_ = lexem_->GetLine();
@@ -208,6 +209,7 @@ void RPN::VARS_MDEF() {
             AddCell(equality, empty);
         }
     }
+    AddCell(new RPN_Node(true, true, true, true, true), empty);
 }
 
 void RPN::FUNC(std::string id_name) {

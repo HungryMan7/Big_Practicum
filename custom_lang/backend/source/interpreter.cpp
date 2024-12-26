@@ -60,7 +60,7 @@ RPN_Node* Interpreter::RunFunction(std::string func_name) {
                 tid_->AddTable();
             } else if (rpn_[ind]->IsEndLabel()) {
                 tid_->RemoveTable();
-            } else if (false) {
+            } else if (rpn_[ind]->IsClearLabel()) {
                 delete stack.top();
                 stack.pop();
             }
