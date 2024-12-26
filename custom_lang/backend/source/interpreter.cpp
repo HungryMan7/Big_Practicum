@@ -1,24 +1,36 @@
 #include "../includes/interpreter.h"
 
-RPN_Node* Interpreter::Run(std::vector<RPN_Node*> rpn) {
+void Interpreter::Run(std::vector<RPN_Node*> rpn) {
     rpn_ = rpn;
     tid_ = new RPN_TID;
-    return RunFunction("main");
-}
-
-RPN_Node* Interpreter::RunFunction(std::string func_name) {
     int ind = 0;
     while (ind < rpn_.size() && rpn_[ind]->GetType() != "function" ||
-           rpn_[ind]->GetName() != func_name) {
+           rpn_[ind]->GetName() != "main") {
         ++ind;
     }
     if (ind == rpn_.size()) {
         throw "function or label not found!";
     }
     ++ind;
-    for (; rpn_[ind]->GetType() != "utility" || rpn_[ind]->GetKeyword() != "return"; ++ind) {
-        if (rpn_[ind]->GetType() == "function") {
-            stack.push(RunFunction(rpn_[ind]->GetName()));
+    for (; ind < rpn_.size(); ++ind) {
+        std::cout << "ind: " << ind << "\n";
+        if (rpn_[ind]->GetType() == "utility") {
+            if (rpn_[ind]->GetKeyword() == "return") {
+                RPN_Node* res = stack.top();
+                stack.pop();
+                if (res->GetType() == "identifier") {
+                    std::string nnnnnnn = res->GetName(); 
+                    delete res;
+                    res = tid_->getValue(nnnnnnn);
+                }
+                stack.push(res);
+            }
+        } else if (rpn_[ind]->GetType() == "function") {
+            std::string zzz = rpn_[ind]->GetName();
+            ind = 0;
+            while (rpn_[ind]->GetType() != "function" || rpn_[ind]->GetName() != zzz) {
+                ++ind;
+            }
         } else if (rpn_[ind]->GetType() == "other") {
             RPN_Node* second = stack.top();
             stack.pop();
@@ -60,18 +72,9 @@ RPN_Node* Interpreter::RunFunction(std::string func_name) {
                 tid_->AddTable();
             } else if (rpn_[ind]->IsEndLabel()) {
                 tid_->RemoveTable();
-            } else if (false) {
-                delete stack.top();
-                stack.pop();
             }
         }
     }
-    RPN_Node* result = stack.top();
-    stack.pop();
-    if (result->GetType() == "identifier") {
-        return tid_->getValue(result->GetName());
-    }
-    return result;
 }
 
 RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string operation) {
