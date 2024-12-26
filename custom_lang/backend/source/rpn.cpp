@@ -997,6 +997,7 @@ void RPN::LOOP_WHILE(std::string func_name) {
     int false_while_number = false_number;
     false_number++;
     label_number_++;
+    AddCell(new RPN_Node(true, true, true), empty);
     AddCell(new RPN_Node(return_number), empty);
     EXP_ZERO(empty);
     AddCell(new RPN_Node(false, true, false_while_number), empty);
@@ -1006,6 +1007,7 @@ void RPN::LOOP_WHILE(std::string func_name) {
     table_id.RemoveTable();
     AddCell(new RPN_Node(true, return_number), empty);
     AddCell(new RPN_Node(false_while_number, false), empty);
+    AddCell(new RPN_Node(true, true, true, true), empty);
 }
 
 void RPN::LOOP_FOR(std::string func_name) {

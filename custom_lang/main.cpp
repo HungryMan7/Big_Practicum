@@ -29,8 +29,10 @@ int main() {
             x->Print();
             std::cout << "\n";
         }
-        interpreter->Run(rpn_chain->GetChain());
-        std::cout << "Compiled successfully!\n";
+        RPN_Node* exit_code = interpreter->Run(rpn_chain->GetChain());
+        std::cout << "Program finished with code |";
+        exit_code->Print();
+        std::cout << "|";
     } catch (const std::string e) {
         std::cout << e;
     } catch (char const* e) {
