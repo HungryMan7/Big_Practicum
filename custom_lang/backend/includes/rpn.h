@@ -62,6 +62,10 @@ public:
         type_ = "label";
         rpn_end_label = true;
     }
+    RPN_Node(bool flag, bool flag1, bool flag2, bool flag3, bool flag4) {
+        type_ = "label";
+        rpn_clear_label = true;
+    }
     RPN_Node(Lexem* lex, std::string utility) {
         type_ = "utility";
         keyword = lex->GetValue();
@@ -115,6 +119,7 @@ public:
     bool IsEmptyLabel() { return rpn_empty_label; }
     bool IsStartLabel() { return rpn_start_label; }
     bool IsEndLabel() { return rpn_end_label; }
+    bool IsClearLabel() { return rpn_clear_label; }
     void Print() {
         std::cout << type_;
         if (type_ == "identifier" || type_ == "function") {
@@ -127,6 +132,7 @@ public:
             if (rpn_empty_label) std::cout << " empty ";
             if (rpn_start_label) std::cout << " start ";
             if (rpn_end_label) std::cout << " end ";
+            if (rpn_clear_label) std::cout << " clear ";
         } else if (type_ == "integer") {
             std::cout << " " << value_int;
         } else if (type_ == "double") {
@@ -157,7 +163,8 @@ private:
     std::vector<RPN_Node*> array_elements;
     bool rpn_label = false, rpn_false_label = false, 
     rpn_go_label = false, rpn_empty_label = false,
-    rpn_start_label = false, rpn_end_label = false;
+    rpn_start_label = false, rpn_end_label = false,
+    rpn_clear_label = false;
     bool rpn_go_false_label = false;
     int false_label_number = 0;
 };
