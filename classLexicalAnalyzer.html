@@ -167,13 +167,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lexical__analyzer_8cpp_source.html#l00033">33</a> of file <a class="el" href="lexical__analyzer_8cpp_source.html">lexical_analyzer.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   33</span>                                                       {</div>
-<div class="line"><span class="lineno">   34</span>    <a class="code hl_function" href="classLexicalAnalyzer.html#acc21ec3fc3b849f1840c87f437479fcf">ReadFile</a>(filename);</div>
-<div class="line"><span class="lineno">   35</span>    current_lexem_.clear();</div>
-<div class="line"><span class="lineno">   36</span>    GetChar();</div>
-<div class="line"><span class="lineno">   37</span>    H();</div>
-<div class="line"><span class="lineno">   38</span>}</div>
+<p class="definition">Definition at line <a class="el" href="lexical__analyzer_8cpp_source.html#l00032">32</a> of file <a class="el" href="lexical__analyzer_8cpp_source.html">lexical_analyzer.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   32</span>                                                       {</div>
+<div class="line"><span class="lineno">   33</span>    <a class="code hl_function" href="classLexicalAnalyzer.html#acc21ec3fc3b849f1840c87f437479fcf">ReadFile</a>(filename);</div>
+<div class="line"><span class="lineno">   34</span>    current_lexem_.clear();</div>
+<div class="line"><span class="lineno">   35</span>    GetChar();</div>
+<div class="line"><span class="lineno">   36</span>    H();</div>
+<div class="line"><span class="lineno">   37</span>}</div>
 <div class="ttc" id="aclassLexicalAnalyzer_html_acc21ec3fc3b849f1840c87f437479fcf"><div class="ttname"><a href="classLexicalAnalyzer.html#acc21ec3fc3b849f1840c87f437479fcf">LexicalAnalyzer::ReadFile</a></div><div class="ttdeci">void ReadFile(const std::string &amp;filename)</div><div class="ttdef"><b>Definition</b> <a href="lexical__analyzer_8cpp_source.html#l00013">lexical_analyzer.cpp:13</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -193,10 +193,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lexical__analyzer_8cpp_source.html#l00045">45</a> of file <a class="el" href="lexical__analyzer_8cpp_source.html">lexical_analyzer.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   45</span>                                             {</div>
-<div class="line"><span class="lineno">   46</span>    <span class="keywordflow">return</span> list_of_lexems_;</div>
-<div class="line"><span class="lineno">   47</span>}</div>
+<p class="definition">Definition at line <a class="el" href="lexical__analyzer_8cpp_source.html#l00044">44</a> of file <a class="el" href="lexical__analyzer_8cpp_source.html">lexical_analyzer.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   44</span>                                             {</div>
+<div class="line"><span class="lineno">   45</span>    <span class="keywordflow">return</span> list_of_lexems_;</div>
+<div class="line"><span class="lineno">   46</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -228,14 +228,13 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   21</span>    <span class="keywordtype">int</span> text_size;</div>
 <div class="line"><span class="lineno">   22</span>    file.seekg(0, file.end);</div>
 <div class="line"><span class="lineno">   23</span>    text_size = (int)file.tellg();</div>
-<div class="line"><span class="lineno">   24</span>    std::cout &lt;&lt; text_size &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">   25</span>    file.seekg(0, file.beg);</div>
-<div class="line"><span class="lineno">   26</span>    program_ = <span class="keyword">new</span> <span class="keywordtype">char</span>[text_size];</div>
-<div class="line"><span class="lineno">   27</span>    file.read(program_, text_size);</div>
-<div class="line"><span class="lineno">   28</span>    file.close();</div>
-<div class="line"><span class="lineno">   29</span>    iter_ = program_;</div>
-<div class="line"><span class="lineno">   30</span>    file_size_ = text_size;</div>
-<div class="line"><span class="lineno">   31</span>}</div>
+<div class="line"><span class="lineno">   24</span>    file.seekg(0, file.beg);</div>
+<div class="line"><span class="lineno">   25</span>    program_ = <span class="keyword">new</span> <span class="keywordtype">char</span>[text_size];</div>
+<div class="line"><span class="lineno">   26</span>    file.read(program_, text_size);</div>
+<div class="line"><span class="lineno">   27</span>    file.close();</div>
+<div class="line"><span class="lineno">   28</span>    iter_ = program_;</div>
+<div class="line"><span class="lineno">   29</span>    file_size_ = text_size;</div>
+<div class="line"><span class="lineno">   30</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -255,11 +254,11 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lexical__analyzer_8cpp_source.html#l00040">40</a> of file <a class="el" href="lexical__analyzer_8cpp_source.html">lexical_analyzer.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   40</span>                                                           {</div>
-<div class="line"><span class="lineno">   41</span>    <span class="keywordflow">if</span> (bor_) <span class="keyword">delete</span> bor_;</div>
-<div class="line"><span class="lineno">   42</span>    bor_ = <span class="keyword">new</span> <a class="code hl_class" href="classBor.html">Bor</a>(filename);</div>
-<div class="line"><span class="lineno">   43</span>}</div>
+<p class="definition">Definition at line <a class="el" href="lexical__analyzer_8cpp_source.html#l00039">39</a> of file <a class="el" href="lexical__analyzer_8cpp_source.html">lexical_analyzer.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   39</span>                                                           {</div>
+<div class="line"><span class="lineno">   40</span>    <span class="keywordflow">if</span> (bor_) <span class="keyword">delete</span> bor_;</div>
+<div class="line"><span class="lineno">   41</span>    bor_ = <span class="keyword">new</span> <a class="code hl_class" href="classBor.html">Bor</a>(filename);</div>
+<div class="line"><span class="lineno">   42</span>}</div>
 <div class="ttc" id="aclassBor_html"><div class="ttname"><a href="classBor.html">Bor</a></div><div class="ttdoc">A trie class.</div><div class="ttdef"><b>Definition</b> <a href="bor_8h_source.html#l00016">bor.h:16</a></div></div>
 </div><!-- fragment -->
 </div>
