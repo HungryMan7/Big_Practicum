@@ -12,7 +12,7 @@ var searchData=
   ['getlexems_9',['GetLexems',['../classLexicalAnalyzer.html#a4e33ca376c9b37de9662c2d410433b62',1,'LexicalAnalyzer']]],
   ['getlexemtype_10',['GetLexemType',['../classLexem.html#a938cb625de5c04aec086c76c8d2d4298',1,'Lexem']]],
   ['getline_11',['getline',['../classCell.html#ac8b3e90394c14b29b3cc1cd0d66bef8e',1,'Cell::getLine()'],['../classLexem.html#ae1d3e3e82881db03c3ee014198438dbb',1,'Lexem::GetLine()']]],
-  ['getname_12',['getname',['../structRPN__Node.html#a5089f456b1507f445925a589c554c5c6',1,'RPN_Node::GetName()'],['../classCell.html#ad8a1f7438f6590ae78f2b22c22d40c2e',1,'Cell::getName()']]],
+  ['getname_12',['getname',['../classCell.html#ad8a1f7438f6590ae78f2b22c22d40c2e',1,'Cell::getName()'],['../structRPN__Node.html#a5089f456b1507f445925a589c554c5c6',1,'RPN_Node::GetName()']]],
   ['getoperation_13',['GetOperation',['../structRPN__Node.html#a2af128757cfa54d64e49018ea08066d4',1,'RPN_Node']]],
   ['getsizesvalue_14',['GetSizesValue',['../structRPN__Node.html#a35be037cf3e9acd7c4786bf376f7d27a',1,'RPN_Node']]],
   ['getstringvalue_15',['GetStringValue',['../structRPN__Node.html#ac4eb9041b616c1bc42b6b55c77c0bcb8',1,'RPN_Node']]],

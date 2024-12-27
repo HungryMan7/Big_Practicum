@@ -1276,66 +1276,62 @@ $(document).ready(function(){initNavTree('rpn_8cpp_source.html',''); initResizab
 <div class="line"><a id="l01158" name="l01158"></a><span class="lineno"> 1158</span> </div>
 <div class="foldopen" id="foldopen01159" data-start="{" data-end="}">
 <div class="line"><a id="l01159" name="l01159"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6"> 1159</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6">RPN_TID::FindID</a>(std::string id_name) {</div>
-<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
-<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l01162" name="l01162"></a><span class="lineno"> 1162</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
-<div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
-<div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l01165" name="l01165"></a><span class="lineno"> 1165</span>            }</div>
-<div class="line"><a id="l01166" name="l01166"></a><span class="lineno"> 1166</span>        }</div>
-<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
-<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"> 1168</span>    } <span class="keywordflow">while</span>(temp);</div>
-<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span>}</div>
+<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
+<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span>        <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
+<div class="line"><a id="l01162" name="l01162"></a><span class="lineno"> 1162</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span>        }</div>
+<div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span>    }</div>
+<div class="line"><a id="l01165" name="l01165"></a><span class="lineno"> 1165</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l01166" name="l01166"></a><span class="lineno"> 1166</span>}</div>
 </div>
-<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span> </div>
-<div class="foldopen" id="foldopen01172" data-start="{" data-end="}">
-<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111"> 1172</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111">RPN_TID::setValue</a>(std::string id_name, <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value) {</div>
-<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"> 1173</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
-<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"> 1175</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
-<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
-<div class="line"><a id="l01177" name="l01177"></a><span class="lineno"> 1177</span>                <span class="keywordtype">id</span>.second = value;</div>
-<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"> 1178</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span>            }</div>
-<div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span>        }</div>
-<div class="line"><a id="l01181" name="l01181"></a><span class="lineno"> 1181</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
-<div class="line"><a id="l01182" name="l01182"></a><span class="lineno"> 1182</span>    } <span class="keywordflow">while</span>(temp);</div>
-<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span>}</div>
+<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span> </div>
+<div class="foldopen" id="foldopen01168" data-start="{" data-end="}">
+<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"><a class="line" href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111"> 1168</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111">RPN_TID::setValue</a>(std::string id_name, <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value) {</div>
+<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
+<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span>    <span class="keywordflow">do</span> {</div>
+<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
+<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
+<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"> 1173</span>                <span class="keywordtype">id</span>.second = value;</div>
+<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"> 1175</span>            }</div>
+<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span>        }</div>
+<div class="line"><a id="l01177" name="l01177"></a><span class="lineno"> 1177</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
+<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"> 1178</span>    } <span class="keywordflow">while</span>(temp);</div>
+<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span>}</div>
 </div>
-<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span> </div>
-<div class="foldopen" id="foldopen01185" data-start="{" data-end="}">
-<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671"> 1185</a></span><a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* <a class="code hl_function" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">RPN_TID::getValue</a>(std::string id_name) {</div>
-<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span>    <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>();</div>
-<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
-<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
-<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
-<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>                value = <span class="keywordtype">id</span>.second;</div>
-<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>            }</div>
-<div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>        }</div>
-<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
-<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span>    } <span class="keywordflow">while</span>(temp);</div>
-<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span>    <span class="keywordflow">return</span> value;</div>
-<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span>}</div>
+<div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span> </div>
+<div class="foldopen" id="foldopen01181" data-start="{" data-end="}">
+<div class="line"><a id="l01181" name="l01181"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671"> 1181</a></span><a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* <a class="code hl_function" href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">RPN_TID::getValue</a>(std::string id_name) {</div>
+<div class="line"><a id="l01182" name="l01182"></a><span class="lineno"> 1182</span>    <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>* value = <span class="keyword">new</span> <a class="code hl_struct" href="structRPN__Node.html">RPN_Node</a>();</div>
+<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
+<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span>    <span class="keywordflow">do</span> {</div>
+<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"> 1185</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keywordtype">id</span> : temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">ID</a>) {</div>
+<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.first == id_name) {</div>
+<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span>                value = <span class="keywordtype">id</span>.second;</div>
+<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span>            }</div>
+<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span>        }</div>
+<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>        temp = temp-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
+<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>    } <span class="keywordflow">while</span>(temp);</div>
+<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>    <span class="keywordflow">return</span> value;</div>
+<div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>}</div>
 </div>
-<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span> </div>
-<div class="foldopen" id="foldopen01199" data-start="{" data-end="}">
-<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3"> 1199</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3">RPN_TID::AddTable</a>() {</div>
-<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a> *add_table = <span class="keyword">new</span> <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>;</div>
-<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
-<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">next</a> = add_table;</div>
-<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span>    root_ = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">next</a>;</div>
-<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"> 1204</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a> = temp;</div>
-<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>}</div>
+<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span> </div>
+<div class="foldopen" id="foldopen01195" data-start="{" data-end="}">
+<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3"> 1195</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3">RPN_TID::AddTable</a>() {</div>
+<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a> *add_table = <span class="keyword">new</span> <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>;</div>
+<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_;</div>
+<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">next</a> = add_table;</div>
+<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"> 1199</span>    root_ = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#a8205851cb7963a5197041f0cf817894c">next</a>;</div>
+<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span>    root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a> = temp;</div>
+<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>}</div>
 </div>
-<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span> </div>
-<div class="foldopen" id="foldopen01207" data-start="{" data-end="}">
-<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a"> 1207</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a">RPN_TID::RemoveTable</a>() {</div>
-<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
-<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>    <span class="keyword">delete</span> root_;</div>
-<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span>    root_ = temp;</div>
-<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span>}</div>
+<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span> </div>
+<div class="foldopen" id="foldopen01203" data-start="{" data-end="}">
+<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"><a class="line" href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a"> 1203</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a">RPN_TID::RemoveTable</a>() {</div>
+<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"> 1204</span>    <a class="code hl_class" href="classRPN__TID__Node.html">RPN_TID_Node</a>* temp = root_-&gt;<a class="code hl_variable" href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">pred</a>;</div>
+<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>    <span class="keyword">delete</span> root_;</div>
+<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>    root_ = temp;</div>
+<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span>}</div>
 </div>
 <div class="ttc" id="aclassLexem_html_a756fc28b51b15172a993faeaff89fe91"><div class="ttname"><a href="classLexem.html#a756fc28b51b15172a993faeaff89fe91">Lexem::GetValue</a></div><div class="ttdeci">std::string GetValue()</div><div class="ttdef"><b>Definition</b> <a href="lexem_8cpp_source.html#l00076">lexem.cpp:76</a></div></div>
 <div class="ttc" id="aclassLexem_html_ae1d3e3e82881db03c3ee014198438dbb"><div class="ttname"><a href="classLexem.html#ae1d3e3e82881db03c3ee014198438dbb">Lexem::GetLine</a></div><div class="ttdeci">int GetLine()</div><div class="ttdef"><b>Definition</b> <a href="lexem_8cpp_source.html#l00080">lexem.cpp:80</a></div></div>
@@ -1346,14 +1342,14 @@ $(document).ready(function(){initNavTree('rpn_8cpp_source.html',''); initResizab
 <div class="ttc" id="aclassRPN__TID__Node_html_a9bd800b5b4ee8db6f67c56538a5c3372"><div class="ttname"><a href="classRPN__TID__Node.html#a9bd800b5b4ee8db6f67c56538a5c3372">RPN_TID_Node::~RPN_TID_Node</a></div><div class="ttdeci">virtual ~RPN_TID_Node()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01137">rpn.cpp:1137</a></div></div>
 <div class="ttc" id="aclassRPN__TID__Node_html_ab5ed2dcca4609e4b7cdad01bf0b85c1c"><div class="ttname"><a href="classRPN__TID__Node.html#ab5ed2dcca4609e4b7cdad01bf0b85c1c">RPN_TID_Node::pred</a></div><div class="ttdeci">RPN_TID_Node * pred</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00174">rpn.h:174</a></div></div>
 <div class="ttc" id="aclassRPN__TID__Node_html_ac260908c2e3195809967aa1f32ae02ec"><div class="ttname"><a href="classRPN__TID__Node.html#ac260908c2e3195809967aa1f32ae02ec">RPN_TID_Node::ID</a></div><div class="ttdeci">std::map&lt; std::string, RPN_Node * &gt; ID</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00175">rpn.h:175</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_a3b424fe5f90b7eac07450d3ab9154111"><div class="ttname"><a href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111">RPN_TID::setValue</a></div><div class="ttdeci">void setValue(std::string id_name, RPN_Node *value)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01172">rpn.cpp:1172</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_a3b424fe5f90b7eac07450d3ab9154111"><div class="ttname"><a href="classRPN__TID.html#a3b424fe5f90b7eac07450d3ab9154111">RPN_TID::setValue</a></div><div class="ttdeci">void setValue(std::string id_name, RPN_Node *value)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01168">rpn.cpp:1168</a></div></div>
 <div class="ttc" id="aclassRPN__TID_html_a3d05943823a3a52d615c47463475510f"><div class="ttname"><a href="classRPN__TID.html#a3d05943823a3a52d615c47463475510f">RPN_TID::AddID</a></div><div class="ttdeci">void AddID(std::string id_name, RPN_Node *value)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01155">rpn.cpp:1155</a></div></div>
 <div class="ttc" id="aclassRPN__TID_html_a3ee6c795476f4a312c1fb0f04f0b24e6"><div class="ttname"><a href="classRPN__TID.html#a3ee6c795476f4a312c1fb0f04f0b24e6">RPN_TID::FindID</a></div><div class="ttdeci">bool FindID(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01159">rpn.cpp:1159</a></div></div>
 <div class="ttc" id="aclassRPN__TID_html_a559bbaa46c124a4c2c48a8bc117cc4ac"><div class="ttname"><a href="classRPN__TID.html#a559bbaa46c124a4c2c48a8bc117cc4ac">RPN_TID::RPN_TID</a></div><div class="ttdeci">RPN_TID()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01143">rpn.cpp:1143</a></div></div>
 <div class="ttc" id="aclassRPN__TID_html_a9cc9f235692099be69a1d27e58856905"><div class="ttname"><a href="classRPN__TID.html#a9cc9f235692099be69a1d27e58856905">RPN_TID::~RPN_TID</a></div><div class="ttdeci">virtual ~RPN_TID()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01147">rpn.cpp:1147</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_aa9f1f86400ccebd6c266b572290017f3"><div class="ttname"><a href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3">RPN_TID::AddTable</a></div><div class="ttdeci">void AddTable()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01199">rpn.cpp:1199</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_aae479183023b34d1374c3d9fb9da845a"><div class="ttname"><a href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a">RPN_TID::RemoveTable</a></div><div class="ttdeci">void RemoveTable()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01207">rpn.cpp:1207</a></div></div>
-<div class="ttc" id="aclassRPN__TID_html_aed792a2176e4f86bc3bb2397cc07e671"><div class="ttname"><a href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">RPN_TID::getValue</a></div><div class="ttdeci">RPN_Node * getValue(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01185">rpn.cpp:1185</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_aa9f1f86400ccebd6c266b572290017f3"><div class="ttname"><a href="classRPN__TID.html#aa9f1f86400ccebd6c266b572290017f3">RPN_TID::AddTable</a></div><div class="ttdeci">void AddTable()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01195">rpn.cpp:1195</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_aae479183023b34d1374c3d9fb9da845a"><div class="ttname"><a href="classRPN__TID.html#aae479183023b34d1374c3d9fb9da845a">RPN_TID::RemoveTable</a></div><div class="ttdeci">void RemoveTable()</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01203">rpn.cpp:1203</a></div></div>
+<div class="ttc" id="aclassRPN__TID_html_aed792a2176e4f86bc3bb2397cc07e671"><div class="ttname"><a href="classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671">RPN_TID::getValue</a></div><div class="ttdeci">RPN_Node * getValue(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l01181">rpn.cpp:1181</a></div></div>
 <div class="ttc" id="aclassRPN_html_a6f84096ac507b43fbc6fdc4a5710e919"><div class="ttname"><a href="classRPN.html#a6f84096ac507b43fbc6fdc4a5710e919">RPN::AddCell</a></div><div class="ttdeci">void AddCell(Lexem *element, std::vector&lt; RPN_Node * &gt; &amp;container)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8h_source.html#l00199">rpn.h:199</a></div></div>
 <div class="ttc" id="aclassRPN_html_aabd677eac80142d309e79bb0e3d6d563"><div class="ttname"><a href="classRPN.html#aabd677eac80142d309e79bb0e3d6d563">RPN::Analyze</a></div><div class="ttdeci">void Analyze(const std::vector&lt; Lexem * &gt; &amp;list_of_lexems)</div><div class="ttdef"><b>Definition</b> <a href="rpn_8cpp_source.html#l00085">rpn.cpp:85</a></div></div>
 <div class="ttc" id="aclassTID_html_a2a9f158a7d8c99438cbf70563c31a77e"><div class="ttname"><a href="classTID.html#a2a9f158a7d8c99438cbf70563c31a77e">TID::IsUsed</a></div><div class="ttdeci">bool IsUsed(std::string id_name)</div><div class="ttdef"><b>Definition</b> <a href="tid_8cpp_source.html#l00099">tid.cpp:99</a></div></div>
