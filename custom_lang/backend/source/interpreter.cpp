@@ -14,16 +14,7 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
     ++ind;
     for (; ind < rpn_.size(); ++ind) {
         if (rpn_[ind]->GetType() == "utility") {
-            if (rpn_[ind]->GetKeyword() == "return") {
-                RPN_Node* res = stack.top();
-                stack.pop();
-                if (res->GetType() == "identifier") {
-                    std::string name = res->GetName(); 
-                    delete res;
-                    res = tid_->getValue(name);
-                }
-                stack.push(res);
-            } else if (rpn_[ind]->GetKeyword() == "cout") {
+            if (rpn_[ind]->GetKeyword() == "cout") {
                 while (rpn_[ind]->GetType() != "label") {
                     --ind;
                 }
@@ -76,17 +67,10 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
         } else if (rpn_[ind]->GetType() == "other") {
             RPN_Node* second = stack.top();
             (stack.top())->Print();
-                std::cout << "\n";
-            stack.pop();
             RPN_Node* first = stack.top();
-            (stack.top())->Print();
-                std::cout << "\n";
             stack.pop();
             stack.push(Solve(first, second, rpn_[ind]->GetOperation()));
-            std::cout << rpn_[ind]->GetOperation() << " " << is_func << "\n";
             if (rpn_[ind]->GetOperation() == "=" && is_func) {
-                (stack.top())->Print();
-                std::cout << "\n";
                 delete stack.top();
                 stack.pop();
             }
