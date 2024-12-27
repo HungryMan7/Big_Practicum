@@ -5,6 +5,7 @@
 class Interpreter {
 public:
     void Run(std::vector<RPN_Node*> rpn);
+    void RunFunc(std::string);
     RPN_Node* Solve(RPN_Node*, RPN_Node*, std::string);
 
 private:

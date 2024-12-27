@@ -3,9 +3,13 @@
 void Interpreter::Run(std::vector<RPN_Node*> rpn) {
     rpn_ = rpn;
     tid_ = new RPN_TID;
+    RunFunc("main");
+}
+
+void Interpreter::RunFunc(std::string func_name) {
     int ind = 0;
     while (ind < rpn_.size() && rpn_[ind]->GetType() != "function" ||
-           rpn_[ind]->GetName() != "main") {
+           rpn_[ind]->GetName() != func_name) {
         ++ind;
     }
     if (ind == rpn_.size()) {
@@ -13,8 +17,19 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
     }
     ++ind;
     for (; ind < rpn_.size(); ++ind) {
+        std::cout << ind << "\n";
         if (rpn_[ind]->GetType() == "utility") {
-            if (rpn_[ind]->GetKeyword() == "cout") {
+            if (rpn_[ind]->GetKeyword() == "return") {
+                RPN_Node* res = stack.top();
+                stack.pop();
+                if (res->GetType() == "identifier") {
+                    std::string name = res->GetName();
+                    delete res;
+                    res = tid_->getValue(name);
+                }
+                stack.push(res);
+                return;
+            } else if (rpn_[ind]->GetKeyword() == "cout") {
                 while (rpn_[ind]->GetType() != "label") {
                     --ind;
                 }
@@ -59,14 +74,10 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
             }
         } else if (rpn_[ind]->GetType() == "function") {
             is_func = false;
-            std::string name = rpn_[ind]->GetName();
-            ind = 0;
-            while (rpn_[ind]->GetType() != "function" || rpn_[ind]->GetName() != name) {
-                ++ind;
-            }
+            RunFunc(rpn_[ind]->GetName());
         } else if (rpn_[ind]->GetType() == "other") {
             RPN_Node* second = stack.top();
-            (stack.top())->Print();
+            stack.pop();
             RPN_Node* first = stack.top();
             stack.pop();
             stack.push(Solve(first, second, rpn_[ind]->GetOperation()));
