@@ -82,6 +82,8 @@ public:
             value_int = std::stoi(name);
         } else if (type == "double") {
             value_double = std::stod(name);
+        } else if (type == "bool") {
+            value_bool = name == "1" ? true : false;
         } else if (type == "string") {
             value_string = name;
         } else if (type == "array") {
@@ -106,12 +108,12 @@ public:
     int GetFalseLabelNumber() { return false_label_number; }
     std::string GetKeyword() { return keyword; }
     std::string GetOperation() { return operation; }
-    int GetIntegerValue() { return value_int; }
-    double GetDoubleValue() { return value_double; }
-    bool GetBoolValue() { return value_bool; }
-    std::string GetStringValue() { return value_string; }
+    int& GetIntegerValue() { return value_int; }
+    double& GetDoubleValue() { return value_double; }
+    bool& GetBoolValue() { return value_bool; }
+    std::string& GetStringValue() { return value_string; }
     std::vector<std::vector<int>> GetSizesValue() { return value_array; }
-    std::vector<RPN_Node*> GetElements() { return array_elements; }
+    std::vector<RPN_Node*>& GetElements() { return array_elements; }
     bool IsCommonLabel() { return rpn_label; }
     bool IsFalseLabel() { return rpn_false_label; }
     bool IsGoLabel() { return rpn_go_label; }

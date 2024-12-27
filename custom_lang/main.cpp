@@ -30,7 +30,6 @@ int main() {
             std::cout << "\n";
         }
         interpreter->Run(rpn_chain->GetChain());
-        std::cout << "Program finished successfully";
     } catch (const std::string e) {
         std::cout << e;
     } catch (char const* e) {
