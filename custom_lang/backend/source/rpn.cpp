@@ -625,21 +625,31 @@ void RPN::FUNC_CALL(std::string id_name) {
     int index = 0;
     GetLex(); // (
     bool checker = false;
-    AddCell(new RPN_Node(true, true, true), empty);
+    std::vector<RPN_Node*> params;
     while (lexem_->GetType() == LexemType::Identifier || lexem_->GetType() == LexemType::String ||
         lexem_->GetType() == LexemType::Integer || lexem_->GetType() == LexemType::Float || lexem_->GetValue() == "{" || lexem_->GetValue() == "(") {
         checker = true;
+        std::string argument_name = "argument_value";
         do {
             if (lexem_->GetValue() == ",") {
                 GetLex();
             }
-            RPN_Node* param = new RPN_Node(table_id.getType(id_name).second.second[index], "identifier");
-            AddCell(param, empty);
+            params.push_back(new RPN_Node(table_id.getType(id_name).second.second[index], "identifier"));
+            std::string new_string = argument_name + std::to_string(index);
+            AddCell(new RPN_Node(new_string, "identifier"), empty);
             EXP_ONE(empty);
             RPN_Node* sign = new RPN_Node("=", "other");
             AddCell(sign, empty);
             index++;
         } while (lexem_->GetValue() == ",");
+        AddCell(new RPN_Node(true, true, true), empty);
+        for (int i = 0; i < params.size(); ++i) {
+            AddCell(params[i], empty);
+            std::string new_string = argument_name + std::to_string(i);
+            AddCell(new RPN_Node(new_string, "identifier"), empty);
+            RPN_Node* sign = new RPN_Node("=", "other");
+            AddCell(sign, empty);
+        }
         GetLex(); // )
     }
     if (!checker) GetLex(); // )
