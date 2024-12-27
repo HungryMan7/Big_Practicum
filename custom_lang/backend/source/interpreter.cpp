@@ -7,6 +7,7 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
 }
 
 void Interpreter::RunFunc(std::string func_name) {
+    bool is_func = false;
     int ind = 0;
     while (ind < rpn_.size() && rpn_[ind]->GetType() != "function" ||
            rpn_[ind]->GetName() != func_name) {

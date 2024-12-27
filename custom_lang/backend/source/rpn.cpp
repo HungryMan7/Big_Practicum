@@ -1157,15 +1157,11 @@ void RPN_TID::AddID(std::string id_name, RPN_Node* value) {
 }
 
 bool RPN_TID::FindID(std::string id_name) {
-    RPN_TID_Node* temp = root_;
-    do {
-        for (auto id : temp->ID) {
-            if (id.first == id_name) {
-                return true;
-            }
+    for (auto id : root_->ID) {
+        if (id.first == id_name) {
+            return true;
         }
-        temp = temp->pred;
-    } while(temp);
+    }
     return false;
 }
 
