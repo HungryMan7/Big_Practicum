@@ -1,6 +1,8 @@
 #include "../includes/semantics_analyzer.h"
 #include <fstream>
 
+bool output = false;
+
 void SemanticsAnalyzer::Analyze(const std::vector<Lexem*>& list_of_lexems) {
     list_of_lexems_ = list_of_lexems;
     GetLex();
@@ -525,6 +527,11 @@ void SemanticsAnalyzer::INPUT() {
             " column: " + std::to_string(lexem_->GetColumn() - 1) +
             " ID was not declared";
     }
+    if (table_id_.getType(current_id_name_).first[0] == "array") {
+        throw "line: " + std::to_string(lexem_->GetLine()) +
+            " column: " + std::to_string(lexem_->GetColumn() - 1) +
+            " you can't write in an array";
+    }
     GetLex(); // id;
     while (lexem_->GetValue() == ">>") {
         GetLex(); // >>
@@ -539,12 +546,14 @@ void SemanticsAnalyzer::INPUT() {
 }
 
 void SemanticsAnalyzer::OUTPUT() {
+    output = true;
     GetLex(); // <<
     EXP_FOURTEEN();
     while (lexem_->GetValue() == "<<") {
         GetLex(); // <<
         EXP_FOURTEEN();
     }
+    output = false;
 }
 
 std::vector<std::string> SemanticsAnalyzer::FUNC_CALL(std::string id_name) {
@@ -1161,6 +1170,11 @@ std::vector<std::string> SemanticsAnalyzer::EXP_FOURTEEN() {
         }
         else {
             GetLex();
+            if (output && table_id_.getType(current_id_name_).first[0] == "array") {
+                throw "line: " + std::to_string(lexem_->GetLine()) +
+                    " column: " + std::to_string(lexem_->GetColumn() - 1) +
+                    " you can't write out an array";
+            }
             return table_id_.getType(current_id_name_).first;
         }
         while (lexem_->GetValue() == "::") {
