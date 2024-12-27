@@ -67,17 +67,10 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
         } else if (rpn_[ind]->GetType() == "other") {
             RPN_Node* second = stack.top();
             (stack.top())->Print();
-                std::cout << "\n";
-            stack.pop();
             RPN_Node* first = stack.top();
-            (stack.top())->Print();
-                std::cout << "\n";
             stack.pop();
             stack.push(Solve(first, second, rpn_[ind]->GetOperation()));
-            std::cout << rpn_[ind]->GetOperation() << " " << is_func << "\n";
             if (rpn_[ind]->GetOperation() == "=" && is_func) {
-                (stack.top())->Print();
-                std::cout << "\n";
                 delete stack.top();
                 stack.pop();
             }
