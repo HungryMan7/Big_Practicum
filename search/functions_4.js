@@ -2,7 +2,7 @@ var searchData=
 [
   ['getboolvalue_0',['GetBoolValue',['../structRPN__Node.html#a46ef94089aed0ab39f4b5a321fdff90d',1,'RPN_Node']]],
   ['getchain_1',['GetChain',['../classRPN.html#adbc1b717fc9d13a31e75d6358149c434',1,'RPN']]],
-  ['getcolumn_2',['getcolumn',['../classCell.html#aae8e6d9b518d8936e1212c893febbc0d',1,'Cell::getColumn()'],['../classLexem.html#ae4561959b60f8e8737e0271a735d412f',1,'Lexem::GetColumn()']]],
+  ['getcolumn_2',['getcolumn',['../classLexem.html#ae4561959b60f8e8737e0271a735d412f',1,'Lexem::GetColumn()'],['../classCell.html#aae8e6d9b518d8936e1212c893febbc0d',1,'Cell::getColumn()']]],
   ['getdoublevalue_3',['GetDoubleValue',['../structRPN__Node.html#a01ebf7c754c2411787ae6fb1a09bb4b7',1,'RPN_Node']]],
   ['getelements_4',['GetElements',['../structRPN__Node.html#ad5eb5c2251851bd4d004e0c60bcb7804',1,'RPN_Node']]],
   ['getfalselabelnumber_5',['GetFalseLabelNumber',['../structRPN__Node.html#a5a087e8a4da1b1526b5eaa3fae2c72bb',1,'RPN_Node']]],
@@ -11,12 +11,12 @@ var searchData=
   ['getlabelnumber_8',['GetLabelNumber',['../structRPN__Node.html#a48b0487d0444ff15949639f027f7b781',1,'RPN_Node']]],
   ['getlexems_9',['GetLexems',['../classLexicalAnalyzer.html#a4e33ca376c9b37de9662c2d410433b62',1,'LexicalAnalyzer']]],
   ['getlexemtype_10',['GetLexemType',['../classLexem.html#a938cb625de5c04aec086c76c8d2d4298',1,'Lexem']]],
-  ['getline_11',['getline',['../classLexem.html#ae1d3e3e82881db03c3ee014198438dbb',1,'Lexem::GetLine()'],['../classCell.html#ac8b3e90394c14b29b3cc1cd0d66bef8e',1,'Cell::getLine()']]],
-  ['getname_12',['getname',['../classCell.html#ad8a1f7438f6590ae78f2b22c22d40c2e',1,'Cell::getName()'],['../structRPN__Node.html#a5089f456b1507f445925a589c554c5c6',1,'RPN_Node::GetName()']]],
+  ['getline_11',['getline',['../classCell.html#ac8b3e90394c14b29b3cc1cd0d66bef8e',1,'Cell::getLine()'],['../classLexem.html#ae1d3e3e82881db03c3ee014198438dbb',1,'Lexem::GetLine()']]],
+  ['getname_12',['getname',['../structRPN__Node.html#a5089f456b1507f445925a589c554c5c6',1,'RPN_Node::GetName()'],['../classCell.html#ad8a1f7438f6590ae78f2b22c22d40c2e',1,'Cell::getName()']]],
   ['getoperation_13',['GetOperation',['../structRPN__Node.html#a2af128757cfa54d64e49018ea08066d4',1,'RPN_Node']]],
   ['getsizesvalue_14',['GetSizesValue',['../structRPN__Node.html#a35be037cf3e9acd7c4786bf376f7d27a',1,'RPN_Node']]],
   ['getstringvalue_15',['GetStringValue',['../structRPN__Node.html#ac4eb9041b616c1bc42b6b55c77c0bcb8',1,'RPN_Node']]],
-  ['gettype_16',['gettype',['../classLexem.html#afa591326d8b243bfa5b66ffed792a1f3',1,'Lexem::GetType()'],['../structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe',1,'RPN_Node::GetType()'],['../classCell.html#a3c9569a4451e2c92c35e63d55eefe586',1,'Cell::getType()'],['../classTID.html#a8033fa4872946b84a4c9e55935f4802a',1,'TID::getType()']]],
+  ['gettype_16',['gettype',['../classCell.html#a3c9569a4451e2c92c35e63d55eefe586',1,'Cell::getType()'],['../classTID.html#a8033fa4872946b84a4c9e55935f4802a',1,'TID::getType()'],['../classLexem.html#afa591326d8b243bfa5b66ffed792a1f3',1,'Lexem::GetType()'],['../structRPN__Node.html#aaaf5ecca4af83402083997d0948811fe',1,'RPN_Node::GetType()']]],
   ['getvalue_17',['getvalue',['../classRPN__TID.html#aed792a2176e4f86bc3bb2397cc07e671',1,'RPN_TID::getValue()'],['../classCell.html#abe01fb0c82f403e2f8b80061671e9962',1,'Cell::getValue()'],['../classLexem.html#a756fc28b51b15172a993faeaff89fe91',1,'Lexem::GetValue()']]],
   ['getvariant_18',['getVariant',['../classCell.html#aa8f750034be207862259a39072434910',1,'Cell']]]
 ];
