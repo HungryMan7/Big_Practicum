@@ -1,13 +1,15 @@
 int main() {
-  loop while(i < 0) {
-    cout << "while testing";
-  }
-  loop for(;;) {
-    cout << "for testing";
-  }
-  loop foreach(i; i < 5) {
+  int i;
+  loop while(i < 3) {
+    cout << i << " while testing";
     i += 1;
-    cout << "foreach testing";
+  }
+  loop for(; i < 10; i += 1) {
+    cout << i << " for testing";
+    if (i == 4) {
+      i += 3;
+      continue;
+    }
   }
   return 0;
 }

@@ -67,6 +67,7 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
                 }
             }
         } else if (rpn_[ind]->GetType() == "function") {
+            is_func = false;
             std::string name = rpn_[ind]->GetName();
             ind = 0;
             while (rpn_[ind]->GetType() != "function" || rpn_[ind]->GetName() != name) {
@@ -74,10 +75,21 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
             }
         } else if (rpn_[ind]->GetType() == "other") {
             RPN_Node* second = stack.top();
+            (stack.top())->Print();
+                std::cout << "\n";
             stack.pop();
             RPN_Node* first = stack.top();
+            (stack.top())->Print();
+                std::cout << "\n";
             stack.pop();
             stack.push(Solve(first, second, rpn_[ind]->GetOperation()));
+            std::cout << rpn_[ind]->GetOperation() << " " << is_func << "\n";
+            if (rpn_[ind]->GetOperation() == "=" && is_func) {
+                (stack.top())->Print();
+                std::cout << "\n";
+                delete stack.top();
+                stack.pop();
+            }
             delete first;
             delete second;
         } else if (rpn_[ind]->GetType() == "identifier" || rpn_[ind]->GetType() == "integer" ||
@@ -111,6 +123,18 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
                 --ind;
             } else if (rpn_[ind]->IsStartLabel()) {
                 tid_->AddTable();
+                int return_value = ind;
+                ++ind;
+                while (ind < rpn_.size()) {
+                    if (rpn_[ind]->GetType() == "function") {
+                        is_func = true;
+                        break;
+                    } else if (rpn_[ind]->GetType() == "label") {
+                        break;
+                    }
+                    ++ind;
+                } 
+                ind = return_value;
             } else if (rpn_[ind]->IsEndLabel()) {
                 tid_->RemoveTable();
             }
@@ -119,6 +143,7 @@ void Interpreter::Run(std::vector<RPN_Node*> rpn) {
 }
 
 RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string operation) {
+    RPN_Node* res = new RPN_Node(*first);
     if (first->GetType() == "identifier") {
         std::string name = first->GetName();
         delete first;
@@ -143,7 +168,7 @@ RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string oper
             first->SetSizes(second->GetSizesValue());
         }
         first->SetType(second->GetType());
-        return new RPN_Node(*first);
+        return res;
     } else if (operation == "+=") {
         return Solve(first, Solve(first, second, "+"), "=");
     } else if (operation == "-=") {
@@ -206,7 +231,6 @@ RPN_Node* Interpreter::Solve(RPN_Node* first, RPN_Node* second, std::string oper
     } else if (operation == ">") {
         RPN_Node* result = new RPN_Node("", "bool");
         if (second->GetType() == "integer") {
-            std::cout << first->GetIntegerValue() << " > " << second->GetIntegerValue() << "\n";
             result->SetBoolValue(first->GetIntegerValue() > second->GetIntegerValue());
             return result;
         } else if (second->GetType() == "double") {

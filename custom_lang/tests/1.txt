@@ -6,7 +6,6 @@ int f(int a, int b, int c, int d) {
 int main() {
   int a, b, c;
   cin >> a >> b >> c;
-  f(a, b, c, 4);
-  cout << "Well, it's working! :)";
-  return;
+  cout << f(a, b, c, 4) << "Well, it's working! :)";
+  return 0;
 }

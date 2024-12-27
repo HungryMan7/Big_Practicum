@@ -82,6 +82,8 @@ public:
             value_int = std::stoi(name);
         } else if (type == "double") {
             value_double = std::stod(name);
+        } else if (type == "bool") {
+            value_bool = name == "1" ? true : false;
         } else if (type == "string") {
             value_string = name;
         } else if (type == "array") {
